@@ -1,0 +1,1103 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"heap_4.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.bss.ucHeap,"aw",%nobits
+  20              		.align	2
+  23              	ucHeap:
+  24 0000 00000000 		.space	76800
+  24      00000000 
+  24      00000000 
+  24      00000000 
+  24      00000000 
+  25              		.section	.rodata.heapSTRUCT_SIZE,"a",%progbits
+  26              		.align	1
+  29              	heapSTRUCT_SIZE:
+  30 0000 0800     		.short	8
+  31              		.section	.rodata.xTotalHeapSize,"a",%progbits
+  32              		.align	2
+  35              	xTotalHeapSize:
+  36 0000 F82B0100 		.word	76792
+  37              		.section	.bss.xStart,"aw",%nobits
+  38              		.align	2
+  41              	xStart:
+  42 0000 00000000 		.space	8
+  42      00000000 
+  43              		.section	.bss.pxEnd,"aw",%nobits
+  44              		.align	2
+  47              	pxEnd:
+  48 0000 00000000 		.space	4
+  49              		.section	.data.xFreeBytesRemaining,"aw",%progbits
+  50              		.align	2
+  53              	xFreeBytesRemaining:
+  54 0000 F82B0100 		.word	76792
+  55              		.section	.bss.xBlockAllocatedBit,"aw",%nobits
+  56              		.align	2
+  59              	xBlockAllocatedBit:
+  60 0000 00000000 		.space	4
+  61              		.section	.text.pvPortMalloc,"ax",%progbits
+  62              		.align	2
+  63              		.global	pvPortMalloc
+  64              		.thumb
+  65              		.thumb_func
+  67              	pvPortMalloc:
+  68              	.LFB110:
+  69              		.file 1 "Source/portable/MemMang/heap_4.c"
+   1:Source/portable/MemMang/heap_4.c **** /*
+   2:Source/portable/MemMang/heap_4.c ****     FreeRTOS V7.5.3 - Copyright (C) 2013 Real Time Engineers Ltd. 
+   3:Source/portable/MemMang/heap_4.c ****     All rights reserved
+   4:Source/portable/MemMang/heap_4.c **** 
+   5:Source/portable/MemMang/heap_4.c ****     VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
+   6:Source/portable/MemMang/heap_4.c **** 
+   7:Source/portable/MemMang/heap_4.c ****     ***************************************************************************
+   8:Source/portable/MemMang/heap_4.c ****      *                                                                       *
+   9:Source/portable/MemMang/heap_4.c ****      *    FreeRTOS provides completely free yet professionally developed,    *
+  10:Source/portable/MemMang/heap_4.c ****      *    robust, strictly quality controlled, supported, and cross          *
+  11:Source/portable/MemMang/heap_4.c ****      *    platform software that has become a de facto standard.             *
+  12:Source/portable/MemMang/heap_4.c ****      *                                                                       *
+  13:Source/portable/MemMang/heap_4.c ****      *    Help yourself get started quickly and support the FreeRTOS         *
+  14:Source/portable/MemMang/heap_4.c ****      *    project by purchasing a FreeRTOS tutorial book, reference          *
+  15:Source/portable/MemMang/heap_4.c ****      *    manual, or both from: http://www.FreeRTOS.org/Documentation        *
+  16:Source/portable/MemMang/heap_4.c ****      *                                                                       *
+  17:Source/portable/MemMang/heap_4.c ****      *    Thank you!                                                         *
+  18:Source/portable/MemMang/heap_4.c ****      *                                                                       *
+  19:Source/portable/MemMang/heap_4.c ****     ***************************************************************************
+  20:Source/portable/MemMang/heap_4.c **** 
+  21:Source/portable/MemMang/heap_4.c ****     This file is part of the FreeRTOS distribution.
+  22:Source/portable/MemMang/heap_4.c **** 
+  23:Source/portable/MemMang/heap_4.c ****     FreeRTOS is free software; you can redistribute it and/or modify it under
+  24:Source/portable/MemMang/heap_4.c ****     the terms of the GNU General Public License (version 2) as published by the
+  25:Source/portable/MemMang/heap_4.c ****     Free Software Foundation >>!AND MODIFIED BY!<< the FreeRTOS exception.
+  26:Source/portable/MemMang/heap_4.c **** 
+  27:Source/portable/MemMang/heap_4.c ****     >>! NOTE: The modification to the GPL is included to allow you to distribute
+  28:Source/portable/MemMang/heap_4.c ****     >>! a combined work that includes FreeRTOS without being obliged to provide
+  29:Source/portable/MemMang/heap_4.c ****     >>! the source code for proprietary components outside of the FreeRTOS
+  30:Source/portable/MemMang/heap_4.c ****     >>! kernel.
+  31:Source/portable/MemMang/heap_4.c **** 
+  32:Source/portable/MemMang/heap_4.c ****     FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
+  33:Source/portable/MemMang/heap_4.c ****     WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  34:Source/portable/MemMang/heap_4.c ****     FOR A PARTICULAR PURPOSE.  Full license text is available from the following
+  35:Source/portable/MemMang/heap_4.c ****     link: http://www.freertos.org/a00114.html
+  36:Source/portable/MemMang/heap_4.c **** 
+  37:Source/portable/MemMang/heap_4.c ****     1 tab == 4 spaces!
+  38:Source/portable/MemMang/heap_4.c **** 
+  39:Source/portable/MemMang/heap_4.c ****     ***************************************************************************
+  40:Source/portable/MemMang/heap_4.c ****      *                                                                       *
+  41:Source/portable/MemMang/heap_4.c ****      *    Having a problem?  Start by reading the FAQ "My application does   *
+  42:Source/portable/MemMang/heap_4.c ****      *    not run, what could be wrong?"                                     *
+  43:Source/portable/MemMang/heap_4.c ****      *                                                                       *
+  44:Source/portable/MemMang/heap_4.c ****      *    http://www.FreeRTOS.org/FAQHelp.html                               *
+  45:Source/portable/MemMang/heap_4.c ****      *                                                                       *
+  46:Source/portable/MemMang/heap_4.c ****     ***************************************************************************
+  47:Source/portable/MemMang/heap_4.c **** 
+  48:Source/portable/MemMang/heap_4.c ****     http://www.FreeRTOS.org - Documentation, books, training, latest versions,
+  49:Source/portable/MemMang/heap_4.c ****     license and Real Time Engineers Ltd. contact details.
+  50:Source/portable/MemMang/heap_4.c **** 
+  51:Source/portable/MemMang/heap_4.c ****     http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
+  52:Source/portable/MemMang/heap_4.c ****     including FreeRTOS+Trace - an indispensable productivity tool, a DOS
+  53:Source/portable/MemMang/heap_4.c ****     compatible FAT file system, and our tiny thread aware UDP/IP stack.
+  54:Source/portable/MemMang/heap_4.c **** 
+  55:Source/portable/MemMang/heap_4.c ****     http://www.OpenRTOS.com - Real Time Engineers ltd license FreeRTOS to High
+  56:Source/portable/MemMang/heap_4.c ****     Integrity Systems to sell under the OpenRTOS brand.  Low cost OpenRTOS
+  57:Source/portable/MemMang/heap_4.c ****     licenses offer ticketed support, indemnification and middleware.
+  58:Source/portable/MemMang/heap_4.c **** 
+  59:Source/portable/MemMang/heap_4.c ****     http://www.SafeRTOS.com - High Integrity Systems also provide a safety
+  60:Source/portable/MemMang/heap_4.c ****     engineered and independently SIL3 certified version for use in safety and
+  61:Source/portable/MemMang/heap_4.c ****     mission critical applications that require provable dependability.
+  62:Source/portable/MemMang/heap_4.c **** 
+  63:Source/portable/MemMang/heap_4.c ****     1 tab == 4 spaces!
+  64:Source/portable/MemMang/heap_4.c **** */
+  65:Source/portable/MemMang/heap_4.c **** 
+  66:Source/portable/MemMang/heap_4.c **** /*
+  67:Source/portable/MemMang/heap_4.c ****  * A sample implementation of pvPortMalloc() and vPortFree() that combines 
+  68:Source/portable/MemMang/heap_4.c ****  * (coalescences) adjacent memory blocks as they are freed, and in so doing 
+  69:Source/portable/MemMang/heap_4.c ****  * limits memory fragmentation.
+  70:Source/portable/MemMang/heap_4.c ****  *
+  71:Source/portable/MemMang/heap_4.c ****  * See heap_1.c, heap_2.c and heap_3.c for alternative implementations, and the 
+  72:Source/portable/MemMang/heap_4.c ****  * memory management pages of http://www.FreeRTOS.org for more information.
+  73:Source/portable/MemMang/heap_4.c ****  */
+  74:Source/portable/MemMang/heap_4.c **** #include <stdlib.h>
+  75:Source/portable/MemMang/heap_4.c **** 
+  76:Source/portable/MemMang/heap_4.c **** /* Defining MPU_WRAPPERS_INCLUDED_FROM_API_FILE prevents task.h from redefining
+  77:Source/portable/MemMang/heap_4.c **** all the API functions to use the MPU wrappers.  That should only be done when
+  78:Source/portable/MemMang/heap_4.c **** task.h is included from an application file. */
+  79:Source/portable/MemMang/heap_4.c **** #define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+  80:Source/portable/MemMang/heap_4.c **** 
+  81:Source/portable/MemMang/heap_4.c **** #include "FreeRTOS.h"
+  82:Source/portable/MemMang/heap_4.c **** #include "task.h"
+  83:Source/portable/MemMang/heap_4.c **** 
+  84:Source/portable/MemMang/heap_4.c **** #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+  85:Source/portable/MemMang/heap_4.c **** 
+  86:Source/portable/MemMang/heap_4.c **** /* Block sizes must not get too small. */
+  87:Source/portable/MemMang/heap_4.c **** #define heapMINIMUM_BLOCK_SIZE	( ( size_t ) ( heapSTRUCT_SIZE * 2 ) )
+  88:Source/portable/MemMang/heap_4.c **** 
+  89:Source/portable/MemMang/heap_4.c **** /* Assumes 8bit bytes! */
+  90:Source/portable/MemMang/heap_4.c **** #define heapBITS_PER_BYTE		( ( size_t ) 8 )
+  91:Source/portable/MemMang/heap_4.c **** 
+  92:Source/portable/MemMang/heap_4.c **** /* A few bytes might be lost to byte aligning the heap start address. */
+  93:Source/portable/MemMang/heap_4.c **** #define heapADJUSTED_HEAP_SIZE	( configTOTAL_HEAP_SIZE - portBYTE_ALIGNMENT )
+  94:Source/portable/MemMang/heap_4.c **** 
+  95:Source/portable/MemMang/heap_4.c **** /* Allocate the memory for the heap. */
+  96:Source/portable/MemMang/heap_4.c **** static unsigned char ucHeap[ configTOTAL_HEAP_SIZE ];
+  97:Source/portable/MemMang/heap_4.c **** 
+  98:Source/portable/MemMang/heap_4.c **** /* Define the linked list structure.  This is used to link free blocks in order
+  99:Source/portable/MemMang/heap_4.c **** of their memory address. */
+ 100:Source/portable/MemMang/heap_4.c **** typedef struct A_BLOCK_LINK
+ 101:Source/portable/MemMang/heap_4.c **** {
+ 102:Source/portable/MemMang/heap_4.c **** 	struct A_BLOCK_LINK *pxNextFreeBlock;	/*<< The next free block in the list. */
+ 103:Source/portable/MemMang/heap_4.c **** 	size_t xBlockSize;						/*<< The size of the free block. */
+ 104:Source/portable/MemMang/heap_4.c **** } xBlockLink;
+ 105:Source/portable/MemMang/heap_4.c **** 
+ 106:Source/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 107:Source/portable/MemMang/heap_4.c **** 
+ 108:Source/portable/MemMang/heap_4.c **** /*
+ 109:Source/portable/MemMang/heap_4.c ****  * Inserts a block of memory that is being freed into the correct position in 
+ 110:Source/portable/MemMang/heap_4.c ****  * the list of free memory blocks.  The block being freed will be merged with
+ 111:Source/portable/MemMang/heap_4.c ****  * the block in front it and/or the block behind it if the memory blocks are
+ 112:Source/portable/MemMang/heap_4.c ****  * adjacent to each other.
+ 113:Source/portable/MemMang/heap_4.c ****  */
+ 114:Source/portable/MemMang/heap_4.c **** static void prvInsertBlockIntoFreeList( xBlockLink *pxBlockToInsert );
+ 115:Source/portable/MemMang/heap_4.c **** 
+ 116:Source/portable/MemMang/heap_4.c **** /*
+ 117:Source/portable/MemMang/heap_4.c ****  * Called automatically to setup the required heap structures the first time
+ 118:Source/portable/MemMang/heap_4.c ****  * pvPortMalloc() is called.
+ 119:Source/portable/MemMang/heap_4.c ****  */
+ 120:Source/portable/MemMang/heap_4.c **** static void prvHeapInit( void );
+ 121:Source/portable/MemMang/heap_4.c **** 
+ 122:Source/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 123:Source/portable/MemMang/heap_4.c **** 
+ 124:Source/portable/MemMang/heap_4.c **** /* The size of the structure placed at the beginning of each allocated memory
+ 125:Source/portable/MemMang/heap_4.c **** block must by correctly byte aligned. */
+ 126:Source/portable/MemMang/heap_4.c **** static const unsigned short heapSTRUCT_SIZE	= ( ( sizeof ( xBlockLink ) + ( portBYTE_ALIGNMENT - 1 
+ 127:Source/portable/MemMang/heap_4.c **** 
+ 128:Source/portable/MemMang/heap_4.c **** /* Ensure the pxEnd pointer will end up on the correct byte alignment. */
+ 129:Source/portable/MemMang/heap_4.c **** static const size_t xTotalHeapSize = ( ( size_t ) heapADJUSTED_HEAP_SIZE ) & ( ( size_t ) ~portBYTE
+ 130:Source/portable/MemMang/heap_4.c **** 
+ 131:Source/portable/MemMang/heap_4.c **** /* Create a couple of list links to mark the start and end of the list. */
+ 132:Source/portable/MemMang/heap_4.c **** static xBlockLink xStart, *pxEnd = NULL;
+ 133:Source/portable/MemMang/heap_4.c **** 
+ 134:Source/portable/MemMang/heap_4.c **** /* Keeps track of the number of free bytes remaining, but says nothing about
+ 135:Source/portable/MemMang/heap_4.c **** fragmentation. */
+ 136:Source/portable/MemMang/heap_4.c **** static size_t xFreeBytesRemaining = ( ( size_t ) heapADJUSTED_HEAP_SIZE ) & ( ( size_t ) ~portBYTE_
+ 137:Source/portable/MemMang/heap_4.c **** 
+ 138:Source/portable/MemMang/heap_4.c **** /* Gets set to the top bit of an size_t type.  When this bit in the xBlockSize 
+ 139:Source/portable/MemMang/heap_4.c **** member of an xBlockLink structure is set then the block belongs to the 
+ 140:Source/portable/MemMang/heap_4.c **** application.  When the bit is free the block is still part of the free heap
+ 141:Source/portable/MemMang/heap_4.c **** space. */
+ 142:Source/portable/MemMang/heap_4.c **** static size_t xBlockAllocatedBit = 0;
+ 143:Source/portable/MemMang/heap_4.c **** 
+ 144:Source/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 145:Source/portable/MemMang/heap_4.c **** 
+ 146:Source/portable/MemMang/heap_4.c **** void *pvPortMalloc( size_t xWantedSize )
+ 147:Source/portable/MemMang/heap_4.c **** {
+  70              		.loc 1 147 0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 24
+  73              		@ frame_needed = 1, uses_anonymous_args = 0
+  74 0000 80B5     		push	{r7, lr}
+  75              	.LCFI0:
+  76              		.cfi_def_cfa_offset 8
+  77              		.cfi_offset 7, -8
+  78              		.cfi_offset 14, -4
+  79 0002 86B0     		sub	sp, sp, #24
+  80              	.LCFI1:
+  81              		.cfi_def_cfa_offset 32
+  82 0004 00AF     		add	r7, sp, #0
+  83              	.LCFI2:
+  84              		.cfi_def_cfa_register 7
+  85 0006 7860     		str	r0, [r7, #4]
+ 148:Source/portable/MemMang/heap_4.c **** xBlockLink *pxBlock, *pxPreviousBlock, *pxNewBlockLink;
+ 149:Source/portable/MemMang/heap_4.c **** void *pvReturn = NULL;
+  86              		.loc 1 149 0
+  87 0008 0023     		movs	r3, #0
+  88 000a FB60     		str	r3, [r7, #12]
+ 150:Source/portable/MemMang/heap_4.c **** 
+ 151:Source/portable/MemMang/heap_4.c **** 	vTaskSuspendAll();
+  89              		.loc 1 151 0
+  90 000c FFF7FEFF 		bl	vTaskSuspendAll
+ 152:Source/portable/MemMang/heap_4.c **** 	{
+ 153:Source/portable/MemMang/heap_4.c **** 		/* If this is the first call to malloc then the heap will require
+ 154:Source/portable/MemMang/heap_4.c **** 		initialisation to setup the list of free blocks. */
+ 155:Source/portable/MemMang/heap_4.c **** 		if( pxEnd == NULL )
+  91              		.loc 1 155 0
+  92 0010 3D4B     		ldr	r3, .L11
+  93 0012 1B68     		ldr	r3, [r3]
+  94 0014 002B     		cmp	r3, #0
+  95 0016 01D1     		bne	.L2
+ 156:Source/portable/MemMang/heap_4.c **** 		{
+ 157:Source/portable/MemMang/heap_4.c **** 			prvHeapInit();
+  96              		.loc 1 157 0
+  97 0018 FFF7FEFF 		bl	prvHeapInit
+  98              	.L2:
+ 158:Source/portable/MemMang/heap_4.c **** 		}
+ 159:Source/portable/MemMang/heap_4.c **** 
+ 160:Source/portable/MemMang/heap_4.c **** 		/* Check the requested block size is not so large that the top bit is
+ 161:Source/portable/MemMang/heap_4.c **** 		set.  The top bit of the block size member of the xBlockLink structure 
+ 162:Source/portable/MemMang/heap_4.c **** 		is used to determine who owns the block - the application or the
+ 163:Source/portable/MemMang/heap_4.c **** 		kernel, so it must be free. */
+ 164:Source/portable/MemMang/heap_4.c **** 		if( ( xWantedSize & xBlockAllocatedBit ) == 0 )
+  99              		.loc 1 164 0
+ 100 001c 3B4B     		ldr	r3, .L11+4
+ 101 001e 1A68     		ldr	r2, [r3]
+ 102 0020 7B68     		ldr	r3, [r7, #4]
+ 103 0022 1340     		ands	r3, r3, r2
+ 104 0024 002B     		cmp	r3, #0
+ 105 0026 63D1     		bne	.L3
+ 165:Source/portable/MemMang/heap_4.c **** 		{
+ 166:Source/portable/MemMang/heap_4.c **** 			/* The wanted size is increased so it can contain a xBlockLink
+ 167:Source/portable/MemMang/heap_4.c **** 			structure in addition to the requested amount of bytes. */
+ 168:Source/portable/MemMang/heap_4.c **** 			if( xWantedSize > 0 )
+ 106              		.loc 1 168 0
+ 107 0028 7B68     		ldr	r3, [r7, #4]
+ 108 002a 002B     		cmp	r3, #0
+ 109 002c 0DD0     		beq	.L4
+ 169:Source/portable/MemMang/heap_4.c **** 			{
+ 170:Source/portable/MemMang/heap_4.c **** 				xWantedSize += heapSTRUCT_SIZE;
+ 110              		.loc 1 170 0
+ 111 002e 0823     		movs	r3, #8
+ 112 0030 7A68     		ldr	r2, [r7, #4]
+ 113 0032 1344     		add	r3, r3, r2
+ 114 0034 7B60     		str	r3, [r7, #4]
+ 171:Source/portable/MemMang/heap_4.c **** 
+ 172:Source/portable/MemMang/heap_4.c **** 				/* Ensure that blocks are always aligned to the required number 
+ 173:Source/portable/MemMang/heap_4.c **** 				of bytes. */
+ 174:Source/portable/MemMang/heap_4.c **** 				if( ( xWantedSize & portBYTE_ALIGNMENT_MASK ) != 0x00 )
+ 115              		.loc 1 174 0
+ 116 0036 7B68     		ldr	r3, [r7, #4]
+ 117 0038 03F00703 		and	r3, r3, #7
+ 118 003c 002B     		cmp	r3, #0
+ 119 003e 04D0     		beq	.L4
+ 175:Source/portable/MemMang/heap_4.c **** 				{
+ 176:Source/portable/MemMang/heap_4.c **** 					/* Byte alignment required. */
+ 177:Source/portable/MemMang/heap_4.c **** 					xWantedSize += ( portBYTE_ALIGNMENT - ( xWantedSize & portBYTE_ALIGNMENT_MASK ) );
+ 120              		.loc 1 177 0
+ 121 0040 7B68     		ldr	r3, [r7, #4]
+ 122 0042 23F00703 		bic	r3, r3, #7
+ 123 0046 0833     		adds	r3, r3, #8
+ 124 0048 7B60     		str	r3, [r7, #4]
+ 125              	.L4:
+ 178:Source/portable/MemMang/heap_4.c **** 				}
+ 179:Source/portable/MemMang/heap_4.c **** 			}
+ 180:Source/portable/MemMang/heap_4.c **** 
+ 181:Source/portable/MemMang/heap_4.c **** 			if( ( xWantedSize > 0 ) && ( xWantedSize <= xFreeBytesRemaining ) )
+ 126              		.loc 1 181 0
+ 127 004a 7B68     		ldr	r3, [r7, #4]
+ 128 004c 002B     		cmp	r3, #0
+ 129 004e 4FD0     		beq	.L3
+ 130              		.loc 1 181 0 is_stmt 0 discriminator 1
+ 131 0050 2F4B     		ldr	r3, .L11+8
+ 132 0052 1B68     		ldr	r3, [r3]
+ 133 0054 7A68     		ldr	r2, [r7, #4]
+ 134 0056 9A42     		cmp	r2, r3
+ 135 0058 4AD8     		bhi	.L3
+ 182:Source/portable/MemMang/heap_4.c **** 			{
+ 183:Source/portable/MemMang/heap_4.c **** 				/* Traverse the list from the start	(lowest address) block until 
+ 184:Source/portable/MemMang/heap_4.c **** 				one	of adequate size is found. */
+ 185:Source/portable/MemMang/heap_4.c **** 				pxPreviousBlock = &xStart;
+ 136              		.loc 1 185 0 is_stmt 1
+ 137 005a 2E4B     		ldr	r3, .L11+12
+ 138 005c 3B61     		str	r3, [r7, #16]
+ 186:Source/portable/MemMang/heap_4.c **** 				pxBlock = xStart.pxNextFreeBlock;
+ 139              		.loc 1 186 0
+ 140 005e 2D4B     		ldr	r3, .L11+12
+ 141 0060 1B68     		ldr	r3, [r3]
+ 142 0062 7B61     		str	r3, [r7, #20]
+ 187:Source/portable/MemMang/heap_4.c **** 				while( ( pxBlock->xBlockSize < xWantedSize ) && ( pxBlock->pxNextFreeBlock != NULL ) )
+ 143              		.loc 1 187 0
+ 144 0064 04E0     		b	.L5
+ 145              	.L7:
+ 188:Source/portable/MemMang/heap_4.c **** 				{
+ 189:Source/portable/MemMang/heap_4.c **** 					pxPreviousBlock = pxBlock;
+ 146              		.loc 1 189 0
+ 147 0066 7B69     		ldr	r3, [r7, #20]
+ 148 0068 3B61     		str	r3, [r7, #16]
+ 190:Source/portable/MemMang/heap_4.c **** 					pxBlock = pxBlock->pxNextFreeBlock;
+ 149              		.loc 1 190 0
+ 150 006a 7B69     		ldr	r3, [r7, #20]
+ 151 006c 1B68     		ldr	r3, [r3]
+ 152 006e 7B61     		str	r3, [r7, #20]
+ 153              	.L5:
+ 187:Source/portable/MemMang/heap_4.c **** 				while( ( pxBlock->xBlockSize < xWantedSize ) && ( pxBlock->pxNextFreeBlock != NULL ) )
+ 154              		.loc 1 187 0 discriminator 1
+ 155 0070 7B69     		ldr	r3, [r7, #20]
+ 156 0072 5A68     		ldr	r2, [r3, #4]
+ 157 0074 7B68     		ldr	r3, [r7, #4]
+ 158 0076 9A42     		cmp	r2, r3
+ 159 0078 03D2     		bcs	.L6
+ 187:Source/portable/MemMang/heap_4.c **** 				while( ( pxBlock->xBlockSize < xWantedSize ) && ( pxBlock->pxNextFreeBlock != NULL ) )
+ 160              		.loc 1 187 0 is_stmt 0 discriminator 2
+ 161 007a 7B69     		ldr	r3, [r7, #20]
+ 162 007c 1B68     		ldr	r3, [r3]
+ 163 007e 002B     		cmp	r3, #0
+ 164 0080 F1D1     		bne	.L7
+ 165              	.L6:
+ 191:Source/portable/MemMang/heap_4.c **** 				}
+ 192:Source/portable/MemMang/heap_4.c **** 
+ 193:Source/portable/MemMang/heap_4.c **** 				/* If the end marker was reached then a block of adequate size 
+ 194:Source/portable/MemMang/heap_4.c **** 				was	not found. */
+ 195:Source/portable/MemMang/heap_4.c **** 				if( pxBlock != pxEnd )
+ 166              		.loc 1 195 0 is_stmt 1
+ 167 0082 214B     		ldr	r3, .L11
+ 168 0084 1B68     		ldr	r3, [r3]
+ 169 0086 7A69     		ldr	r2, [r7, #20]
+ 170 0088 9A42     		cmp	r2, r3
+ 171 008a 31D0     		beq	.L3
+ 196:Source/portable/MemMang/heap_4.c **** 				{
+ 197:Source/portable/MemMang/heap_4.c **** 					/* Return the memory space pointed to - jumping over the 
+ 198:Source/portable/MemMang/heap_4.c **** 					xBlockLink structure at its start. */
+ 199:Source/portable/MemMang/heap_4.c **** 					pvReturn = ( void * ) ( ( ( unsigned char * ) pxPreviousBlock->pxNextFreeBlock ) + heapSTRUCT_
+ 172              		.loc 1 199 0
+ 173 008c 3B69     		ldr	r3, [r7, #16]
+ 174 008e 1A68     		ldr	r2, [r3]
+ 175 0090 0823     		movs	r3, #8
+ 176 0092 1344     		add	r3, r3, r2
+ 177 0094 FB60     		str	r3, [r7, #12]
+ 200:Source/portable/MemMang/heap_4.c **** 
+ 201:Source/portable/MemMang/heap_4.c **** 					/* This block is being returned for use so must be taken out 
+ 202:Source/portable/MemMang/heap_4.c **** 					of the list of free blocks. */
+ 203:Source/portable/MemMang/heap_4.c **** 					pxPreviousBlock->pxNextFreeBlock = pxBlock->pxNextFreeBlock;
+ 178              		.loc 1 203 0
+ 179 0096 7B69     		ldr	r3, [r7, #20]
+ 180 0098 1A68     		ldr	r2, [r3]
+ 181 009a 3B69     		ldr	r3, [r7, #16]
+ 182 009c 1A60     		str	r2, [r3]
+ 204:Source/portable/MemMang/heap_4.c **** 
+ 205:Source/portable/MemMang/heap_4.c **** 					/* If the block is larger than required it can be split into 
+ 206:Source/portable/MemMang/heap_4.c **** 					two. */
+ 207:Source/portable/MemMang/heap_4.c **** 					if( ( pxBlock->xBlockSize - xWantedSize ) > heapMINIMUM_BLOCK_SIZE )
+ 183              		.loc 1 207 0
+ 184 009e 7B69     		ldr	r3, [r7, #20]
+ 185 00a0 5A68     		ldr	r2, [r3, #4]
+ 186 00a2 7B68     		ldr	r3, [r7, #4]
+ 187 00a4 D21A     		subs	r2, r2, r3
+ 188 00a6 0823     		movs	r3, #8
+ 189 00a8 5B00     		lsls	r3, r3, #1
+ 190 00aa 9A42     		cmp	r2, r3
+ 191 00ac 0FD9     		bls	.L8
+ 208:Source/portable/MemMang/heap_4.c **** 					{
+ 209:Source/portable/MemMang/heap_4.c **** 						/* This block is to be split into two.  Create a new 
+ 210:Source/portable/MemMang/heap_4.c **** 						block following the number of bytes requested. The void 
+ 211:Source/portable/MemMang/heap_4.c **** 						cast is used to prevent byte alignment warnings from the 
+ 212:Source/portable/MemMang/heap_4.c **** 						compiler. */
+ 213:Source/portable/MemMang/heap_4.c **** 						pxNewBlockLink = ( void * ) ( ( ( unsigned char * ) pxBlock ) + xWantedSize );
+ 192              		.loc 1 213 0
+ 193 00ae 7A69     		ldr	r2, [r7, #20]
+ 194 00b0 7B68     		ldr	r3, [r7, #4]
+ 195 00b2 1344     		add	r3, r3, r2
+ 196 00b4 BB60     		str	r3, [r7, #8]
+ 214:Source/portable/MemMang/heap_4.c **** 
+ 215:Source/portable/MemMang/heap_4.c **** 						/* Calculate the sizes of two blocks split from the 
+ 216:Source/portable/MemMang/heap_4.c **** 						single block. */
+ 217:Source/portable/MemMang/heap_4.c **** 						pxNewBlockLink->xBlockSize = pxBlock->xBlockSize - xWantedSize;
+ 197              		.loc 1 217 0
+ 198 00b6 7B69     		ldr	r3, [r7, #20]
+ 199 00b8 5A68     		ldr	r2, [r3, #4]
+ 200 00ba 7B68     		ldr	r3, [r7, #4]
+ 201 00bc D21A     		subs	r2, r2, r3
+ 202 00be BB68     		ldr	r3, [r7, #8]
+ 203 00c0 5A60     		str	r2, [r3, #4]
+ 218:Source/portable/MemMang/heap_4.c **** 						pxBlock->xBlockSize = xWantedSize;
+ 204              		.loc 1 218 0
+ 205 00c2 7B69     		ldr	r3, [r7, #20]
+ 206 00c4 7A68     		ldr	r2, [r7, #4]
+ 207 00c6 5A60     		str	r2, [r3, #4]
+ 219:Source/portable/MemMang/heap_4.c **** 
+ 220:Source/portable/MemMang/heap_4.c **** 						/* Insert the new block into the list of free blocks. */
+ 221:Source/portable/MemMang/heap_4.c **** 						prvInsertBlockIntoFreeList( ( pxNewBlockLink ) );
+ 208              		.loc 1 221 0
+ 209 00c8 B868     		ldr	r0, [r7, #8]
+ 210 00ca FFF7FEFF 		bl	prvInsertBlockIntoFreeList
+ 211              	.L8:
+ 222:Source/portable/MemMang/heap_4.c **** 					}
+ 223:Source/portable/MemMang/heap_4.c **** 
+ 224:Source/portable/MemMang/heap_4.c **** 					xFreeBytesRemaining -= pxBlock->xBlockSize;
+ 212              		.loc 1 224 0
+ 213 00ce 104B     		ldr	r3, .L11+8
+ 214 00d0 1A68     		ldr	r2, [r3]
+ 215 00d2 7B69     		ldr	r3, [r7, #20]
+ 216 00d4 5B68     		ldr	r3, [r3, #4]
+ 217 00d6 D21A     		subs	r2, r2, r3
+ 218 00d8 0D4B     		ldr	r3, .L11+8
+ 219 00da 1A60     		str	r2, [r3]
+ 225:Source/portable/MemMang/heap_4.c **** 
+ 226:Source/portable/MemMang/heap_4.c **** 					/* The block is being returned - it is allocated and owned
+ 227:Source/portable/MemMang/heap_4.c **** 					by the application and has no "next" block. */
+ 228:Source/portable/MemMang/heap_4.c **** 					pxBlock->xBlockSize |= xBlockAllocatedBit;
+ 220              		.loc 1 228 0
+ 221 00dc 7B69     		ldr	r3, [r7, #20]
+ 222 00de 5A68     		ldr	r2, [r3, #4]
+ 223 00e0 0A4B     		ldr	r3, .L11+4
+ 224 00e2 1B68     		ldr	r3, [r3]
+ 225 00e4 1A43     		orrs	r2, r2, r3
+ 226 00e6 7B69     		ldr	r3, [r7, #20]
+ 227 00e8 5A60     		str	r2, [r3, #4]
+ 229:Source/portable/MemMang/heap_4.c **** 					pxBlock->pxNextFreeBlock = NULL;
+ 228              		.loc 1 229 0
+ 229 00ea 7B69     		ldr	r3, [r7, #20]
+ 230 00ec 0022     		movs	r2, #0
+ 231 00ee 1A60     		str	r2, [r3]
+ 232              	.L3:
+ 230:Source/portable/MemMang/heap_4.c **** 				}
+ 231:Source/portable/MemMang/heap_4.c **** 			}
+ 232:Source/portable/MemMang/heap_4.c **** 		}
+ 233:Source/portable/MemMang/heap_4.c **** 
+ 234:Source/portable/MemMang/heap_4.c **** 		traceMALLOC( pvReturn, xWantedSize );
+ 235:Source/portable/MemMang/heap_4.c **** 	}
+ 236:Source/portable/MemMang/heap_4.c **** 	xTaskResumeAll();
+ 233              		.loc 1 236 0
+ 234 00f0 FFF7FEFF 		bl	xTaskResumeAll
+ 237:Source/portable/MemMang/heap_4.c **** 
+ 238:Source/portable/MemMang/heap_4.c **** 	#if( configUSE_MALLOC_FAILED_HOOK == 1 )
+ 239:Source/portable/MemMang/heap_4.c **** 	{
+ 240:Source/portable/MemMang/heap_4.c **** 		if( pvReturn == NULL )
+ 235              		.loc 1 240 0
+ 236 00f4 FB68     		ldr	r3, [r7, #12]
+ 237 00f6 002B     		cmp	r3, #0
+ 238 00f8 01D1     		bne	.L9
+ 239              	.LBB2:
+ 241:Source/portable/MemMang/heap_4.c **** 		{
+ 242:Source/portable/MemMang/heap_4.c **** 			extern void vApplicationMallocFailedHook( void );
+ 243:Source/portable/MemMang/heap_4.c **** 			vApplicationMallocFailedHook();
+ 240              		.loc 1 243 0
+ 241 00fa FFF7FEFF 		bl	vApplicationMallocFailedHook
+ 242              	.L9:
+ 243              	.LBE2:
+ 244:Source/portable/MemMang/heap_4.c **** 		}
+ 245:Source/portable/MemMang/heap_4.c **** 	}
+ 246:Source/portable/MemMang/heap_4.c **** 	#endif
+ 247:Source/portable/MemMang/heap_4.c **** 
+ 248:Source/portable/MemMang/heap_4.c **** 	return pvReturn;
+ 244              		.loc 1 248 0
+ 245 00fe FB68     		ldr	r3, [r7, #12]
+ 249:Source/portable/MemMang/heap_4.c **** }
+ 246              		.loc 1 249 0
+ 247 0100 1846     		mov	r0, r3
+ 248 0102 1837     		adds	r7, r7, #24
+ 249 0104 BD46     		mov	sp, r7
+ 250              		@ sp needed
+ 251 0106 80BD     		pop	{r7, pc}
+ 252              	.L12:
+ 253              		.align	2
+ 254              	.L11:
+ 255 0108 00000000 		.word	pxEnd
+ 256 010c 00000000 		.word	xBlockAllocatedBit
+ 257 0110 00000000 		.word	xFreeBytesRemaining
+ 258 0114 00000000 		.word	xStart
+ 259              		.cfi_endproc
+ 260              	.LFE110:
+ 262              		.section	.text.vPortFree,"ax",%progbits
+ 263              		.align	2
+ 264              		.global	vPortFree
+ 265              		.thumb
+ 266              		.thumb_func
+ 268              	vPortFree:
+ 269              	.LFB111:
+ 250:Source/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 251:Source/portable/MemMang/heap_4.c **** 
+ 252:Source/portable/MemMang/heap_4.c **** void vPortFree( void *pv )
+ 253:Source/portable/MemMang/heap_4.c **** {
+ 270              		.loc 1 253 0
+ 271              		.cfi_startproc
+ 272              		@ args = 0, pretend = 0, frame = 16
+ 273              		@ frame_needed = 1, uses_anonymous_args = 0
+ 274 0000 80B5     		push	{r7, lr}
+ 275              	.LCFI3:
+ 276              		.cfi_def_cfa_offset 8
+ 277              		.cfi_offset 7, -8
+ 278              		.cfi_offset 14, -4
+ 279 0002 84B0     		sub	sp, sp, #16
+ 280              	.LCFI4:
+ 281              		.cfi_def_cfa_offset 24
+ 282 0004 00AF     		add	r7, sp, #0
+ 283              	.LCFI5:
+ 284              		.cfi_def_cfa_register 7
+ 285 0006 7860     		str	r0, [r7, #4]
+ 254:Source/portable/MemMang/heap_4.c **** unsigned char *puc = ( unsigned char * ) pv;
+ 286              		.loc 1 254 0
+ 287 0008 7B68     		ldr	r3, [r7, #4]
+ 288 000a FB60     		str	r3, [r7, #12]
+ 255:Source/portable/MemMang/heap_4.c **** xBlockLink *pxLink;
+ 256:Source/portable/MemMang/heap_4.c **** 
+ 257:Source/portable/MemMang/heap_4.c **** 	if( pv != NULL )
+ 289              		.loc 1 257 0
+ 290 000c 7B68     		ldr	r3, [r7, #4]
+ 291 000e 002B     		cmp	r3, #0
+ 292 0010 38D0     		beq	.L13
+ 258:Source/portable/MemMang/heap_4.c **** 	{
+ 259:Source/portable/MemMang/heap_4.c **** 		/* The memory being freed will have an xBlockLink structure immediately
+ 260:Source/portable/MemMang/heap_4.c **** 		before it. */
+ 261:Source/portable/MemMang/heap_4.c **** 		puc -= heapSTRUCT_SIZE;
+ 293              		.loc 1 261 0
+ 294 0012 0823     		movs	r3, #8
+ 295 0014 5B42     		negs	r3, r3
+ 296 0016 FA68     		ldr	r2, [r7, #12]
+ 297 0018 1344     		add	r3, r3, r2
+ 298 001a FB60     		str	r3, [r7, #12]
+ 262:Source/portable/MemMang/heap_4.c **** 
+ 263:Source/portable/MemMang/heap_4.c **** 		/* This casting is to keep the compiler from issuing warnings. */
+ 264:Source/portable/MemMang/heap_4.c **** 		pxLink = ( void * ) puc;
+ 299              		.loc 1 264 0
+ 300 001c FB68     		ldr	r3, [r7, #12]
+ 301 001e BB60     		str	r3, [r7, #8]
+ 265:Source/portable/MemMang/heap_4.c **** 
+ 266:Source/portable/MemMang/heap_4.c **** 		/* Check the block is actually allocated. */
+ 267:Source/portable/MemMang/heap_4.c **** 		configASSERT( ( pxLink->xBlockSize & xBlockAllocatedBit ) != 0 );
+ 302              		.loc 1 267 0
+ 303 0020 BB68     		ldr	r3, [r7, #8]
+ 304 0022 5A68     		ldr	r2, [r3, #4]
+ 305 0024 194B     		ldr	r3, .L19
+ 306 0026 1B68     		ldr	r3, [r3]
+ 307 0028 1340     		ands	r3, r3, r2
+ 308 002a 002B     		cmp	r3, #0
+ 309 002c 02D1     		bne	.L15
+ 310              		.loc 1 267 0 is_stmt 0 discriminator 1
+ 311 002e FFF7FEFF 		bl	ulPortSetInterruptMask
+ 312              	.L16:
+ 313 0032 FEE7     		b	.L16
+ 314              	.L15:
+ 268:Source/portable/MemMang/heap_4.c **** 		configASSERT( pxLink->pxNextFreeBlock == NULL );
+ 315              		.loc 1 268 0 is_stmt 1
+ 316 0034 BB68     		ldr	r3, [r7, #8]
+ 317 0036 1B68     		ldr	r3, [r3]
+ 318 0038 002B     		cmp	r3, #0
+ 319 003a 02D0     		beq	.L17
+ 320              		.loc 1 268 0 is_stmt 0 discriminator 1
+ 321 003c FFF7FEFF 		bl	ulPortSetInterruptMask
+ 322              	.L18:
+ 323 0040 FEE7     		b	.L18
+ 324              	.L17:
+ 269:Source/portable/MemMang/heap_4.c **** 		
+ 270:Source/portable/MemMang/heap_4.c **** 		if( ( pxLink->xBlockSize & xBlockAllocatedBit ) != 0 )
+ 325              		.loc 1 270 0 is_stmt 1
+ 326 0042 BB68     		ldr	r3, [r7, #8]
+ 327 0044 5A68     		ldr	r2, [r3, #4]
+ 328 0046 114B     		ldr	r3, .L19
+ 329 0048 1B68     		ldr	r3, [r3]
+ 330 004a 1340     		ands	r3, r3, r2
+ 331 004c 002B     		cmp	r3, #0
+ 332 004e 19D0     		beq	.L13
+ 271:Source/portable/MemMang/heap_4.c **** 		{
+ 272:Source/portable/MemMang/heap_4.c **** 			if( pxLink->pxNextFreeBlock == NULL )
+ 333              		.loc 1 272 0
+ 334 0050 BB68     		ldr	r3, [r7, #8]
+ 335 0052 1B68     		ldr	r3, [r3]
+ 336 0054 002B     		cmp	r3, #0
+ 337 0056 15D1     		bne	.L13
+ 273:Source/portable/MemMang/heap_4.c **** 			{
+ 274:Source/portable/MemMang/heap_4.c **** 				/* The block is being returned to the heap - it is no longer
+ 275:Source/portable/MemMang/heap_4.c **** 				allocated. */
+ 276:Source/portable/MemMang/heap_4.c **** 				pxLink->xBlockSize &= ~xBlockAllocatedBit;
+ 338              		.loc 1 276 0
+ 339 0058 BB68     		ldr	r3, [r7, #8]
+ 340 005a 5A68     		ldr	r2, [r3, #4]
+ 341 005c 0B4B     		ldr	r3, .L19
+ 342 005e 1B68     		ldr	r3, [r3]
+ 343 0060 DB43     		mvns	r3, r3
+ 344 0062 1A40     		ands	r2, r2, r3
+ 345 0064 BB68     		ldr	r3, [r7, #8]
+ 346 0066 5A60     		str	r2, [r3, #4]
+ 277:Source/portable/MemMang/heap_4.c **** 
+ 278:Source/portable/MemMang/heap_4.c **** 				vTaskSuspendAll();
+ 347              		.loc 1 278 0
+ 348 0068 FFF7FEFF 		bl	vTaskSuspendAll
+ 279:Source/portable/MemMang/heap_4.c **** 				{
+ 280:Source/portable/MemMang/heap_4.c **** 					/* Add this block to the list of free blocks. */
+ 281:Source/portable/MemMang/heap_4.c **** 					xFreeBytesRemaining += pxLink->xBlockSize;
+ 349              		.loc 1 281 0
+ 350 006c BB68     		ldr	r3, [r7, #8]
+ 351 006e 5A68     		ldr	r2, [r3, #4]
+ 352 0070 074B     		ldr	r3, .L19+4
+ 353 0072 1B68     		ldr	r3, [r3]
+ 354 0074 1A44     		add	r2, r2, r3
+ 355 0076 064B     		ldr	r3, .L19+4
+ 356 0078 1A60     		str	r2, [r3]
+ 282:Source/portable/MemMang/heap_4.c **** 					prvInsertBlockIntoFreeList( ( ( xBlockLink * ) pxLink ) );
+ 357              		.loc 1 282 0
+ 358 007a B868     		ldr	r0, [r7, #8]
+ 359 007c FFF7FEFF 		bl	prvInsertBlockIntoFreeList
+ 283:Source/portable/MemMang/heap_4.c **** 					traceFREE( pv, pxLink->xBlockSize );
+ 284:Source/portable/MemMang/heap_4.c **** 				}
+ 285:Source/portable/MemMang/heap_4.c **** 				xTaskResumeAll();
+ 360              		.loc 1 285 0
+ 361 0080 FFF7FEFF 		bl	xTaskResumeAll
+ 362              	.L13:
+ 286:Source/portable/MemMang/heap_4.c **** 			}
+ 287:Source/portable/MemMang/heap_4.c **** 		}
+ 288:Source/portable/MemMang/heap_4.c **** 	}
+ 289:Source/portable/MemMang/heap_4.c **** }
+ 363              		.loc 1 289 0
+ 364 0084 1037     		adds	r7, r7, #16
+ 365 0086 BD46     		mov	sp, r7
+ 366              		@ sp needed
+ 367 0088 80BD     		pop	{r7, pc}
+ 368              	.L20:
+ 369 008a 00BF     		.align	2
+ 370              	.L19:
+ 371 008c 00000000 		.word	xBlockAllocatedBit
+ 372 0090 00000000 		.word	xFreeBytesRemaining
+ 373              		.cfi_endproc
+ 374              	.LFE111:
+ 376              		.section	.text.xPortGetFreeHeapSize,"ax",%progbits
+ 377              		.align	2
+ 378              		.global	xPortGetFreeHeapSize
+ 379              		.thumb
+ 380              		.thumb_func
+ 382              	xPortGetFreeHeapSize:
+ 383              	.LFB112:
+ 290:Source/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 291:Source/portable/MemMang/heap_4.c **** 
+ 292:Source/portable/MemMang/heap_4.c **** size_t xPortGetFreeHeapSize( void )
+ 293:Source/portable/MemMang/heap_4.c **** {
+ 384              		.loc 1 293 0
+ 385              		.cfi_startproc
+ 386              		@ args = 0, pretend = 0, frame = 0
+ 387              		@ frame_needed = 1, uses_anonymous_args = 0
+ 388              		@ link register save eliminated.
+ 389 0000 80B4     		push	{r7}
+ 390              	.LCFI6:
+ 391              		.cfi_def_cfa_offset 4
+ 392              		.cfi_offset 7, -4
+ 393 0002 00AF     		add	r7, sp, #0
+ 394              	.LCFI7:
+ 395              		.cfi_def_cfa_register 7
+ 294:Source/portable/MemMang/heap_4.c **** 	return xFreeBytesRemaining;
+ 396              		.loc 1 294 0
+ 397 0004 034B     		ldr	r3, .L23
+ 398 0006 1B68     		ldr	r3, [r3]
+ 295:Source/portable/MemMang/heap_4.c **** }
+ 399              		.loc 1 295 0
+ 400 0008 1846     		mov	r0, r3
+ 401 000a BD46     		mov	sp, r7
+ 402              		@ sp needed
+ 403 000c 5DF8047B 		ldr	r7, [sp], #4
+ 404 0010 7047     		bx	lr
+ 405              	.L24:
+ 406 0012 00BF     		.align	2
+ 407              	.L23:
+ 408 0014 00000000 		.word	xFreeBytesRemaining
+ 409              		.cfi_endproc
+ 410              	.LFE112:
+ 412              		.section	.text.vPortInitialiseBlocks,"ax",%progbits
+ 413              		.align	2
+ 414              		.global	vPortInitialiseBlocks
+ 415              		.thumb
+ 416              		.thumb_func
+ 418              	vPortInitialiseBlocks:
+ 419              	.LFB113:
+ 296:Source/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 297:Source/portable/MemMang/heap_4.c **** 
+ 298:Source/portable/MemMang/heap_4.c **** void vPortInitialiseBlocks( void )
+ 299:Source/portable/MemMang/heap_4.c **** {
+ 420              		.loc 1 299 0
+ 421              		.cfi_startproc
+ 422              		@ args = 0, pretend = 0, frame = 0
+ 423              		@ frame_needed = 1, uses_anonymous_args = 0
+ 424              		@ link register save eliminated.
+ 425 0000 80B4     		push	{r7}
+ 426              	.LCFI8:
+ 427              		.cfi_def_cfa_offset 4
+ 428              		.cfi_offset 7, -4
+ 429 0002 00AF     		add	r7, sp, #0
+ 430              	.LCFI9:
+ 431              		.cfi_def_cfa_register 7
+ 300:Source/portable/MemMang/heap_4.c **** 	/* This just exists to keep the linker quiet. */
+ 301:Source/portable/MemMang/heap_4.c **** }
+ 432              		.loc 1 301 0
+ 433 0004 BD46     		mov	sp, r7
+ 434              		@ sp needed
+ 435 0006 5DF8047B 		ldr	r7, [sp], #4
+ 436 000a 7047     		bx	lr
+ 437              		.cfi_endproc
+ 438              	.LFE113:
+ 440              		.section	.text.prvHeapInit,"ax",%progbits
+ 441              		.align	2
+ 442              		.thumb
+ 443              		.thumb_func
+ 445              	prvHeapInit:
+ 446              	.LFB114:
+ 302:Source/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 303:Source/portable/MemMang/heap_4.c **** 
+ 304:Source/portable/MemMang/heap_4.c **** static void prvHeapInit( void )
+ 305:Source/portable/MemMang/heap_4.c **** {
+ 447              		.loc 1 305 0
+ 448              		.cfi_startproc
+ 449              		@ args = 0, pretend = 0, frame = 16
+ 450              		@ frame_needed = 1, uses_anonymous_args = 0
+ 451 0000 80B5     		push	{r7, lr}
+ 452              	.LCFI10:
+ 453              		.cfi_def_cfa_offset 8
+ 454              		.cfi_offset 7, -8
+ 455              		.cfi_offset 14, -4
+ 456 0002 84B0     		sub	sp, sp, #16
+ 457              	.LCFI11:
+ 458              		.cfi_def_cfa_offset 24
+ 459 0004 00AF     		add	r7, sp, #0
+ 460              	.LCFI12:
+ 461              		.cfi_def_cfa_register 7
+ 306:Source/portable/MemMang/heap_4.c **** xBlockLink *pxFirstFreeBlock;
+ 307:Source/portable/MemMang/heap_4.c **** unsigned char *pucHeapEnd, *pucAlignedHeap;
+ 308:Source/portable/MemMang/heap_4.c **** 
+ 309:Source/portable/MemMang/heap_4.c **** 	/* Ensure the heap starts on a correctly aligned boundary. */
+ 310:Source/portable/MemMang/heap_4.c **** 	pucAlignedHeap = ( unsigned char * ) ( ( ( portPOINTER_SIZE_TYPE ) &ucHeap[ portBYTE_ALIGNMENT ] )
+ 462              		.loc 1 310 0
+ 463 0006 1F4B     		ldr	r3, .L29
+ 464 0008 23F00703 		bic	r3, r3, #7
+ 465 000c FB60     		str	r3, [r7, #12]
+ 311:Source/portable/MemMang/heap_4.c **** 
+ 312:Source/portable/MemMang/heap_4.c **** 	/* xStart is used to hold a pointer to the first item in the list of free
+ 313:Source/portable/MemMang/heap_4.c **** 	blocks.  The void cast is used to prevent compiler warnings. */
+ 314:Source/portable/MemMang/heap_4.c **** 	xStart.pxNextFreeBlock = ( void * ) pucAlignedHeap;
+ 466              		.loc 1 314 0
+ 467 000e 1E4B     		ldr	r3, .L29+4
+ 468 0010 FA68     		ldr	r2, [r7, #12]
+ 469 0012 1A60     		str	r2, [r3]
+ 315:Source/portable/MemMang/heap_4.c **** 	xStart.xBlockSize = ( size_t ) 0;
+ 470              		.loc 1 315 0
+ 471 0014 1C4B     		ldr	r3, .L29+4
+ 472 0016 0022     		movs	r2, #0
+ 473 0018 5A60     		str	r2, [r3, #4]
+ 316:Source/portable/MemMang/heap_4.c **** 
+ 317:Source/portable/MemMang/heap_4.c **** 	/* pxEnd is used to mark the end of the list of free blocks and is inserted
+ 318:Source/portable/MemMang/heap_4.c **** 	at the end of the heap space. */
+ 319:Source/portable/MemMang/heap_4.c **** 	pucHeapEnd = pucAlignedHeap + xTotalHeapSize;
+ 474              		.loc 1 319 0
+ 475 001a 1C4B     		ldr	r3, .L29+8
+ 476 001c FA68     		ldr	r2, [r7, #12]
+ 477 001e 1344     		add	r3, r3, r2
+ 478 0020 BB60     		str	r3, [r7, #8]
+ 320:Source/portable/MemMang/heap_4.c **** 	pucHeapEnd -= heapSTRUCT_SIZE;
+ 479              		.loc 1 320 0
+ 480 0022 0823     		movs	r3, #8
+ 481 0024 5B42     		negs	r3, r3
+ 482 0026 BA68     		ldr	r2, [r7, #8]
+ 483 0028 1344     		add	r3, r3, r2
+ 484 002a BB60     		str	r3, [r7, #8]
+ 321:Source/portable/MemMang/heap_4.c **** 	pxEnd = ( void * ) pucHeapEnd;
+ 485              		.loc 1 321 0
+ 486 002c 184B     		ldr	r3, .L29+12
+ 487 002e BA68     		ldr	r2, [r7, #8]
+ 488 0030 1A60     		str	r2, [r3]
+ 322:Source/portable/MemMang/heap_4.c **** 	configASSERT( ( ( ( unsigned long ) pxEnd ) & ( ( unsigned long ) portBYTE_ALIGNMENT_MASK ) ) == 0
+ 489              		.loc 1 322 0
+ 490 0032 174B     		ldr	r3, .L29+12
+ 491 0034 1B68     		ldr	r3, [r3]
+ 492 0036 03F00703 		and	r3, r3, #7
+ 493 003a 002B     		cmp	r3, #0
+ 494 003c 02D0     		beq	.L27
+ 495              		.loc 1 322 0 is_stmt 0 discriminator 1
+ 496 003e FFF7FEFF 		bl	ulPortSetInterruptMask
+ 497              	.L28:
+ 498 0042 FEE7     		b	.L28
+ 499              	.L27:
+ 323:Source/portable/MemMang/heap_4.c **** 	pxEnd->xBlockSize = 0;
+ 500              		.loc 1 323 0 is_stmt 1
+ 501 0044 124B     		ldr	r3, .L29+12
+ 502 0046 1B68     		ldr	r3, [r3]
+ 503 0048 0022     		movs	r2, #0
+ 504 004a 5A60     		str	r2, [r3, #4]
+ 324:Source/portable/MemMang/heap_4.c **** 	pxEnd->pxNextFreeBlock = NULL;
+ 505              		.loc 1 324 0
+ 506 004c 104B     		ldr	r3, .L29+12
+ 507 004e 1B68     		ldr	r3, [r3]
+ 508 0050 0022     		movs	r2, #0
+ 509 0052 1A60     		str	r2, [r3]
+ 325:Source/portable/MemMang/heap_4.c **** 
+ 326:Source/portable/MemMang/heap_4.c **** 	/* To start with there is a single free block that is sized to take up the
+ 327:Source/portable/MemMang/heap_4.c **** 	entire heap space, minus the space taken by pxEnd. */
+ 328:Source/portable/MemMang/heap_4.c **** 	pxFirstFreeBlock = ( void * ) pucAlignedHeap;
+ 510              		.loc 1 328 0
+ 511 0054 FB68     		ldr	r3, [r7, #12]
+ 512 0056 7B60     		str	r3, [r7, #4]
+ 329:Source/portable/MemMang/heap_4.c **** 	pxFirstFreeBlock->xBlockSize = xTotalHeapSize - heapSTRUCT_SIZE;
+ 513              		.loc 1 329 0
+ 514 0058 0C4A     		ldr	r2, .L29+8
+ 515 005a 0823     		movs	r3, #8
+ 516 005c D21A     		subs	r2, r2, r3
+ 517 005e 7B68     		ldr	r3, [r7, #4]
+ 518 0060 5A60     		str	r2, [r3, #4]
+ 330:Source/portable/MemMang/heap_4.c **** 	pxFirstFreeBlock->pxNextFreeBlock = pxEnd;
+ 519              		.loc 1 330 0
+ 520 0062 0B4B     		ldr	r3, .L29+12
+ 521 0064 1A68     		ldr	r2, [r3]
+ 522 0066 7B68     		ldr	r3, [r7, #4]
+ 523 0068 1A60     		str	r2, [r3]
+ 331:Source/portable/MemMang/heap_4.c **** 
+ 332:Source/portable/MemMang/heap_4.c **** 	/* The heap now contains pxEnd. */
+ 333:Source/portable/MemMang/heap_4.c **** 	xFreeBytesRemaining -= heapSTRUCT_SIZE;
+ 524              		.loc 1 333 0
+ 525 006a 0A4B     		ldr	r3, .L29+16
+ 526 006c 1A68     		ldr	r2, [r3]
+ 527 006e 0823     		movs	r3, #8
+ 528 0070 D21A     		subs	r2, r2, r3
+ 529 0072 084B     		ldr	r3, .L29+16
+ 530 0074 1A60     		str	r2, [r3]
+ 334:Source/portable/MemMang/heap_4.c **** 
+ 335:Source/portable/MemMang/heap_4.c **** 	/* Work out the position of the top bit in a size_t variable. */
+ 336:Source/portable/MemMang/heap_4.c **** 	xBlockAllocatedBit = ( ( size_t ) 1 ) << ( ( sizeof( size_t ) * heapBITS_PER_BYTE ) - 1 );
+ 531              		.loc 1 336 0
+ 532 0076 084B     		ldr	r3, .L29+20
+ 533 0078 4FF00042 		mov	r2, #-2147483648
+ 534 007c 1A60     		str	r2, [r3]
+ 337:Source/portable/MemMang/heap_4.c **** }
+ 535              		.loc 1 337 0
+ 536 007e 1037     		adds	r7, r7, #16
+ 537 0080 BD46     		mov	sp, r7
+ 538              		@ sp needed
+ 539 0082 80BD     		pop	{r7, pc}
+ 540              	.L30:
+ 541              		.align	2
+ 542              	.L29:
+ 543 0084 08000000 		.word	ucHeap+8
+ 544 0088 00000000 		.word	xStart
+ 545 008c F82B0100 		.word	76792
+ 546 0090 00000000 		.word	pxEnd
+ 547 0094 00000000 		.word	xFreeBytesRemaining
+ 548 0098 00000000 		.word	xBlockAllocatedBit
+ 549              		.cfi_endproc
+ 550              	.LFE114:
+ 552              		.section	.text.prvInsertBlockIntoFreeList,"ax",%progbits
+ 553              		.align	2
+ 554              		.thumb
+ 555              		.thumb_func
+ 557              	prvInsertBlockIntoFreeList:
+ 558              	.LFB115:
+ 338:Source/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 339:Source/portable/MemMang/heap_4.c **** 
+ 340:Source/portable/MemMang/heap_4.c **** static void prvInsertBlockIntoFreeList( xBlockLink *pxBlockToInsert )
+ 341:Source/portable/MemMang/heap_4.c **** {
+ 559              		.loc 1 341 0
+ 560              		.cfi_startproc
+ 561              		@ args = 0, pretend = 0, frame = 16
+ 562              		@ frame_needed = 1, uses_anonymous_args = 0
+ 563              		@ link register save eliminated.
+ 564 0000 80B4     		push	{r7}
+ 565              	.LCFI13:
+ 566              		.cfi_def_cfa_offset 4
+ 567              		.cfi_offset 7, -4
+ 568 0002 85B0     		sub	sp, sp, #20
+ 569              	.LCFI14:
+ 570              		.cfi_def_cfa_offset 24
+ 571 0004 00AF     		add	r7, sp, #0
+ 572              	.LCFI15:
+ 573              		.cfi_def_cfa_register 7
+ 574 0006 7860     		str	r0, [r7, #4]
+ 342:Source/portable/MemMang/heap_4.c **** xBlockLink *pxIterator;
+ 343:Source/portable/MemMang/heap_4.c **** unsigned char *puc;
+ 344:Source/portable/MemMang/heap_4.c **** 
+ 345:Source/portable/MemMang/heap_4.c **** 	/* Iterate through the list until a block is found that has a higher address
+ 346:Source/portable/MemMang/heap_4.c **** 	than the block being inserted. */
+ 347:Source/portable/MemMang/heap_4.c **** 	for( pxIterator = &xStart; pxIterator->pxNextFreeBlock < pxBlockToInsert; pxIterator = pxIterator-
+ 575              		.loc 1 347 0
+ 576 0008 274B     		ldr	r3, .L40
+ 577 000a FB60     		str	r3, [r7, #12]
+ 578 000c 02E0     		b	.L32
+ 579              	.L33:
+ 580              		.loc 1 347 0 is_stmt 0 discriminator 2
+ 581 000e FB68     		ldr	r3, [r7, #12]
+ 582 0010 1B68     		ldr	r3, [r3]
+ 583 0012 FB60     		str	r3, [r7, #12]
+ 584              	.L32:
+ 585              		.loc 1 347 0 discriminator 1
+ 586 0014 FB68     		ldr	r3, [r7, #12]
+ 587 0016 1A68     		ldr	r2, [r3]
+ 588 0018 7B68     		ldr	r3, [r7, #4]
+ 589 001a 9A42     		cmp	r2, r3
+ 590 001c F7D3     		bcc	.L33
+ 348:Source/portable/MemMang/heap_4.c **** 	{
+ 349:Source/portable/MemMang/heap_4.c **** 		/* Nothing to do here, just iterate to the right position. */
+ 350:Source/portable/MemMang/heap_4.c **** 	}
+ 351:Source/portable/MemMang/heap_4.c **** 
+ 352:Source/portable/MemMang/heap_4.c **** 	/* Do the block being inserted, and the block it is being inserted after
+ 353:Source/portable/MemMang/heap_4.c **** 	make a contiguous block of memory? */	
+ 354:Source/portable/MemMang/heap_4.c **** 	puc = ( unsigned char * ) pxIterator;
+ 591              		.loc 1 354 0 is_stmt 1
+ 592 001e FB68     		ldr	r3, [r7, #12]
+ 593 0020 BB60     		str	r3, [r7, #8]
+ 355:Source/portable/MemMang/heap_4.c **** 	if( ( puc + pxIterator->xBlockSize ) == ( unsigned char * ) pxBlockToInsert )
+ 594              		.loc 1 355 0
+ 595 0022 FB68     		ldr	r3, [r7, #12]
+ 596 0024 5B68     		ldr	r3, [r3, #4]
+ 597 0026 BA68     		ldr	r2, [r7, #8]
+ 598 0028 1A44     		add	r2, r2, r3
+ 599 002a 7B68     		ldr	r3, [r7, #4]
+ 600 002c 9A42     		cmp	r2, r3
+ 601 002e 08D1     		bne	.L34
+ 356:Source/portable/MemMang/heap_4.c **** 	{
+ 357:Source/portable/MemMang/heap_4.c **** 		pxIterator->xBlockSize += pxBlockToInsert->xBlockSize;
+ 602              		.loc 1 357 0
+ 603 0030 FB68     		ldr	r3, [r7, #12]
+ 604 0032 5A68     		ldr	r2, [r3, #4]
+ 605 0034 7B68     		ldr	r3, [r7, #4]
+ 606 0036 5B68     		ldr	r3, [r3, #4]
+ 607 0038 1A44     		add	r2, r2, r3
+ 608 003a FB68     		ldr	r3, [r7, #12]
+ 609 003c 5A60     		str	r2, [r3, #4]
+ 358:Source/portable/MemMang/heap_4.c **** 		pxBlockToInsert = pxIterator;
+ 610              		.loc 1 358 0
+ 611 003e FB68     		ldr	r3, [r7, #12]
+ 612 0040 7B60     		str	r3, [r7, #4]
+ 613              	.L34:
+ 359:Source/portable/MemMang/heap_4.c **** 	}
+ 360:Source/portable/MemMang/heap_4.c **** 
+ 361:Source/portable/MemMang/heap_4.c **** 	/* Do the block being inserted, and the block it is being inserted before
+ 362:Source/portable/MemMang/heap_4.c **** 	make a contiguous block of memory? */
+ 363:Source/portable/MemMang/heap_4.c **** 	puc = ( unsigned char * ) pxBlockToInsert;
+ 614              		.loc 1 363 0
+ 615 0042 7B68     		ldr	r3, [r7, #4]
+ 616 0044 BB60     		str	r3, [r7, #8]
+ 364:Source/portable/MemMang/heap_4.c **** 	if( ( puc + pxBlockToInsert->xBlockSize ) == ( unsigned char * ) pxIterator->pxNextFreeBlock )
+ 617              		.loc 1 364 0
+ 618 0046 7B68     		ldr	r3, [r7, #4]
+ 619 0048 5B68     		ldr	r3, [r3, #4]
+ 620 004a BA68     		ldr	r2, [r7, #8]
+ 621 004c 1A44     		add	r2, r2, r3
+ 622 004e FB68     		ldr	r3, [r7, #12]
+ 623 0050 1B68     		ldr	r3, [r3]
+ 624 0052 9A42     		cmp	r2, r3
+ 625 0054 18D1     		bne	.L35
+ 365:Source/portable/MemMang/heap_4.c **** 	{
+ 366:Source/portable/MemMang/heap_4.c **** 		if( pxIterator->pxNextFreeBlock != pxEnd )
+ 626              		.loc 1 366 0
+ 627 0056 FB68     		ldr	r3, [r7, #12]
+ 628 0058 1A68     		ldr	r2, [r3]
+ 629 005a 144B     		ldr	r3, .L40+4
+ 630 005c 1B68     		ldr	r3, [r3]
+ 631 005e 9A42     		cmp	r2, r3
+ 632 0060 0DD0     		beq	.L36
+ 367:Source/portable/MemMang/heap_4.c **** 		{
+ 368:Source/portable/MemMang/heap_4.c **** 			/* Form one big block from the two blocks. */
+ 369:Source/portable/MemMang/heap_4.c **** 			pxBlockToInsert->xBlockSize += pxIterator->pxNextFreeBlock->xBlockSize;
+ 633              		.loc 1 369 0
+ 634 0062 7B68     		ldr	r3, [r7, #4]
+ 635 0064 5A68     		ldr	r2, [r3, #4]
+ 636 0066 FB68     		ldr	r3, [r7, #12]
+ 637 0068 1B68     		ldr	r3, [r3]
+ 638 006a 5B68     		ldr	r3, [r3, #4]
+ 639 006c 1A44     		add	r2, r2, r3
+ 640 006e 7B68     		ldr	r3, [r7, #4]
+ 641 0070 5A60     		str	r2, [r3, #4]
+ 370:Source/portable/MemMang/heap_4.c **** 			pxBlockToInsert->pxNextFreeBlock = pxIterator->pxNextFreeBlock->pxNextFreeBlock;
+ 642              		.loc 1 370 0
+ 643 0072 FB68     		ldr	r3, [r7, #12]
+ 644 0074 1B68     		ldr	r3, [r3]
+ 645 0076 1A68     		ldr	r2, [r3]
+ 646 0078 7B68     		ldr	r3, [r7, #4]
+ 647 007a 1A60     		str	r2, [r3]
+ 648 007c 08E0     		b	.L38
+ 649              	.L36:
+ 371:Source/portable/MemMang/heap_4.c **** 		}
+ 372:Source/portable/MemMang/heap_4.c **** 		else
+ 373:Source/portable/MemMang/heap_4.c **** 		{
+ 374:Source/portable/MemMang/heap_4.c **** 			pxBlockToInsert->pxNextFreeBlock = pxEnd;
+ 650              		.loc 1 374 0
+ 651 007e 0B4B     		ldr	r3, .L40+4
+ 652 0080 1A68     		ldr	r2, [r3]
+ 653 0082 7B68     		ldr	r3, [r7, #4]
+ 654 0084 1A60     		str	r2, [r3]
+ 655 0086 03E0     		b	.L38
+ 656              	.L35:
+ 375:Source/portable/MemMang/heap_4.c **** 		}
+ 376:Source/portable/MemMang/heap_4.c **** 	}
+ 377:Source/portable/MemMang/heap_4.c **** 	else
+ 378:Source/portable/MemMang/heap_4.c **** 	{
+ 379:Source/portable/MemMang/heap_4.c **** 		pxBlockToInsert->pxNextFreeBlock = pxIterator->pxNextFreeBlock;		
+ 657              		.loc 1 379 0
+ 658 0088 FB68     		ldr	r3, [r7, #12]
+ 659 008a 1A68     		ldr	r2, [r3]
+ 660 008c 7B68     		ldr	r3, [r7, #4]
+ 661 008e 1A60     		str	r2, [r3]
+ 662              	.L38:
+ 380:Source/portable/MemMang/heap_4.c **** 	}
+ 381:Source/portable/MemMang/heap_4.c **** 
+ 382:Source/portable/MemMang/heap_4.c **** 	/* If the block being inserted plugged a gab, so was merged with the block
+ 383:Source/portable/MemMang/heap_4.c **** 	before and the block after, then it's pxNextFreeBlock pointer will have
+ 384:Source/portable/MemMang/heap_4.c **** 	already been set, and should not be set here as that would make it point
+ 385:Source/portable/MemMang/heap_4.c **** 	to itself. */
+ 386:Source/portable/MemMang/heap_4.c **** 	if( pxIterator != pxBlockToInsert )
+ 663              		.loc 1 386 0
+ 664 0090 FA68     		ldr	r2, [r7, #12]
+ 665 0092 7B68     		ldr	r3, [r7, #4]
+ 666 0094 9A42     		cmp	r2, r3
+ 667 0096 02D0     		beq	.L31
+ 387:Source/portable/MemMang/heap_4.c **** 	{
+ 388:Source/portable/MemMang/heap_4.c **** 		pxIterator->pxNextFreeBlock = pxBlockToInsert;
+ 668              		.loc 1 388 0
+ 669 0098 FB68     		ldr	r3, [r7, #12]
+ 670 009a 7A68     		ldr	r2, [r7, #4]
+ 671 009c 1A60     		str	r2, [r3]
+ 672              	.L31:
+ 389:Source/portable/MemMang/heap_4.c **** 	}
+ 390:Source/portable/MemMang/heap_4.c **** }
+ 673              		.loc 1 390 0
+ 674 009e 1437     		adds	r7, r7, #20
+ 675 00a0 BD46     		mov	sp, r7
+ 676              		@ sp needed
+ 677 00a2 5DF8047B 		ldr	r7, [sp], #4
+ 678 00a6 7047     		bx	lr
+ 679              	.L41:
+ 680              		.align	2
+ 681              	.L40:
+ 682 00a8 00000000 		.word	xStart
+ 683 00ac 00000000 		.word	pxEnd
+ 684              		.cfi_endproc
+ 685              	.LFE115:
+ 687              		.text
+ 688              	.Letext0:
+ 689              		.file 2 "/Users/maticknap/ARM/gcc-arm-none-eabi-4_8-2014q2/lib/gcc/arm-none-eabi/4.8.4/include/std
+ 690              		.file 3 "/Users/maticknap/ARM/gcc-arm-none-eabi-4_8-2014q2/arm-none-eabi/include/machine/_default_
+ 691              		.file 4 "/Users/maticknap/ARM/gcc-arm-none-eabi-4_8-2014q2/arm-none-eabi/include/stdint.h"
+ 692              		.file 5 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 heap_4.c
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:20     .bss.ucHeap:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:23     .bss.ucHeap:0000000000000000 ucHeap
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:26     .rodata.heapSTRUCT_SIZE:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:29     .rodata.heapSTRUCT_SIZE:0000000000000000 heapSTRUCT_SIZE
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:32     .rodata.xTotalHeapSize:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:35     .rodata.xTotalHeapSize:0000000000000000 xTotalHeapSize
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:38     .bss.xStart:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:41     .bss.xStart:0000000000000000 xStart
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:44     .bss.pxEnd:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:47     .bss.pxEnd:0000000000000000 pxEnd
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:50     .data.xFreeBytesRemaining:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:53     .data.xFreeBytesRemaining:0000000000000000 xFreeBytesRemaining
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:56     .bss.xBlockAllocatedBit:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:59     .bss.xBlockAllocatedBit:0000000000000000 xBlockAllocatedBit
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:62     .text.pvPortMalloc:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:67     .text.pvPortMalloc:0000000000000000 pvPortMalloc
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:445    .text.prvHeapInit:0000000000000000 prvHeapInit
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:557    .text.prvInsertBlockIntoFreeList:0000000000000000 prvInsertBlockIntoFreeList
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:255    .text.pvPortMalloc:0000000000000108 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:263    .text.vPortFree:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:268    .text.vPortFree:0000000000000000 vPortFree
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:371    .text.vPortFree:000000000000008c $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:377    .text.xPortGetFreeHeapSize:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:382    .text.xPortGetFreeHeapSize:0000000000000000 xPortGetFreeHeapSize
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:408    .text.xPortGetFreeHeapSize:0000000000000014 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:413    .text.vPortInitialiseBlocks:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:418    .text.vPortInitialiseBlocks:0000000000000000 vPortInitialiseBlocks
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:441    .text.prvHeapInit:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:543    .text.prvHeapInit:0000000000000084 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:553    .text.prvInsertBlockIntoFreeList:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckIaNh6.s:682    .text.prvInsertBlockIntoFreeList:00000000000000a8 $d
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+vTaskSuspendAll
+xTaskResumeAll
+vApplicationMallocFailedHook
+ulPortSetInterruptMask

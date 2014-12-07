@@ -1,0 +1,118 @@
+\hypertarget{main_8c}{\section{main.\+c File Reference}
+\label{main_8c}\index{main.\+c@{main.\+c}}
+}
+
+
+Main file with main functions for M\+O\+T\+O\+R T\+C\+P C\+L\+I application.  
+
+
+{\ttfamily \#include \char`\"{}main.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}spi.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}W5200.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}modbus\+\_\+mk.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tcp\+C\+L\+I.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}printf.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{main_8c_a43bdaa64180fb804d07dbce2a55ef3c7}{main\+F\+L\+A\+S\+H\+\_\+\+T\+A\+S\+K\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y}~( tsk\+I\+D\+L\+E\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y + 1\+U\+L )
+\item 
+\hypertarget{main_8c_a9b905ec830f503b3df8ac3f782dad53d}{\#define {\bfseries main\+Q\+U\+E\+U\+E\+\_\+\+P\+O\+L\+L\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y}~( tsk\+I\+D\+L\+E\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y + 2\+U\+L )}\label{main_8c_a9b905ec830f503b3df8ac3f782dad53d}
+
+\item 
+\hypertarget{main_8c_ac40c9bad44e861d73b2da23660c44702}{\#define {\bfseries main\+S\+E\+M\+\_\+\+T\+E\+S\+T\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y}~( tsk\+I\+D\+L\+E\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y + 1\+U\+L )}\label{main_8c_ac40c9bad44e861d73b2da23660c44702}
+
+\item 
+\hypertarget{main_8c_a6bb82b8f3d28eadfe5e8f5a9d1f85a3e}{\#define {\bfseries main\+B\+L\+O\+C\+K\+\_\+\+Q\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y}~( tsk\+I\+D\+L\+E\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y + 2\+U\+L )}\label{main_8c_a6bb82b8f3d28eadfe5e8f5a9d1f85a3e}
+
+\item 
+\hypertarget{main_8c_a1d12ac49385856e62f3a16e0fda8f0f3}{\#define {\bfseries main\+C\+R\+E\+A\+T\+O\+R\+\_\+\+T\+A\+S\+K\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y}~( tsk\+I\+D\+L\+E\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y + 3\+U\+L )}\label{main_8c_a1d12ac49385856e62f3a16e0fda8f0f3}
+
+\item 
+\hypertarget{main_8c_a4f1cb4cf76f2edc06ad8921743415dde}{\#define {\bfseries main\+F\+L\+O\+P\+\_\+\+T\+A\+S\+K\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y}~( tsk\+I\+D\+L\+E\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y )}\label{main_8c_a4f1cb4cf76f2edc06ad8921743415dde}
+
+\item 
+\hypertarget{main_8c_afa612487486b4303046802549315dbb7}{\#define {\bfseries main\+C\+H\+E\+C\+K\+\_\+\+T\+I\+M\+E\+R\+\_\+\+P\+E\+R\+I\+O\+D\+\_\+\+M\+S}~( 3000\+U\+L / port\+T\+I\+C\+K\+\_\+\+R\+A\+T\+E\+\_\+\+M\+S )}\label{main_8c_afa612487486b4303046802549315dbb7}
+
+\item 
+\hypertarget{main_8c_a4c0b5798e5d44e143dda2bdb409320cf}{\#define {\bfseries main\+E\+R\+R\+O\+R\+\_\+\+C\+H\+E\+C\+K\+\_\+\+T\+I\+M\+E\+R\+\_\+\+P\+E\+R\+I\+O\+D\+\_\+\+M\+S}~( 200\+U\+L / port\+T\+I\+C\+K\+\_\+\+R\+A\+T\+E\+\_\+\+M\+S )}\label{main_8c_a4c0b5798e5d44e143dda2bdb409320cf}
+
+\item 
+\hypertarget{main_8c_a394cd8f295089796757bd325cc7818f3}{\#define {\bfseries main\+C\+R\+E\+A\+T\+E\+\_\+\+S\+I\+M\+P\+L\+E\+\_\+\+L\+E\+D\+\_\+\+F\+L\+A\+S\+H\+E\+R\+\_\+\+D\+E\+M\+O\+\_\+\+O\+N\+L\+Y}~0}\label{main_8c_a394cd8f295089796757bd325cc7818f3}
+
+\item 
+\hypertarget{main_8c_aa83b8f663f18dc74afeba8882edf1fb3}{\#define {\bfseries S\+W\+O\+\_\+\+B\+A\+U\+D\+\_\+\+R\+A\+T\+E}~230400}\label{main_8c_aa83b8f663f18dc74afeba8882edf1fb3}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{main_8c_ac74fa6a6daa601cc0e19aa005741098f}{void {\bfseries v\+Reg\+Test1\+Task} (void $\ast$pv\+Parameters)}\label{main_8c_ac74fa6a6daa601cc0e19aa005741098f}
+
+\item 
+\hypertarget{main_8c_a67651971ac887379bee86df2f1ae2d0f}{void {\bfseries v\+Reg\+Test2\+Task} (void $\ast$pv\+Parameters)}\label{main_8c_a67651971ac887379bee86df2f1ae2d0f}
+
+\item 
+\hypertarget{main_8c_a8fc187a5c42510a0a651ce9287795bb5}{void {\bfseries v\+Reg\+Test\+Clear\+Flop\+Registers\+To\+Parameter\+Value} (unsigned long ul\+Value)}\label{main_8c_a8fc187a5c42510a0a651ce9287795bb5}
+
+\item 
+\hypertarget{main_8c_a0ad752e184227076b0dcdd7458a6ef8d}{unsigned long {\bfseries ul\+Reg\+Test\+Check\+Flop\+Registers\+Contain\+Parameter\+Value} (unsigned long ul\+Value)}\label{main_8c_a0ad752e184227076b0dcdd7458a6ef8d}
+
+\item 
+\hypertarget{main_8c_af403c962e80f2ee458bec350412e2782}{void {\bfseries Core\+Sight\+\_\+configure} (uint32\+\_\+t System\+Core\+Clock)}\label{main_8c_af403c962e80f2ee458bec350412e2782}
+
+\item 
+\hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{int {\bfseries main} (void)}\label{main_8c_a840291bc02cba5474a4cb46a9b9566fe}
+
+\item 
+\hypertarget{main_8c_a9ca051aa77e17583aa5a85d5de5c199a}{void {\bfseries v\+Application\+Tick\+Hook} (void)}\label{main_8c_a9ca051aa77e17583aa5a85d5de5c199a}
+
+\item 
+\hypertarget{main_8c_ac8e51d2183b5230cbd5481f8867adce9}{void {\bfseries T\+I\+M3\+\_\+\+I\+R\+Q\+Handler} (void)}\label{main_8c_ac8e51d2183b5230cbd5481f8867adce9}
+
+\item 
+\hypertarget{main_8c_a38ad4725462bdc5e86c4ead4f04b9fc2}{void {\bfseries T\+I\+M2\+\_\+\+I\+R\+Q\+Handler} (void)}\label{main_8c_a38ad4725462bdc5e86c4ead4f04b9fc2}
+
+\item 
+\hypertarget{main_8c_ab7e5c95cf72a3f819bc4462a7fb62ca3}{void {\bfseries v\+Application\+Malloc\+Failed\+Hook} (void)}\label{main_8c_ab7e5c95cf72a3f819bc4462a7fb62ca3}
+
+\item 
+\hypertarget{main_8c_a97fd430f36f8b065226e2bff9bad1de5}{void {\bfseries v\+Application\+Idle\+Hook} (void)}\label{main_8c_a97fd430f36f8b065226e2bff9bad1de5}
+
+\item 
+\hypertarget{main_8c_af82984987d75dcade423623c8f343413}{void {\bfseries v\+Application\+Stack\+Overflow\+Hook} (x\+Task\+Handle px\+Task, signed char $\ast$pc\+Task\+Name)}\label{main_8c_af82984987d75dcade423623c8f343413}
+
+\item 
+\hypertarget{main_8c_a2532ff72b1a2ff82f65e8c2a5a4dde00}{void \hyperlink{main_8c_a2532ff72b1a2ff82f65e8c2a5a4dde00}{assert\+\_\+failed} (uint8\+\_\+t $\ast$file, uint32\+\_\+t line)}\label{main_8c_a2532ff72b1a2ff82f65e8c2a5a4dde00}
+
+\begin{DoxyCompactList}\small\item\em $\ast$-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---$\ast$/ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{main_8c_a13c57287e1961b7a14e4a5372d0b92cf}{volatile unsigned long {\bfseries ul\+Reg\+Test1\+Loop\+Counter} = 0\+U\+L}\label{main_8c_a13c57287e1961b7a14e4a5372d0b92cf}
+
+\item 
+\hypertarget{main_8c_a7193501ad9ce12809d8d16225985792d}{volatile unsigned long {\bfseries ul\+Reg\+Test2\+Loop\+Counter} = 0\+U\+L}\label{main_8c_a7193501ad9ce12809d8d16225985792d}
+
+\item 
+\hypertarget{main_8c_a60ac06a1cb2f6b8bf407772d5a4772cb}{volatile unsigned long {\bfseries ul\+F\+P\+U\+Interrupt\+Nesting} = 0\+U\+L}\label{main_8c_a60ac06a1cb2f6b8bf407772d5a4772cb}
+
+\item 
+\hypertarget{main_8c_a0c5d67350720d16f149b20ae8e6dabdf}{volatile unsigned long {\bfseries ul\+Max\+F\+P\+U\+Interrupt\+Nesting} = 0\+U\+L}\label{main_8c_a0c5d67350720d16f149b20ae8e6dabdf}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Main file with main functions for M\+O\+T\+O\+R T\+C\+P C\+L\+I application. 
+
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{main_8c_a43bdaa64180fb804d07dbce2a55ef3c7}{\index{main.\+c@{main.\+c}!main\+F\+L\+A\+S\+H\+\_\+\+T\+A\+S\+K\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y@{main\+F\+L\+A\+S\+H\+\_\+\+T\+A\+S\+K\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y}}
+\index{main\+F\+L\+A\+S\+H\+\_\+\+T\+A\+S\+K\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y@{main\+F\+L\+A\+S\+H\+\_\+\+T\+A\+S\+K\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y}!main.\+c@{main.\+c}}
+\subsubsection[{main\+F\+L\+A\+S\+H\+\_\+\+T\+A\+S\+K\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y}]{\setlength{\rightskip}{0pt plus 5cm}\#define main\+F\+L\+A\+S\+H\+\_\+\+T\+A\+S\+K\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y~( tsk\+I\+D\+L\+E\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y + 1\+U\+L )}}\label{main_8c_a43bdaa64180fb804d07dbce2a55ef3c7}
+
+\begin{DoxyItemize}
+\item Priorities for the demo application tasks. $\ast$/ 
+\end{DoxyItemize}

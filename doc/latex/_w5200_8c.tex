@@ -1,0 +1,353 @@
+\hypertarget{_w5200_8c}{\section{W5200.\+c File Reference}
+\label{_w5200_8c}\index{W5200.\+c@{W5200.\+c}}
+}
+
+
+File for \hyperlink{_w5200_8c}{W5200.\+c} wiznet functions Wiznet control, creating and closing sockets, sending, receiving data via sockets, etc... ~\newline
+.  
+
+
+{\ttfamily \#include \char`\"{}W5200.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}printf.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_w5200_8c_a5ee62a3762c7f028b0e766483a651225}{init\+\_\+\+W5200} (void)
+\begin{DoxyCompactList}\small\item\em Initialize Wiznet module. \end{DoxyCompactList}\item 
+void \hyperlink{_w5200_8c_a42a23a3184cca4deaad0170d42453361}{W5200\+\_\+set\+\_\+hardware\+\_\+address} (const macaddress\+\_\+t address)
+\begin{DoxyCompactList}\small\item\em set W5200 mac address \end{DoxyCompactList}\item 
+void \hyperlink{_w5200_8c_aa4ec311e1ea605bcc298ec60c572490f}{W5200\+\_\+get\+\_\+hardware\+\_\+address} (macaddress\+\_\+t address)
+\begin{DoxyCompactList}\small\item\em get W5200 mac address \end{DoxyCompactList}\item 
+void \hyperlink{_w5200_8c_a40cf245893230e906da7356d4664441d}{W5200\+\_\+configure\+\_\+network} (const ipv4address\+\_\+t address, const ipv4address\+\_\+t subnet, const ipv4address\+\_\+t gateway)
+\begin{DoxyCompactList}\small\item\em Configures network of wiznet. \end{DoxyCompactList}\item 
+void \hyperlink{_w5200_8c_a5946b2751fcfd947ba8f41af28e8b578}{W5200\+\_\+get\+\_\+ipaddress} (ipv4address\+\_\+t address)
+\begin{DoxyCompactList}\small\item\em sets ip address to Wiznet \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{_w5200_8c_a4c450c01f7c7ae1e2b3067bd9de7848f}{socket} (uint8\+\_\+t mode, uint16\+\_\+t port, uint8\+\_\+t ip\+\_\+proto)
+\begin{DoxyCompactList}\small\item\em Create socket return socket handle. \end{DoxyCompactList}\item 
+int \hyperlink{_w5200_8c_a4004502afbe3d0609add6c322d8a9796}{closesocket} (int sck\+\_\+fd)
+\begin{DoxyCompactList}\small\item\em Close socket handle. \end{DoxyCompactList}\item 
+int \hyperlink{_w5200_8c_a053abad8a21289463ebf0f00c95d7dfd}{connect} (uint8\+\_\+t sck\+\_\+fd, uint8\+\_\+t $\ast$to\+\_\+ip, uint16\+\_\+t to\+\_\+port)
+\begin{DoxyCompactList}\small\item\em Connecto to host by ip via port. \end{DoxyCompactList}\item 
+int \hyperlink{_w5200_8c_ad60595785c5d0b70f82d0c1db13caca3}{send} (uint8\+\_\+t sck\+\_\+fd, uint8\+\_\+t $\ast$buf, uint16\+\_\+t len, uint16\+\_\+t flag)
+\begin{DoxyCompactList}\small\item\em Send buf data via socket. \end{DoxyCompactList}\item 
+int \hyperlink{_w5200_8c_aa4a183e9cf844ab7f012eb8baf0cbe31}{recv} (uint8\+\_\+t sck\+\_\+fd, uint8\+\_\+t $\ast$buf, uint16\+\_\+t len, uint16\+\_\+t flag)
+\begin{DoxyCompactList}\small\item\em Receive data to buffer via socket. \end{DoxyCompactList}\item 
+int \hyperlink{_w5200_8c_a6be5d2045fac85f52cef19e4a9acf235}{listen} (int sck\+\_\+fd)
+\begin{DoxyCompactList}\small\item\em It listens on socket file descriptor previously created by function socket. \end{DoxyCompactList}\item 
+void \hyperlink{_w5200_8c_a0c249529ac954db857c7fdebe7d683ff}{locate\+\_\+interrupt} ()
+\begin{DoxyCompactList}\small\item\em Function used by interrupt handler used to identify wiznet interrupt. \end{DoxyCompactList}\item 
+void \hyperlink{_w5200_8c_a7f9352edc21463cca4e19782bbf6394a}{tcp\+\_\+srv\+\_\+\+Task} (void $\ast$pv\+Parameters)
+\begin{DoxyCompactList}\small\item\em Test task T\+C\+P simple server. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+File for \hyperlink{_w5200_8c}{W5200.\+c} wiznet functions Wiznet control, creating and closing sockets, sending, receiving data via sockets, etc... ~\newline
+. 
+
+
+
+\subsection{Function Documentation}
+\hypertarget{_w5200_8c_a4004502afbe3d0609add6c322d8a9796}{\index{W5200.\+c@{W5200.\+c}!closesocket@{closesocket}}
+\index{closesocket@{closesocket}!W5200.\+c@{W5200.\+c}}
+\subsubsection[{closesocket}]{\setlength{\rightskip}{0pt plus 5cm}int closesocket (
+\begin{DoxyParamCaption}
+\item[{int}]{sck\+\_\+fd}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8c_a4004502afbe3d0609add6c322d8a9796}
+
+
+Close socket handle. 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em sck\+\_\+fd} & -\/ socket file descriptor to close \\
+\hline
+\end{DoxyParams}
+\hypertarget{_w5200_8c_a053abad8a21289463ebf0f00c95d7dfd}{\index{W5200.\+c@{W5200.\+c}!connect@{connect}}
+\index{connect@{connect}!W5200.\+c@{W5200.\+c}}
+\subsubsection[{connect}]{\setlength{\rightskip}{0pt plus 5cm}int connect (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{sck\+\_\+fd, }
+\item[{uint8\+\_\+t $\ast$}]{to\+\_\+ip, }
+\item[{uint16\+\_\+t}]{to\+\_\+port}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8c_a053abad8a21289463ebf0f00c95d7dfd}
+
+
+Connecto to host by ip via port. 
+
+
+
+ \begin{DoxyVerb}\param sck_fd - socket file descriptor
+\end{DoxyVerb}
+ 
+\begin{DoxyParams}{Parameters}
+{\em $\ast$to\+\_\+ip} & -\/ destination ip number in hex format \\
+\hline
+{\em to\+\_\+port} & -\/ destination port number \\
+\hline
+\end{DoxyParams}
+\hypertarget{_w5200_8c_a5ee62a3762c7f028b0e766483a651225}{\index{W5200.\+c@{W5200.\+c}!init\+\_\+\+W5200@{init\+\_\+\+W5200}}
+\index{init\+\_\+\+W5200@{init\+\_\+\+W5200}!W5200.\+c@{W5200.\+c}}
+\subsubsection[{init\+\_\+\+W5200}]{\setlength{\rightskip}{0pt plus 5cm}void init\+\_\+\+W5200 (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8c_a5ee62a3762c7f028b0e766483a651225}
+
+
+Initialize Wiznet module. 
+
+
+
+ Initialize Wiznet module -\/ setup M\+A\+C address, ip address, gateway, subnet, etc..~\newline
+
+\begin{DoxyItemize}
+\item Default settings\+:
+\begin{DoxyItemize}
+\item mac address \+: dd\+:aa\+:bb\+:cc\+:11\+:22
+\item ip address \+: 192.\+168.\+0.\+8
+\item subnet \+: 255.\+255.\+255.\+0
+\item gateway \+: 192.\+168.\+0.\+254
+\item Ping \+: enable
+\item timeout \+: 200 mili sec.
+\item retry count \+: 3
+\item T\+X memory size \+: 2k\+B
+\item R\+X memory size \+: 2k\+B
+\item I\+T masking \+: 0xff
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+~\newline
+ Create and listen on socket '0', port 80.\hypertarget{_w5200_8c_a6be5d2045fac85f52cef19e4a9acf235}{\index{W5200.\+c@{W5200.\+c}!listen@{listen}}
+\index{listen@{listen}!W5200.\+c@{W5200.\+c}}
+\subsubsection[{listen}]{\setlength{\rightskip}{0pt plus 5cm}int listen (
+\begin{DoxyParamCaption}
+\item[{int}]{sck\+\_\+fd}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8c_a6be5d2045fac85f52cef19e4a9acf235}
+
+
+It listens on socket file descriptor previously created by function socket. 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em sck\+\_\+fd} & -\/ socket file descriptor \\
+\hline
+\end{DoxyParams}
+\hypertarget{_w5200_8c_a0c249529ac954db857c7fdebe7d683ff}{\index{W5200.\+c@{W5200.\+c}!locate\+\_\+interrupt@{locate\+\_\+interrupt}}
+\index{locate\+\_\+interrupt@{locate\+\_\+interrupt}!W5200.\+c@{W5200.\+c}}
+\subsubsection[{locate\+\_\+interrupt}]{\setlength{\rightskip}{0pt plus 5cm}void locate\+\_\+interrupt (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8c_a0c249529ac954db857c7fdebe7d683ff}
+
+
+Function used by interrupt handler used to identify wiznet interrupt. 
+
+
+
+ 
+
+ Function used by interrupt service routine. ~\newline
+Reads wiznet interrupt registers and identify interupt plus on which socket interrupt occured. ~\newline
+It depends on interrupt what follows 
+
+\hypertarget{_w5200_8c_aa4a183e9cf844ab7f012eb8baf0cbe31}{\index{W5200.\+c@{W5200.\+c}!recv@{recv}}
+\index{recv@{recv}!W5200.\+c@{W5200.\+c}}
+\subsubsection[{recv}]{\setlength{\rightskip}{0pt plus 5cm}int recv (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{sck\+\_\+fd, }
+\item[{uint8\+\_\+t $\ast$}]{buf, }
+\item[{uint16\+\_\+t}]{len, }
+\item[{uint16\+\_\+t}]{flag}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8c_aa4a183e9cf844ab7f012eb8baf0cbe31}
+
+
+Receive data to buffer via socket. 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em sck\+\_\+fd} & -\/ socket file descriptor \\
+\hline
+{\em $\ast$buf} & -\/ pointer to memory buffer data \\
+\hline
+{\em len} & -\/ length of buffered data \\
+\hline
+{\em flag} & -\/ socket flag N\+O\+T U\+S\+E\+D !!!!! \\
+\hline
+\end{DoxyParams}
+\hypertarget{_w5200_8c_ad60595785c5d0b70f82d0c1db13caca3}{\index{W5200.\+c@{W5200.\+c}!send@{send}}
+\index{send@{send}!W5200.\+c@{W5200.\+c}}
+\subsubsection[{send}]{\setlength{\rightskip}{0pt plus 5cm}int send (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{sck\+\_\+fd, }
+\item[{uint8\+\_\+t $\ast$}]{buf, }
+\item[{uint16\+\_\+t}]{len, }
+\item[{uint16\+\_\+t}]{flag}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8c_ad60595785c5d0b70f82d0c1db13caca3}
+
+
+Send buf data via socket. 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em sck\+\_\+fd} & -\/ socket file descriptor \\
+\hline
+{\em $\ast$buf} & -\/ pointer to memory buffer data \\
+\hline
+{\em len} & -\/ length of buffered data \\
+\hline
+{\em flag} & -\/ socket flag N\+O\+T U\+S\+E\+D !!!!! \\
+\hline
+\end{DoxyParams}
+get real len \hypertarget{_w5200_8c_a4c450c01f7c7ae1e2b3067bd9de7848f}{\index{W5200.\+c@{W5200.\+c}!socket@{socket}}
+\index{socket@{socket}!W5200.\+c@{W5200.\+c}}
+\subsubsection[{socket}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t socket (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{mode, }
+\item[{uint16\+\_\+t}]{port, }
+\item[{uint8\+\_\+t}]{ip\+\_\+proto}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8c_a4c450c01f7c7ae1e2b3067bd9de7848f}
+
+
+Create socket return socket handle. 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em mode} & -\/ socket mode (T\+C\+P, U\+D\+P, ...) \\
+\hline
+{\em port} & -\/ socket port \\
+\hline
+{\em ip\+\_\+proto} & -\/ ip protocol number \\
+\hline
+\end{DoxyParams}
+\hypertarget{_w5200_8c_a7f9352edc21463cca4e19782bbf6394a}{\index{W5200.\+c@{W5200.\+c}!tcp\+\_\+srv\+\_\+\+Task@{tcp\+\_\+srv\+\_\+\+Task}}
+\index{tcp\+\_\+srv\+\_\+\+Task@{tcp\+\_\+srv\+\_\+\+Task}!W5200.\+c@{W5200.\+c}}
+\subsubsection[{tcp\+\_\+srv\+\_\+\+Task}]{\setlength{\rightskip}{0pt plus 5cm}void tcp\+\_\+srv\+\_\+\+Task (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{pv\+Parameters}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8c_a7f9352edc21463cca4e19782bbf6394a}
+
+
+Test task T\+C\+P simple server. 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$pv\+Parameters} & -\/ possible parameters for task \\
+\hline
+\end{DoxyParams}
+
+
+
+
+Task opens socket on port 80, starts listening on port and susped suspend itself. If interrupt occures it process C\+L\+I command\hypertarget{_w5200_8c_a40cf245893230e906da7356d4664441d}{\index{W5200.\+c@{W5200.\+c}!W5200\+\_\+configure\+\_\+network@{W5200\+\_\+configure\+\_\+network}}
+\index{W5200\+\_\+configure\+\_\+network@{W5200\+\_\+configure\+\_\+network}!W5200.\+c@{W5200.\+c}}
+\subsubsection[{W5200\+\_\+configure\+\_\+network}]{\setlength{\rightskip}{0pt plus 5cm}void W5200\+\_\+configure\+\_\+network (
+\begin{DoxyParamCaption}
+\item[{const ipv4address\+\_\+t}]{address, }
+\item[{const ipv4address\+\_\+t}]{subnet, }
+\item[{const ipv4address\+\_\+t}]{gateway}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8c_a40cf245893230e906da7356d4664441d}
+
+
+Configures network of wiznet. 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & -\/ ip addres in hex \\
+\hline
+{\em subnet} & -\/ subnet in dec \\
+\hline
+{\em gateway} & -\/ gateway address in hex \\
+\hline
+\end{DoxyParams}
+It configures ip, subnet and gateway \hypertarget{_w5200_8c_aa4ec311e1ea605bcc298ec60c572490f}{\index{W5200.\+c@{W5200.\+c}!W5200\+\_\+get\+\_\+hardware\+\_\+address@{W5200\+\_\+get\+\_\+hardware\+\_\+address}}
+\index{W5200\+\_\+get\+\_\+hardware\+\_\+address@{W5200\+\_\+get\+\_\+hardware\+\_\+address}!W5200.\+c@{W5200.\+c}}
+\subsubsection[{W5200\+\_\+get\+\_\+hardware\+\_\+address}]{\setlength{\rightskip}{0pt plus 5cm}W5200\+\_\+get\+\_\+hardware\+\_\+address (
+\begin{DoxyParamCaption}
+\item[{macaddress\+\_\+t}]{address}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8c_aa4ec311e1ea605bcc298ec60c572490f}
+
+
+get W5200 mac address 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & -\/ mac address \\
+\hline
+\end{DoxyParams}
+Function reads wiznet register mac address and copies it to address\hypertarget{_w5200_8c_a5946b2751fcfd947ba8f41af28e8b578}{\index{W5200.\+c@{W5200.\+c}!W5200\+\_\+get\+\_\+ipaddress@{W5200\+\_\+get\+\_\+ipaddress}}
+\index{W5200\+\_\+get\+\_\+ipaddress@{W5200\+\_\+get\+\_\+ipaddress}!W5200.\+c@{W5200.\+c}}
+\subsubsection[{W5200\+\_\+get\+\_\+ipaddress}]{\setlength{\rightskip}{0pt plus 5cm}void W5200\+\_\+get\+\_\+ipaddress (
+\begin{DoxyParamCaption}
+\item[{ipv4address\+\_\+t}]{address}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8c_a5946b2751fcfd947ba8f41af28e8b578}
+
+
+sets ip address to Wiznet 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & -\/ ip address in hex \\
+\hline
+\end{DoxyParams}
+\hypertarget{_w5200_8c_a42a23a3184cca4deaad0170d42453361}{\index{W5200.\+c@{W5200.\+c}!W5200\+\_\+set\+\_\+hardware\+\_\+address@{W5200\+\_\+set\+\_\+hardware\+\_\+address}}
+\index{W5200\+\_\+set\+\_\+hardware\+\_\+address@{W5200\+\_\+set\+\_\+hardware\+\_\+address}!W5200.\+c@{W5200.\+c}}
+\subsubsection[{W5200\+\_\+set\+\_\+hardware\+\_\+address}]{\setlength{\rightskip}{0pt plus 5cm}W5200\+\_\+set\+\_\+hardware\+\_\+address (
+\begin{DoxyParamCaption}
+\item[{const macaddress\+\_\+t}]{address}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8c_a42a23a3184cca4deaad0170d42453361}
+
+
+set W5200 mac address 
+
+
+
+ \begin{DoxyVerb}\param address - mac address \end{DoxyVerb}
+ Function set wiznet register to address via S\+P\+I D\+M\+A

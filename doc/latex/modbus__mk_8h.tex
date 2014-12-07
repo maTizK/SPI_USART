@@ -1,0 +1,319 @@
+\hypertarget{modbus__mk_8h}{\section{modbus\+\_\+mk.\+h File Reference}
+\label{modbus__mk_8h}\index{modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}}
+}
+
+
+modbus protocol functions and motor control header file  
+
+
+{\ttfamily \#include \char`\"{}main.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tcp\+C\+L\+I.\+h\char`\"{}}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_spd___settings}{Spd\+\_\+\+Settings}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{modbus__mk_8h_aea29ff83910db519b6c575b4e5a1db98}{\#define {\bfseries U\+S\+A\+R\+Tx}~U\+S\+A\+R\+T6}\label{modbus__mk_8h_aea29ff83910db519b6c575b4e5a1db98}
+
+\item 
+\hypertarget{modbus__mk_8h_a6e158a59c1028938cabdda084cbc7fbe}{\#define {\bfseries U\+S\+A\+R\+Tx\+\_\+\+C\+L\+K}~R\+C\+C\+\_\+\+A\+P\+B2\+Periph\+\_\+\+U\+S\+A\+R\+T6}\label{modbus__mk_8h_a6e158a59c1028938cabdda084cbc7fbe}
+
+\item 
+\hypertarget{modbus__mk_8h_acc6600808e86ed76451963ae572b40ac}{\#define {\bfseries U\+S\+A\+R\+Tx\+\_\+\+R\+X\+\_\+\+G\+P\+I\+O\+\_\+\+P\+I\+N}~G\+P\+I\+O\+\_\+\+Pin\+\_\+6}\label{modbus__mk_8h_acc6600808e86ed76451963ae572b40ac}
+
+\item 
+\hypertarget{modbus__mk_8h_a1b5a54c22247b06ceefe42b9a2d5d174}{\#define {\bfseries U\+S\+A\+R\+Tx\+\_\+\+R\+X\+\_\+\+G\+P\+I\+O\+\_\+\+P\+O\+R\+T}~G\+P\+I\+O\+C}\label{modbus__mk_8h_a1b5a54c22247b06ceefe42b9a2d5d174}
+
+\item 
+\hypertarget{modbus__mk_8h_a4f980bd80901a7012f047757bd963df2}{\#define {\bfseries U\+S\+A\+R\+Tx\+\_\+\+R\+X\+\_\+\+G\+P\+I\+O\+\_\+\+C\+L\+K}~R\+C\+C\+\_\+\+A\+H\+B1\+Periph\+\_\+\+G\+P\+I\+O\+C}\label{modbus__mk_8h_a4f980bd80901a7012f047757bd963df2}
+
+\item 
+\hypertarget{modbus__mk_8h_af78c97cd6fd0ecd95ba61349c06338a4}{\#define {\bfseries U\+S\+A\+R\+Tx\+\_\+\+T\+X\+\_\+\+G\+P\+I\+O\+\_\+\+P\+I\+N}~G\+P\+I\+O\+\_\+\+Pin\+\_\+7}\label{modbus__mk_8h_af78c97cd6fd0ecd95ba61349c06338a4}
+
+\item 
+\hypertarget{modbus__mk_8h_a634496204b64d0d9fd4d4e7b7be20842}{\#define {\bfseries U\+S\+A\+R\+Tx\+\_\+\+T\+X\+\_\+\+G\+P\+I\+O\+\_\+\+P\+O\+R\+T}~G\+P\+I\+O\+C}\label{modbus__mk_8h_a634496204b64d0d9fd4d4e7b7be20842}
+
+\item 
+\hypertarget{modbus__mk_8h_a685995d81f984784f8f8ab017a5028fd}{\#define {\bfseries U\+S\+A\+R\+Tx\+\_\+\+T\+X\+\_\+\+G\+P\+I\+O\+\_\+\+C\+L\+K}~R\+C\+C\+\_\+\+A\+H\+B1\+Periph\+\_\+\+G\+P\+I\+O\+C}\label{modbus__mk_8h_a685995d81f984784f8f8ab017a5028fd}
+
+\item 
+\hypertarget{modbus__mk_8h_ab6238f44c6814c4d01582b1f6d817bd6}{\#define {\bfseries U\+S\+A\+R\+Tx\+\_\+\+C\+S\+\_\+\+G\+P\+I\+O\+\_\+\+P\+I\+N}~G\+P\+I\+O\+\_\+\+Pin\+\_\+8}\label{modbus__mk_8h_ab6238f44c6814c4d01582b1f6d817bd6}
+
+\item 
+\hypertarget{modbus__mk_8h_ae7dace24f8a681b3acc0573458c40a41}{\#define {\bfseries U\+S\+A\+R\+Tx\+\_\+\+C\+S\+\_\+\+G\+P\+I\+O\+\_\+\+P\+O\+R\+T}~G\+P\+I\+O\+G}\label{modbus__mk_8h_ae7dace24f8a681b3acc0573458c40a41}
+
+\item 
+\hypertarget{modbus__mk_8h_a3e87765ca427323c28cebed4900af0fb}{\#define {\bfseries U\+S\+A\+R\+Tx\+\_\+\+C\+S\+\_\+\+G\+P\+I\+O\+\_\+\+C\+L\+K}~R\+C\+C\+\_\+\+A\+H\+B1\+Periph\+\_\+\+G\+P\+I\+O\+G}\label{modbus__mk_8h_a3e87765ca427323c28cebed4900af0fb}
+
+\item 
+\hypertarget{modbus__mk_8h_a74182f362d28458277630ab633378a3a}{\#define {\bfseries D\+E}()~U\+S\+A\+R\+Tx\+\_\+\+C\+S\+\_\+\+G\+P\+I\+O\+\_\+\+P\+O\+R\+T-\/$>$B\+S\+R\+R\+H $\vert$= G\+P\+I\+O\+\_\+\+Pin\+\_\+8;}\label{modbus__mk_8h_a74182f362d28458277630ab633378a3a}
+
+\item 
+\hypertarget{modbus__mk_8h_a215c833053915683c280b1f736c283ac}{\#define {\bfseries D\+D}()~U\+S\+A\+R\+Tx\+\_\+\+C\+S\+\_\+\+G\+P\+I\+O\+\_\+\+P\+O\+R\+T-\/$>$B\+S\+R\+R\+L $\vert$= G\+P\+I\+O\+\_\+\+Pin\+\_\+8;}\label{modbus__mk_8h_a215c833053915683c280b1f736c283ac}
+
+\item 
+\hypertarget{modbus__mk_8h_ae381522e1d10c3730b356f1ac5d2dccb}{\#define {\bfseries M\+A\+X\+\_\+\+S\+T\+R\+L\+E\+N}~512}\label{modbus__mk_8h_ae381522e1d10c3730b356f1ac5d2dccb}
+
+\item 
+\hypertarget{modbus__mk_8h_ab905a70d71fcf11a979354158f33c608}{\#define {\bfseries R\+E\+Q\+\_\+\+M\+A\+X\+\_\+\+L\+E\+N}~512}\label{modbus__mk_8h_ab905a70d71fcf11a979354158f33c608}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{modbus__mk_8h_a0462ebd88ace47d64400c4243ef5c0ef}{void {\bfseries copy\+\_\+inputregisters} (uint16\+\_\+t $\ast$)}\label{modbus__mk_8h_a0462ebd88ace47d64400c4243ef5c0ef}
+
+\item 
+\hypertarget{modbus__mk_8h_ae1a86175665d4ff2dd79f3f1686920d7}{void \hyperlink{modbus__mk_8h_ae1a86175665d4ff2dd79f3f1686920d7}{init\+\_\+\+U\+S\+A\+R\+Tx} (void)}\label{modbus__mk_8h_ae1a86175665d4ff2dd79f3f1686920d7}
+
+\begin{DoxyCompactList}\small\item\em initialize U\+S\+A\+R\+T pheriph \end{DoxyCompactList}\item 
+void \hyperlink{modbus__mk_8h_a311958bfd049859f23038c3f565bcb47}{U\+S\+A\+R\+T\+\_\+puts} (uint8\+\_\+t $\ast$, int)
+\item 
+uint16\+\_\+t \hyperlink{modbus__mk_8h_a8d12ff1a59f0452bf78d0304940f6858}{crc16} (uint8\+\_\+t $\ast$, uint16\+\_\+t)
+\begin{DoxyCompactList}\small\item\em calculation of checksum \end{DoxyCompactList}\item 
+void \hyperlink{modbus__mk_8h_ac97589c51e0db8a823944e96a220aba9}{write\+\_\+read\+\_\+modbus} (uint8\+\_\+t $\ast$, uint8\+\_\+t $\ast$, int, int)
+\begin{DoxyCompactList}\small\item\em write and read data to modbus line \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{modbus__mk_8h_ac61e0f0d62901890bf5299d3937978cb}{modbus\+\_\+\+R\+I\+B} (int16\+\_\+t, int, uint8\+\_\+t $\ast$)
+\begin{DoxyCompactList}\small\item\em read input bits on motor side \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{modbus__mk_8h_a37c5e379d5a8d59eb156c0c4e4c2184d}{modbus\+\_\+\+W\+I\+B} (uint16\+\_\+t, int, uint8\+\_\+t $\ast$)
+\begin{DoxyCompactList}\small\item\em write bits to register \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{modbus__mk_8h_aeaff566da3ff91dfd47e14947e05bbbd}{modbus\+\_\+\+W\+R} (int, int, const uint16\+\_\+t $\ast$)
+\begin{DoxyCompactList}\small\item\em write to register of motor \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{modbus__mk_8h_a0b0ed5533d626fac3771c3eaee41b8f7}{modbus\+\_\+\+W\+S\+R} (int, const uint16\+\_\+t)
+\begin{DoxyCompactList}\small\item\em write to single register of motor \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{modbus__mk_8h_a8f5d167ea2951e169647679b8bdb3291}{modbus\+\_\+\+R\+R} (int, int, uint16\+\_\+t $\ast$)
+\begin{DoxyCompactList}\small\item\em read from motor register \end{DoxyCompactList}\item 
+void \hyperlink{modbus__mk_8h_ae97bc6035f16eba419c568ad2c50f129}{motor\+Heart\+Beat\+\_\+task} (void $\ast$)
+\begin{DoxyCompactList}\small\item\em motor require heart bit application \end{DoxyCompactList}\item 
+void \hyperlink{modbus__mk_8h_a4b840bf36cc079060fc221660e1a84c7}{motor\+Control\+\_\+task} (void $\ast$)
+\begin{DoxyCompactList}\small\item\em motor controling task \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{modbus__mk_8h_a6f8059414f0228f0256115e024eeed4b}{int {\bfseries fd}}\label{modbus__mk_8h_a6f8059414f0228f0256115e024eeed4b}
+
+\item 
+\hypertarget{modbus__mk_8h_a6e2f0269840c73f67124323a0779b912}{volatile uint8\+\_\+t {\bfseries received\+\_\+string} \mbox{[}M\+A\+X\+\_\+\+S\+T\+R\+L\+E\+N+1\mbox{]}}\label{modbus__mk_8h_a6e2f0269840c73f67124323a0779b912}
+
+\item 
+\hypertarget{modbus__mk_8h_ad430fb024df3ec76792add3890522efc}{int {\bfseries rx\+\_\+length}}\label{modbus__mk_8h_ad430fb024df3ec76792add3890522efc}
+
+\item 
+\hypertarget{modbus__mk_8h_ac8c114892c5fcbea02085d17fd08f5ea}{uint16\+\_\+t {\bfseries input\+\_\+\+Register} \mbox{[}10\mbox{]}}\label{modbus__mk_8h_ac8c114892c5fcbea02085d17fd08f5ea}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+modbus protocol functions and motor control header file 
+
+
+
+\subsection{Function Documentation}
+\hypertarget{modbus__mk_8h_a8d12ff1a59f0452bf78d0304940f6858}{\index{modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}!crc16@{crc16}}
+\index{crc16@{crc16}!modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}}
+\subsubsection[{crc16}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t crc16 (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t $\ast$}]{buffer, }
+\item[{uint16\+\_\+t}]{buffer\+\_\+length}
+\end{DoxyParamCaption}
+)}}\label{modbus__mk_8h_a8d12ff1a59f0452bf78d0304940f6858}
+
+
+calculation of checksum 
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$buffer} & -\/ pointer to buffer \\
+\hline
+{\em buffer\+\_\+length} & -\/ buffer length \\
+\hline
+\end{DoxyParams}
+\hypertarget{modbus__mk_8h_ac61e0f0d62901890bf5299d3937978cb}{\index{modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}!modbus\+\_\+\+R\+I\+B@{modbus\+\_\+\+R\+I\+B}}
+\index{modbus\+\_\+\+R\+I\+B@{modbus\+\_\+\+R\+I\+B}!modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}}
+\subsubsection[{modbus\+\_\+\+R\+I\+B}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t modbus\+\_\+\+R\+I\+B (
+\begin{DoxyParamCaption}
+\item[{int16\+\_\+t}]{address, }
+\item[{int}]{nb, }
+\item[{uint8\+\_\+t $\ast$}]{dst}
+\end{DoxyParamCaption}
+)}}\label{modbus__mk_8h_ac61e0f0d62901890bf5299d3937978cb}
+
+
+read input bits on motor side 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & -\/ motor register address \\
+\hline
+{\em nb} & -\/ number of bits to read \\
+\hline
+{\em $\ast$dst} & -\/ destination buffer of read data \\
+\hline
+\end{DoxyParams}
+\hypertarget{modbus__mk_8h_a8f5d167ea2951e169647679b8bdb3291}{\index{modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}!modbus\+\_\+\+R\+R@{modbus\+\_\+\+R\+R}}
+\index{modbus\+\_\+\+R\+R@{modbus\+\_\+\+R\+R}!modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}}
+\subsubsection[{modbus\+\_\+\+R\+R}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t modbus\+\_\+\+R\+R (
+\begin{DoxyParamCaption}
+\item[{int}]{address, }
+\item[{int}]{nb, }
+\item[{uint16\+\_\+t $\ast$}]{src}
+\end{DoxyParamCaption}
+)}}\label{modbus__mk_8h_a8f5d167ea2951e169647679b8bdb3291}
+
+
+read from motor register 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & -\/ register address \\
+\hline
+{\em nb} & -\/ size of data to receieve \\
+\hline
+{\em $\ast$src} & -\/ receieved data \\
+\hline
+\end{DoxyParams}
+\hypertarget{modbus__mk_8h_a37c5e379d5a8d59eb156c0c4e4c2184d}{\index{modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}!modbus\+\_\+\+W\+I\+B@{modbus\+\_\+\+W\+I\+B}}
+\index{modbus\+\_\+\+W\+I\+B@{modbus\+\_\+\+W\+I\+B}!modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}}
+\subsubsection[{modbus\+\_\+\+W\+I\+B}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t modbus\+\_\+\+W\+I\+B (
+\begin{DoxyParamCaption}
+\item[{uint16\+\_\+t}]{address, }
+\item[{int}]{nb, }
+\item[{uint8\+\_\+t $\ast$}]{src}
+\end{DoxyParamCaption}
+)}}\label{modbus__mk_8h_a37c5e379d5a8d59eb156c0c4e4c2184d}
+
+
+write bits to register 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & -\/ register address \\
+\hline
+{\em nb} & -\/ number of bits to send \\
+\hline
+{\em $\ast$src} & -\/ source buffer of bits to send \\
+\hline
+\end{DoxyParams}
+\hypertarget{modbus__mk_8h_aeaff566da3ff91dfd47e14947e05bbbd}{\index{modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}!modbus\+\_\+\+W\+R@{modbus\+\_\+\+W\+R}}
+\index{modbus\+\_\+\+W\+R@{modbus\+\_\+\+W\+R}!modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}}
+\subsubsection[{modbus\+\_\+\+W\+R}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t modbus\+\_\+\+W\+R (
+\begin{DoxyParamCaption}
+\item[{int}]{address, }
+\item[{int}]{nb, }
+\item[{const uint16\+\_\+t $\ast$}]{src}
+\end{DoxyParamCaption}
+)}}\label{modbus__mk_8h_aeaff566da3ff91dfd47e14947e05bbbd}
+
+
+write to register of motor 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & -\/ register address \\
+\hline
+{\em nb} & -\/ size of data to send \\
+\hline
+{\em $\ast$src} & -\/ pointer to data to send \\
+\hline
+\end{DoxyParams}
+\hypertarget{modbus__mk_8h_a0b0ed5533d626fac3771c3eaee41b8f7}{\index{modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}!modbus\+\_\+\+W\+S\+R@{modbus\+\_\+\+W\+S\+R}}
+\index{modbus\+\_\+\+W\+S\+R@{modbus\+\_\+\+W\+S\+R}!modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}}
+\subsubsection[{modbus\+\_\+\+W\+S\+R}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t modbus\+\_\+\+W\+S\+R (
+\begin{DoxyParamCaption}
+\item[{int}]{address, }
+\item[{const uint16\+\_\+t}]{src}
+\end{DoxyParamCaption}
+)}}\label{modbus__mk_8h_a0b0ed5533d626fac3771c3eaee41b8f7}
+
+
+write to single register of motor 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & -\/ register address \\
+\hline
+{\em src} & -\/ data to send \\
+\hline
+\end{DoxyParams}
+\hypertarget{modbus__mk_8h_a4b840bf36cc079060fc221660e1a84c7}{\index{modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}!motor\+Control\+\_\+task@{motor\+Control\+\_\+task}}
+\index{motor\+Control\+\_\+task@{motor\+Control\+\_\+task}!modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}}
+\subsubsection[{motor\+Control\+\_\+task}]{\setlength{\rightskip}{0pt plus 5cm}void motor\+Control\+\_\+task (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{pv\+Parameters}
+\end{DoxyParamCaption}
+)}}\label{modbus__mk_8h_a4b840bf36cc079060fc221660e1a84c7}
+
+
+motor controling task 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pv\+Paramters} & -\/ pointer to set of parameters \\
+\hline
+\end{DoxyParams}
+\hypertarget{modbus__mk_8h_ae97bc6035f16eba419c568ad2c50f129}{\index{modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}!motor\+Heart\+Beat\+\_\+task@{motor\+Heart\+Beat\+\_\+task}}
+\index{motor\+Heart\+Beat\+\_\+task@{motor\+Heart\+Beat\+\_\+task}!modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}}
+\subsubsection[{motor\+Heart\+Beat\+\_\+task}]{\setlength{\rightskip}{0pt plus 5cm}void motor\+Heart\+Beat\+\_\+task (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{pv\+Parameters}
+\end{DoxyParamCaption}
+)}}\label{modbus__mk_8h_ae97bc6035f16eba419c568ad2c50f129}
+
+
+motor require heart bit application 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pv\+Parameters} & -\/ pointer to set of parameters \\
+\hline
+\end{DoxyParams}
+sets speed of motor \hypertarget{modbus__mk_8h_a311958bfd049859f23038c3f565bcb47}{\index{modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}!U\+S\+A\+R\+T\+\_\+puts@{U\+S\+A\+R\+T\+\_\+puts}}
+\index{U\+S\+A\+R\+T\+\_\+puts@{U\+S\+A\+R\+T\+\_\+puts}!modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}}
+\subsubsection[{U\+S\+A\+R\+T\+\_\+puts}]{\setlength{\rightskip}{0pt plus 5cm}void U\+S\+A\+R\+T\+\_\+puts (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t $\ast$}]{s, }
+\item[{int}]{nb}
+\end{DoxyParamCaption}
+)}}\label{modbus__mk_8h_a311958bfd049859f23038c3f565bcb47}
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$s} & -\/ pointer to data to send \\
+\hline
+{\em nb} & -\/ size of data \\
+\hline
+\end{DoxyParams}
+This function is used to transmit a string of characters via the U\+S\+A\+R\+T specified in U\+S\+A\+R\+Tx.
+
+It takes two arguments\+: U\+S\+A\+R\+Tx --$>$ can be any of the U\+S\+A\+R\+Ts e.\+g. U\+S\+A\+R\+T1, U\+S\+A\+R\+T2 etc. (volatile) char $\ast$s is the string you want to send
+
+Note\+: The string has to be passed to the function as a pointer because the compiler doesn't know the 'string' data type. In standard C a string is just an array of characters
+
+Note 2\+: At the moment it takes a volatile char because the received\+\_\+string variable declared as volatile char --$>$ otherwise the compiler will spit out warnings\hypertarget{modbus__mk_8h_ac97589c51e0db8a823944e96a220aba9}{\index{modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}!write\+\_\+read\+\_\+modbus@{write\+\_\+read\+\_\+modbus}}
+\index{write\+\_\+read\+\_\+modbus@{write\+\_\+read\+\_\+modbus}!modbus\+\_\+mk.\+h@{modbus\+\_\+mk.\+h}}
+\subsubsection[{write\+\_\+read\+\_\+modbus}]{\setlength{\rightskip}{0pt plus 5cm}void write\+\_\+read\+\_\+modbus (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t $\ast$}]{req, }
+\item[{uint8\+\_\+t $\ast$}]{rsp, }
+\item[{int}]{write\+\_\+len, }
+\item[{int}]{read\+\_\+len}
+\end{DoxyParamCaption}
+)}}\label{modbus__mk_8h_ac97589c51e0db8a823944e96a220aba9}
+
+
+write and read data to modbus line 
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$req} & -\/ data to send \\
+\hline
+{\em $\ast$rsp} & -\/ received data \\
+\hline
+{\em write\+\_\+len} & -\/ size of data to send \\
+\hline
+{\em read\+\_\+len} & -\/ size of dataa to read \\
+\hline
+\end{DoxyParams}

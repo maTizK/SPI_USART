@@ -1,0 +1,630 @@
+\hypertarget{_w5200_8h}{\section{W5200.\+h File Reference}
+\label{_w5200_8h}\index{W5200.\+h@{W5200.\+h}}
+}
+
+
+Header file for \hyperlink{_w5200_8c}{W5200.\+c} wiznet functions.  
+
+
+{\ttfamily \#include \char`\"{}main.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}spi.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{_w5200_8h_ab9bea1cb93c990d3cf4e59b8bf12c246}{\#define {\bfseries W5200\+\_\+\+M\+A\+X\+\_\+\+S\+O\+C\+K\+E\+T\+S}~8}\label{_w5200_8h_ab9bea1cb93c990d3cf4e59b8bf12c246}
+
+\item 
+\hypertarget{_w5200_8h_ab368da79dc611beac3c8cae776e57d67}{\#define {\bfseries W5200\+\_\+\+M\+R}~0x0000}\label{_w5200_8h_ab368da79dc611beac3c8cae776e57d67}
+
+\item 
+\hypertarget{_w5200_8h_ac68cd88d2df3343c5b026d5c6552bff3}{\#define {\bfseries W5200\+\_\+\+G\+A\+R}~0x0001}\label{_w5200_8h_ac68cd88d2df3343c5b026d5c6552bff3}
+
+\item 
+\hypertarget{_w5200_8h_ad56a3386141c4130a396419070656259}{\#define {\bfseries W5200\+\_\+\+S\+U\+B\+R}~0x0005}\label{_w5200_8h_ad56a3386141c4130a396419070656259}
+
+\item 
+\hypertarget{_w5200_8h_a7f39a4c0b65303a1676b32e541551bfe}{\#define {\bfseries W5200\+\_\+\+S\+H\+A\+R}~0x0009}\label{_w5200_8h_a7f39a4c0b65303a1676b32e541551bfe}
+
+\item 
+\hypertarget{_w5200_8h_ae0f45191cbd45583eefcda31d2f86e7e}{\#define {\bfseries W5200\+\_\+\+S\+I\+P\+R}~0x000\+F}\label{_w5200_8h_ae0f45191cbd45583eefcda31d2f86e7e}
+
+\item 
+\hypertarget{_w5200_8h_abe19dca52b0934afc723b53a891c2099}{\#define {\bfseries W5200\+\_\+\+I\+R}~0x0015}\label{_w5200_8h_abe19dca52b0934afc723b53a891c2099}
+
+\item 
+\hypertarget{_w5200_8h_a2f0785f9a389bed0fc3b3f8c9c315cb3}{\#define {\bfseries W5200\+\_\+\+I\+M\+R}~0x0016}\label{_w5200_8h_a2f0785f9a389bed0fc3b3f8c9c315cb3}
+
+\item 
+\hypertarget{_w5200_8h_a0af9cc14cb46c2e3a425e92be3882681}{\#define {\bfseries W5200\+\_\+\+R\+T\+R}~0x0017}\label{_w5200_8h_a0af9cc14cb46c2e3a425e92be3882681}
+
+\item 
+\hypertarget{_w5200_8h_a41e73b19af1c95ee5c1896855226894a}{\#define {\bfseries W5200\+\_\+\+R\+C\+R}~0x0019}\label{_w5200_8h_a41e73b19af1c95ee5c1896855226894a}
+
+\item 
+\hypertarget{_w5200_8h_a72b88887277cd2719e0a6c161d7514f1}{\#define {\bfseries W5200\+\_\+\+P\+A\+T\+R}~0x001\+C}\label{_w5200_8h_a72b88887277cd2719e0a6c161d7514f1}
+
+\item 
+\hypertarget{_w5200_8h_a745a01eaf8c46605cbff1bc757356fa0}{\#define {\bfseries W5200\+\_\+\+P\+P\+P\+A\+L\+G\+O}~0x001\+E}\label{_w5200_8h_a745a01eaf8c46605cbff1bc757356fa0}
+
+\item 
+\hypertarget{_w5200_8h_a6211f59e64375079ee1677496791b206}{\#define {\bfseries W5200\+\_\+\+P\+T\+I\+M\+E\+R}~0x0028}\label{_w5200_8h_a6211f59e64375079ee1677496791b206}
+
+\item 
+\hypertarget{_w5200_8h_a061594defb7e60d5f85e54519e4e81d4}{\#define {\bfseries W5200\+\_\+\+P\+M\+A\+G\+I\+C}~0x0029}\label{_w5200_8h_a061594defb7e60d5f85e54519e4e81d4}
+
+\item 
+\hypertarget{_w5200_8h_a0db166eae3b1fd9ee5e32a8c75e7a945}{\#define {\bfseries W5200\+\_\+\+I\+N\+T\+L\+E\+V\+E\+L}~0x0030}\label{_w5200_8h_a0db166eae3b1fd9ee5e32a8c75e7a945}
+
+\item 
+\hypertarget{_w5200_8h_a41a82c8093307b57167785209b727cef}{\#define {\bfseries W5200\+\_\+\+I\+R2}~0x0034}\label{_w5200_8h_a41a82c8093307b57167785209b727cef}
+
+\item 
+\hypertarget{_w5200_8h_afd6caedf2e082def6fb2d3bf818a3ac0}{\#define {\bfseries W5200\+\_\+\+P\+S\+T\+A\+T\+U\+S}~0x0035}\label{_w5200_8h_afd6caedf2e082def6fb2d3bf818a3ac0}
+
+\item 
+\hypertarget{_w5200_8h_a57183b94ceca31def0c00e42faf2857d}{\#define {\bfseries W5200\+\_\+\+I\+M\+R2}~0x0036}\label{_w5200_8h_a57183b94ceca31def0c00e42faf2857d}
+
+\item 
+\hypertarget{_w5200_8h_a232ec76842ff2654a6f0ce87751718e5}{\#define {\bfseries W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G}(s)~(0x4000 + (s $<$$<$ 8))}\label{_w5200_8h_a232ec76842ff2654a6f0ce87751718e5}
+
+\item 
+\hypertarget{_w5200_8h_a189babdcc0db51f9da5bf059a9ddccbb}{\#define {\bfseries W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+T\+X\+\_\+\+B\+A\+S\+E}(s)~(0x8000 + (8$\ast$s $<$$<$ 8))}\label{_w5200_8h_a189babdcc0db51f9da5bf059a9ddccbb}
+
+\item 
+\hypertarget{_w5200_8h_afd27a468b9091c92c2ffcdcfd1af3214}{\#define {\bfseries W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+X\+\_\+\+B\+A\+S\+E}(s)~(0xc000 + (8$\ast$s $<$$<$ 8))}\label{_w5200_8h_afd27a468b9091c92c2ffcdcfd1af3214}
+
+\item 
+\hypertarget{_w5200_8h_aa612cf818c0966ae2ad44373231e81b3}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+M\+R}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x00)}\label{_w5200_8h_aa612cf818c0966ae2ad44373231e81b3}
+
+\item 
+\hypertarget{_w5200_8h_a3428b6c515450ede15f502d64aad59d5}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+C\+R}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x01)}\label{_w5200_8h_a3428b6c515450ede15f502d64aad59d5}
+
+\item 
+\hypertarget{_w5200_8h_af5851a9549984a6fe44b7367e877c007}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+I\+R}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x02)}\label{_w5200_8h_af5851a9549984a6fe44b7367e877c007}
+
+\item 
+\hypertarget{_w5200_8h_a0fb95f2c8768a1794b71b6d2fa0e974a}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x03)}\label{_w5200_8h_a0fb95f2c8768a1794b71b6d2fa0e974a}
+
+\item 
+\hypertarget{_w5200_8h_ac5a787ea49eb5ddd4830a2cf212b9c6c}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+P\+O\+R\+T}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x04)}\label{_w5200_8h_ac5a787ea49eb5ddd4830a2cf212b9c6c}
+
+\item 
+\hypertarget{_w5200_8h_ab53b6d5cd6a32546ffd3e65a44f0c7f9}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+D\+H\+A\+R}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x06)}\label{_w5200_8h_ab53b6d5cd6a32546ffd3e65a44f0c7f9}
+
+\item 
+\hypertarget{_w5200_8h_a4c5d51689b0f2c5f7d926dc6eed87966}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+D\+I\+P\+R}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x0\+C)}\label{_w5200_8h_a4c5d51689b0f2c5f7d926dc6eed87966}
+
+\item 
+\hypertarget{_w5200_8h_aa187c725ff7f7a84b94b71aa4ebe39f4}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+D\+P\+O\+R\+T}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x10)}\label{_w5200_8h_aa187c725ff7f7a84b94b71aa4ebe39f4}
+
+\item 
+\hypertarget{_w5200_8h_a38382d957ff18e2041090411beb58393}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+M\+S\+S\+R}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x12)}\label{_w5200_8h_a38382d957ff18e2041090411beb58393}
+
+\item 
+\hypertarget{_w5200_8h_ab5b5e692efb1d1d2cf2214c5b9db63f9}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+P\+R\+O\+T\+O}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x14)}\label{_w5200_8h_ab5b5e692efb1d1d2cf2214c5b9db63f9}
+
+\item 
+\hypertarget{_w5200_8h_a33db48fd5849c6efd180221399170932}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+I\+P\+\_\+\+T\+O\+S}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x15)}\label{_w5200_8h_a33db48fd5849c6efd180221399170932}
+
+\item 
+\hypertarget{_w5200_8h_a01b8f2dc4b35733647215bfafde430a0}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+I\+P\+\_\+\+T\+T\+L}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x16)}\label{_w5200_8h_a01b8f2dc4b35733647215bfafde430a0}
+
+\item 
+\hypertarget{_w5200_8h_a52676ee031cd10c88e637bfa23e6891d}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+R\+X\+M\+E\+M\+\_\+\+S\+I\+Z\+E}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x1\+E)}\label{_w5200_8h_a52676ee031cd10c88e637bfa23e6891d}
+
+\item 
+\hypertarget{_w5200_8h_a904bb61f3db80b0cc080f63be245ca2f}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+T\+X\+M\+E\+M\+\_\+\+S\+I\+Z\+E}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x1\+F)}\label{_w5200_8h_a904bb61f3db80b0cc080f63be245ca2f}
+
+\item 
+\hypertarget{_w5200_8h_a3b685036a3a5e3b5339da383d304bfc3}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+T\+X\+\_\+\+F\+S\+R}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x20)}\label{_w5200_8h_a3b685036a3a5e3b5339da383d304bfc3}
+
+\item 
+\hypertarget{_w5200_8h_a3172d75d32cfaa93421e3bb687c1cada}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+T\+X\+\_\+\+R\+D}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x22)}\label{_w5200_8h_a3172d75d32cfaa93421e3bb687c1cada}
+
+\item 
+\hypertarget{_w5200_8h_acdabd5ef0d192ef48905787c16b83df7}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+T\+X\+\_\+\+W\+R}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x24)}\label{_w5200_8h_acdabd5ef0d192ef48905787c16b83df7}
+
+\item 
+\hypertarget{_w5200_8h_a27d357da7af3fbaf44f3ac9439b482fb}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+R\+X\+\_\+\+R\+S\+R}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x26)}\label{_w5200_8h_a27d357da7af3fbaf44f3ac9439b482fb}
+
+\item 
+\hypertarget{_w5200_8h_a2e9dbc10bd188e972a0ff59eac465e59}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+R\+X\+\_\+\+R\+D}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x28)}\label{_w5200_8h_a2e9dbc10bd188e972a0ff59eac465e59}
+
+\item 
+\hypertarget{_w5200_8h_a73432d38b769620a62b3446203bdd4aa}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+R\+X\+\_\+\+W\+R}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x2\+A)}\label{_w5200_8h_a73432d38b769620a62b3446203bdd4aa}
+
+\item 
+\hypertarget{_w5200_8h_ac5eb94633921afe469fda5a751c259a2}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+I\+M\+R}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x2\+C)}\label{_w5200_8h_ac5eb94633921afe469fda5a751c259a2}
+
+\item 
+\hypertarget{_w5200_8h_aaf97522528f472548e075b272dee046b}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+F\+R\+A\+G}(s)~(W5200\+\_\+\+S\+O\+C\+K\+E\+T\+\_\+\+R\+E\+G(s) + 0x2\+D)}\label{_w5200_8h_aaf97522528f472548e075b272dee046b}
+
+\item 
+\hypertarget{_w5200_8h_a3d4a3cc6db027389040e604a91208688}{\#define {\bfseries W5200\+\_\+\+M\+R\+\_\+\+R\+S\+T}~0x80}\label{_w5200_8h_a3d4a3cc6db027389040e604a91208688}
+
+\item 
+\hypertarget{_w5200_8h_aa9560b26d08d42afcf5fbdce44134195}{\#define {\bfseries W5200\+\_\+\+M\+R\+\_\+\+P\+B}~0x10}\label{_w5200_8h_aa9560b26d08d42afcf5fbdce44134195}
+
+\item 
+\hypertarget{_w5200_8h_a15978bf2c2c53fe937a969f9ebcff750}{\#define {\bfseries W5200\+\_\+\+M\+R\+\_\+\+P\+P\+P\+O\+E\+\_\+\+E\+N\+A\+B\+L\+E}~0x08}\label{_w5200_8h_a15978bf2c2c53fe937a969f9ebcff750}
+
+\item 
+\hypertarget{_w5200_8h_af63e8f9e89bb1f2524075cbf86a4f618}{\#define {\bfseries W5200\+\_\+\+I\+R\+\_\+\+C\+O\+N\+F\+L\+I\+C\+T}~0x80}\label{_w5200_8h_af63e8f9e89bb1f2524075cbf86a4f618}
+
+\item 
+\hypertarget{_w5200_8h_afafdd52f5ac7c37699ce37dddb7b0e84}{\#define {\bfseries W5200\+\_\+\+I\+R\+\_\+\+P\+P\+P\+O\+E\+\_\+\+C\+L\+O\+S\+E}~0x20}\label{_w5200_8h_afafdd52f5ac7c37699ce37dddb7b0e84}
+
+\item 
+\hypertarget{_w5200_8h_a5f051957593d54472c31f3cfce355ad5}{\#define {\bfseries W5200\+\_\+\+I\+M\+R\+\_\+\+C\+O\+N\+F\+L\+I\+C\+T}~0x80}\label{_w5200_8h_a5f051957593d54472c31f3cfce355ad5}
+
+\item 
+\hypertarget{_w5200_8h_ab88039306cdf1adc44a2891e315e1bf7}{\#define {\bfseries W5200\+\_\+\+I\+M\+R\+\_\+\+P\+P\+P\+O\+E\+\_\+\+C\+L\+O\+S\+E}~0x20}\label{_w5200_8h_ab88039306cdf1adc44a2891e315e1bf7}
+
+\item 
+\hypertarget{_w5200_8h_a4bdc476be17cdaed06d938f27e49825a}{\#define {\bfseries W5200\+\_\+\+P\+S\+T\+A\+T\+U\+S\+\_\+\+L\+I\+N\+K}~0x20}\label{_w5200_8h_a4bdc476be17cdaed06d938f27e49825a}
+
+\item 
+\hypertarget{_w5200_8h_ab2e1377941e1019bb19e037582c13137}{\#define {\bfseries W5200\+\_\+\+P\+S\+T\+A\+T\+U\+S\+\_\+\+P\+O\+W\+E\+R\+D\+O\+W\+N}~0x08}\label{_w5200_8h_ab2e1377941e1019bb19e037582c13137}
+
+\item 
+\hypertarget{_w5200_8h_a0dd661936ad414629ab7a73ac5b1a51c}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+M\+R\+\_\+\+M\+U\+L\+T\+I}~0x80}\label{_w5200_8h_a0dd661936ad414629ab7a73ac5b1a51c}
+
+\item 
+\hypertarget{_w5200_8h_a817b9cb9d7914be6bfcac4335461c119}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+M\+R\+\_\+\+M\+F}~0x40}\label{_w5200_8h_a817b9cb9d7914be6bfcac4335461c119}
+
+\item 
+\hypertarget{_w5200_8h_ab3e64a8292ab68c42b7ac82c15d95ac8}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+M\+R\+\_\+\+N\+D}~0x20}\label{_w5200_8h_ab3e64a8292ab68c42b7ac82c15d95ac8}
+
+\item 
+\hypertarget{_w5200_8h_aa9710c27a572300e2ec89bdf3107bb49}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+M\+R\+\_\+\+M\+C}~0x20}\label{_w5200_8h_aa9710c27a572300e2ec89bdf3107bb49}
+
+\item 
+\hypertarget{_w5200_8h_ac81027a331b331ab6e08832afb64e2b3}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+M\+R\+\_\+\+C\+L\+O\+S\+E\+D}~0x00}\label{_w5200_8h_ac81027a331b331ab6e08832afb64e2b3}
+
+\item 
+\hypertarget{_w5200_8h_ae79d13c1c2a5a398eb384a589954047c}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+M\+R\+\_\+\+T\+C\+P}~0x01}\label{_w5200_8h_ae79d13c1c2a5a398eb384a589954047c}
+
+\item 
+\hypertarget{_w5200_8h_afc74de0cf6abb0de164a8acd9588a2d3}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+M\+R\+\_\+\+U\+D\+P}~0x02}\label{_w5200_8h_afc74de0cf6abb0de164a8acd9588a2d3}
+
+\item 
+\hypertarget{_w5200_8h_a2e14d0a4c02be5368249c06c90ab9341}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+M\+R\+\_\+\+I\+P\+R\+A\+W}~0x03}\label{_w5200_8h_a2e14d0a4c02be5368249c06c90ab9341}
+
+\item 
+\hypertarget{_w5200_8h_a30ccdb1174a3b4c9778815f6a5cb65df}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+M\+R\+\_\+\+M\+A\+C\+R\+A\+W}~0x04}\label{_w5200_8h_a30ccdb1174a3b4c9778815f6a5cb65df}
+
+\item 
+\hypertarget{_w5200_8h_a2724fc32174f29308a8d297e60b8e324}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+C\+R\+\_\+\+I\+D\+L\+E}~0x00}\label{_w5200_8h_a2724fc32174f29308a8d297e60b8e324}
+
+\item 
+\hypertarget{_w5200_8h_ab5a5e09e928d9adada8e2820872b3fc8}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+C\+R\+\_\+\+O\+P\+E\+N}~0x01}\label{_w5200_8h_ab5a5e09e928d9adada8e2820872b3fc8}
+
+\item 
+\hypertarget{_w5200_8h_a8247c32de3c24f5d73298e1ad1c5347a}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+C\+R\+\_\+\+L\+I\+S\+T\+E\+N}~0x02}\label{_w5200_8h_a8247c32de3c24f5d73298e1ad1c5347a}
+
+\item 
+\hypertarget{_w5200_8h_ad3a4f3879c9609bdcfaee39ed7b93fa4}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+C\+R\+\_\+\+C\+O\+N\+N\+E\+C\+T}~0x04}\label{_w5200_8h_ad3a4f3879c9609bdcfaee39ed7b93fa4}
+
+\item 
+\hypertarget{_w5200_8h_ac824427ef1240b2670e67d5f94a699b5}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+C\+R\+\_\+\+D\+I\+S\+C\+O\+N}~0x08}\label{_w5200_8h_ac824427ef1240b2670e67d5f94a699b5}
+
+\item 
+\hypertarget{_w5200_8h_af831f13b4bfc39e52bb329d8a9f4fa48}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+C\+R\+\_\+\+C\+L\+O\+S\+E}~0x10}\label{_w5200_8h_af831f13b4bfc39e52bb329d8a9f4fa48}
+
+\item 
+\hypertarget{_w5200_8h_a7ec9b1147081c4e055d7bc77dddeb6ae}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+C\+R\+\_\+\+S\+E\+N\+D}~0x20}\label{_w5200_8h_a7ec9b1147081c4e055d7bc77dddeb6ae}
+
+\item 
+\hypertarget{_w5200_8h_a2615adbdaa8b59cf6365232841a382d3}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+C\+R\+\_\+\+S\+E\+N\+D\+\_\+\+M\+A\+C}~0x21}\label{_w5200_8h_a2615adbdaa8b59cf6365232841a382d3}
+
+\item 
+\hypertarget{_w5200_8h_a024f4c6cb132d1da80eee930499f7629}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+C\+R\+\_\+\+S\+E\+N\+D\+\_\+\+K\+E\+E\+P}~0x22}\label{_w5200_8h_a024f4c6cb132d1da80eee930499f7629}
+
+\item 
+\hypertarget{_w5200_8h_af2337634644af8d79c4831b4d643b51b}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+C\+R\+\_\+\+R\+E\+C\+V}~0x40}\label{_w5200_8h_af2337634644af8d79c4831b4d643b51b}
+
+\item 
+\hypertarget{_w5200_8h_adff921d75c311f8fa7b76bc600fd93f0}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R\+\_\+\+S\+O\+C\+K\+\_\+\+C\+L\+O\+S\+E\+D}~0x0000}\label{_w5200_8h_adff921d75c311f8fa7b76bc600fd93f0}
+
+\item 
+\hypertarget{_w5200_8h_aa476cb9312c9932f7f470b78679fd87f}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R\+\_\+\+S\+O\+C\+K\+\_\+\+A\+R\+P}~0x0001}\label{_w5200_8h_aa476cb9312c9932f7f470b78679fd87f}
+
+\item 
+\hypertarget{_w5200_8h_acbff896ad5ae5954515a4f6bc2cc8f24}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R\+\_\+\+S\+O\+C\+K\+\_\+\+I\+N\+I\+T}~0x0013}\label{_w5200_8h_acbff896ad5ae5954515a4f6bc2cc8f24}
+
+\item 
+\hypertarget{_w5200_8h_a10d48b048cbc750c7af845cec33cfe00}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R\+\_\+\+S\+O\+C\+K\+\_\+\+L\+I\+S\+T\+E\+N}~0x0014}\label{_w5200_8h_a10d48b048cbc750c7af845cec33cfe00}
+
+\item 
+\hypertarget{_w5200_8h_a62d9c5aec404031857271448c6680b79}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R\+\_\+\+S\+O\+C\+K\+\_\+\+S\+Y\+N\+S\+E\+N\+T}~0x0015}\label{_w5200_8h_a62d9c5aec404031857271448c6680b79}
+
+\item 
+\hypertarget{_w5200_8h_a3e162265f8139edde3003876c256aee0}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R\+\_\+\+S\+O\+C\+K\+\_\+\+S\+Y\+N\+R\+E\+C\+V}~0x0016}\label{_w5200_8h_a3e162265f8139edde3003876c256aee0}
+
+\item 
+\hypertarget{_w5200_8h_a62e4fcddc793891cbe7cc3959c5538c0}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R\+\_\+\+S\+O\+C\+K\+\_\+\+E\+S\+T\+A\+B\+L\+I\+S\+H\+E\+D}~0x0017}\label{_w5200_8h_a62e4fcddc793891cbe7cc3959c5538c0}
+
+\item 
+\hypertarget{_w5200_8h_ab40adf3eba9babe5da172ad642ea21a2}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R\+\_\+\+S\+O\+C\+K\+\_\+\+F\+I\+N\+\_\+\+W\+A\+I\+T}~0x0018}\label{_w5200_8h_ab40adf3eba9babe5da172ad642ea21a2}
+
+\item 
+\hypertarget{_w5200_8h_a910beb79a3408e26aef406dc17a7bc5f}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R\+\_\+\+S\+O\+C\+K\+\_\+\+C\+L\+O\+S\+I\+N\+G}~0x001\+A}\label{_w5200_8h_a910beb79a3408e26aef406dc17a7bc5f}
+
+\item 
+\hypertarget{_w5200_8h_a9df5b9cafcecd8c04518ee2491f810fd}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R\+\_\+\+S\+O\+C\+K\+\_\+\+T\+I\+M\+E\+\_\+\+W\+A\+I\+T}~0x001\+B}\label{_w5200_8h_a9df5b9cafcecd8c04518ee2491f810fd}
+
+\item 
+\hypertarget{_w5200_8h_a0a0deffef05bc1c396613311fc23239b}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R\+\_\+\+S\+O\+C\+K\+\_\+\+C\+L\+O\+S\+E\+\_\+\+W\+A\+I\+T}~0x001\+C}\label{_w5200_8h_a0a0deffef05bc1c396613311fc23239b}
+
+\item 
+\hypertarget{_w5200_8h_a5a5588d503a0154c1bfd3a012a9a5cca}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R\+\_\+\+S\+O\+C\+K\+\_\+\+L\+A\+S\+T\+\_\+\+A\+C\+K}~0x001\+D}\label{_w5200_8h_a5a5588d503a0154c1bfd3a012a9a5cca}
+
+\item 
+\hypertarget{_w5200_8h_aadc2d1b20d87d6a06a9db7e2e6b97e09}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R\+\_\+\+S\+O\+C\+K\+\_\+\+U\+D\+P}~0x0022}\label{_w5200_8h_aadc2d1b20d87d6a06a9db7e2e6b97e09}
+
+\item 
+\hypertarget{_w5200_8h_a3875abacfc3bd417426f48337c9bacd3}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R\+\_\+\+S\+O\+C\+K\+\_\+\+I\+P\+R\+A\+W}~0x0032}\label{_w5200_8h_a3875abacfc3bd417426f48337c9bacd3}
+
+\item 
+\hypertarget{_w5200_8h_aa47f58abd124b4431fc4317d2cd5b3ab}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R\+\_\+\+S\+O\+C\+K\+\_\+\+M\+A\+C\+R\+A\+W}~0x0042}\label{_w5200_8h_aa47f58abd124b4431fc4317d2cd5b3ab}
+
+\item 
+\hypertarget{_w5200_8h_a9362194e1d124f52e82f17e1e314a90e}{\#define {\bfseries W5200\+\_\+\+Sn\+\_\+\+S\+R\+\_\+\+S\+O\+C\+K\+\_\+\+P\+P\+P\+O\+E}~0x005\+F}\label{_w5200_8h_a9362194e1d124f52e82f17e1e314a90e}
+
+\item 
+\hypertarget{_w5200_8h_a6b2d018e99fadef899492a66765da293}{\#define {\bfseries W5200\+\_\+\+R\+A\+M\+S\+I\+Z\+E}~16384}\label{_w5200_8h_a6b2d018e99fadef899492a66765da293}
+
+\item 
+\hypertarget{_w5200_8h_aa1c0ac7fd5688369e9dfda725030c13a}{\#define {\bfseries W5200\+\_\+\+T\+X\+\_\+\+R\+A\+M\+\_\+\+A\+D\+D\+R}~0x8000}\label{_w5200_8h_aa1c0ac7fd5688369e9dfda725030c13a}
+
+\item 
+\hypertarget{_w5200_8h_a24feeccd0fc4df189beb646dfe70f556}{\#define {\bfseries W5200\+\_\+\+R\+X\+\_\+\+R\+A\+M\+\_\+\+A\+D\+D\+R}~0x\+C000}\label{_w5200_8h_a24feeccd0fc4df189beb646dfe70f556}
+
+\item 
+\hypertarget{_w5200_8h_a635a41ecc1708a30dbf8385b222983b8}{\#define {\bfseries W5200\+\_\+\+R\+A\+M\+S\+I\+Z\+E\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+W\+H\+O\+L\+E}~0x0\+F}\label{_w5200_8h_a635a41ecc1708a30dbf8385b222983b8}
+
+\item 
+\hypertarget{_w5200_8h_ac3155717b1d412a5eb7769bdb4d7322a}{\#define {\bfseries W5200\+\_\+\+R\+A\+M\+S\+I\+Z\+E\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+H\+A\+L\+F}~0x08}\label{_w5200_8h_ac3155717b1d412a5eb7769bdb4d7322a}
+
+\item 
+\hypertarget{_w5200_8h_aabbad01ee0dfc91bac99e301ce483fd9}{\#define {\bfseries W5200\+\_\+\+R\+A\+M\+S\+I\+Z\+E\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+Q\+U\+A\+R\+T\+E\+R}~0x04}\label{_w5200_8h_aabbad01ee0dfc91bac99e301ce483fd9}
+
+\item 
+\hypertarget{_w5200_8h_a2dfbd0ff3d67e29badca6b88837cf984}{\#define {\bfseries W5200\+\_\+\+R\+A\+M\+S\+I\+Z\+E\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+E\+I\+G\+H\+T\+H}~0x02}\label{_w5200_8h_a2dfbd0ff3d67e29badca6b88837cf984}
+
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{_w5200_8h_ad320fd73dfc1e025fbc3d37798162917}{typedef uint8\+\_\+t {\bfseries macaddress\+\_\+t} \mbox{[}6\mbox{]}}\label{_w5200_8h_ad320fd73dfc1e025fbc3d37798162917}
+
+\item 
+\hypertarget{_w5200_8h_afd05c886d6ec501ec491499789662e9d}{typedef uint8\+\_\+t {\bfseries ipv4address\+\_\+t} \mbox{[}4\mbox{]}}\label{_w5200_8h_afd05c886d6ec501ec491499789662e9d}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_w5200_8h_a5ee62a3762c7f028b0e766483a651225}{init\+\_\+\+W5200} (void)
+\begin{DoxyCompactList}\small\item\em Initialize Wiznet module. \end{DoxyCompactList}\item 
+void \hyperlink{_w5200_8h_a968c4f334a2cf2815edb46974368be48}{W5200\+\_\+set\+\_\+hardware\+\_\+address} (const macaddress\+\_\+t address)
+\begin{DoxyCompactList}\small\item\em set W5200 mac address \end{DoxyCompactList}\item 
+void \hyperlink{_w5200_8h_a5c215a901aed0bf72288c723c76453ef}{W5200\+\_\+get\+\_\+hardware\+\_\+address} (macaddress\+\_\+t address)
+\begin{DoxyCompactList}\small\item\em get W5200 mac address \end{DoxyCompactList}\item 
+void \hyperlink{_w5200_8h_a40cf245893230e906da7356d4664441d}{W5200\+\_\+configure\+\_\+network} (const ipv4address\+\_\+t address, const ipv4address\+\_\+t subnet, const ipv4address\+\_\+t gateway)
+\begin{DoxyCompactList}\small\item\em Configures network of wiznet. \end{DoxyCompactList}\item 
+void \hyperlink{_w5200_8h_a5946b2751fcfd947ba8f41af28e8b578}{W5200\+\_\+get\+\_\+ipaddress} (ipv4address\+\_\+t address)
+\begin{DoxyCompactList}\small\item\em sets ip address to Wiznet \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{_w5200_8h_a4c450c01f7c7ae1e2b3067bd9de7848f}{socket} (uint8\+\_\+t mode, uint16\+\_\+t port, uint8\+\_\+t ip\+\_\+proto)
+\begin{DoxyCompactList}\small\item\em Create socket return socket handle. \end{DoxyCompactList}\item 
+int \hyperlink{_w5200_8h_a053abad8a21289463ebf0f00c95d7dfd}{connect} (uint8\+\_\+t sck\+\_\+fd, uint8\+\_\+t $\ast$to\+\_\+ip, uint16\+\_\+t to\+\_\+port)
+\begin{DoxyCompactList}\small\item\em Connecto to host by ip via port. \end{DoxyCompactList}\item 
+int \hyperlink{_w5200_8h_ad60595785c5d0b70f82d0c1db13caca3}{send} (uint8\+\_\+t sck\+\_\+fd, uint8\+\_\+t $\ast$buf, uint16\+\_\+t len, uint16\+\_\+t flag)
+\begin{DoxyCompactList}\small\item\em Send buf data via socket. \end{DoxyCompactList}\item 
+int \hyperlink{_w5200_8h_a4004502afbe3d0609add6c322d8a9796}{closesocket} (int sck\+\_\+fd)
+\begin{DoxyCompactList}\small\item\em Close socket handle. \end{DoxyCompactList}\item 
+int \hyperlink{_w5200_8h_aa4a183e9cf844ab7f012eb8baf0cbe31}{recv} (uint8\+\_\+t sck\+\_\+fd, uint8\+\_\+t $\ast$buf, uint16\+\_\+t len, uint16\+\_\+t flag)
+\begin{DoxyCompactList}\small\item\em Receive data to buffer via socket. \end{DoxyCompactList}\item 
+void \hyperlink{_w5200_8h_a7f9352edc21463cca4e19782bbf6394a}{tcp\+\_\+srv\+\_\+\+Task} (void $\ast$pv\+Parameters)
+\begin{DoxyCompactList}\small\item\em Test task T\+C\+P simple server. \end{DoxyCompactList}\item 
+int \hyperlink{_w5200_8h_a6be5d2045fac85f52cef19e4a9acf235}{listen} (int sck\+\_\+fd)
+\begin{DoxyCompactList}\small\item\em It listens on socket file descriptor previously created by function socket. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{_w5200_8h_af87f3f0bfdb9b96657370cf502d963de}{x\+Task\+Handle {\bfseries set\+\_\+mac\+Task\+Handle}}\label{_w5200_8h_af87f3f0bfdb9b96657370cf502d963de}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Header file for \hyperlink{_w5200_8c}{W5200.\+c} wiznet functions. 
+
+
+
+\subsection{Function Documentation}
+\hypertarget{_w5200_8h_a4004502afbe3d0609add6c322d8a9796}{\index{W5200.\+h@{W5200.\+h}!closesocket@{closesocket}}
+\index{closesocket@{closesocket}!W5200.\+h@{W5200.\+h}}
+\subsubsection[{closesocket}]{\setlength{\rightskip}{0pt plus 5cm}int closesocket (
+\begin{DoxyParamCaption}
+\item[{int}]{sck\+\_\+fd}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8h_a4004502afbe3d0609add6c322d8a9796}
+
+
+Close socket handle. 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em sck\+\_\+fd} & -\/ socket file descriptor to close \\
+\hline
+\end{DoxyParams}
+\hypertarget{_w5200_8h_a053abad8a21289463ebf0f00c95d7dfd}{\index{W5200.\+h@{W5200.\+h}!connect@{connect}}
+\index{connect@{connect}!W5200.\+h@{W5200.\+h}}
+\subsubsection[{connect}]{\setlength{\rightskip}{0pt plus 5cm}int connect (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{sck\+\_\+fd, }
+\item[{uint8\+\_\+t $\ast$}]{to\+\_\+ip, }
+\item[{uint16\+\_\+t}]{to\+\_\+port}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8h_a053abad8a21289463ebf0f00c95d7dfd}
+
+
+Connecto to host by ip via port. 
+
+
+
+ \begin{DoxyVerb}\param sck_fd - socket file descriptor
+\end{DoxyVerb}
+ 
+\begin{DoxyParams}{Parameters}
+{\em $\ast$to\+\_\+ip} & -\/ destination ip number in hex format \\
+\hline
+{\em to\+\_\+port} & -\/ destination port number \\
+\hline
+\end{DoxyParams}
+\hypertarget{_w5200_8h_a5ee62a3762c7f028b0e766483a651225}{\index{W5200.\+h@{W5200.\+h}!init\+\_\+\+W5200@{init\+\_\+\+W5200}}
+\index{init\+\_\+\+W5200@{init\+\_\+\+W5200}!W5200.\+h@{W5200.\+h}}
+\subsubsection[{init\+\_\+\+W5200}]{\setlength{\rightskip}{0pt plus 5cm}void init\+\_\+\+W5200 (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8h_a5ee62a3762c7f028b0e766483a651225}
+
+
+Initialize Wiznet module. 
+
+
+
+ Initialize Wiznet module -\/ setup M\+A\+C address, ip address, gateway, subnet, etc..~\newline
+
+\begin{DoxyItemize}
+\item Default settings\+:
+\begin{DoxyItemize}
+\item mac address \+: dd\+:aa\+:bb\+:cc\+:11\+:22
+\item ip address \+: 192.\+168.\+0.\+8
+\item subnet \+: 255.\+255.\+255.\+0
+\item gateway \+: 192.\+168.\+0.\+254
+\item Ping \+: enable
+\item timeout \+: 200 mili sec.
+\item retry count \+: 3
+\item T\+X memory size \+: 2k\+B
+\item R\+X memory size \+: 2k\+B
+\item I\+T masking \+: 0xff
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+~\newline
+ Create and listen on socket '0', port 80.\hypertarget{_w5200_8h_a6be5d2045fac85f52cef19e4a9acf235}{\index{W5200.\+h@{W5200.\+h}!listen@{listen}}
+\index{listen@{listen}!W5200.\+h@{W5200.\+h}}
+\subsubsection[{listen}]{\setlength{\rightskip}{0pt plus 5cm}int listen (
+\begin{DoxyParamCaption}
+\item[{int}]{sck\+\_\+fd}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8h_a6be5d2045fac85f52cef19e4a9acf235}
+
+
+It listens on socket file descriptor previously created by function socket. 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em sck\+\_\+fd} & -\/ socket file descriptor \\
+\hline
+\end{DoxyParams}
+\hypertarget{_w5200_8h_aa4a183e9cf844ab7f012eb8baf0cbe31}{\index{W5200.\+h@{W5200.\+h}!recv@{recv}}
+\index{recv@{recv}!W5200.\+h@{W5200.\+h}}
+\subsubsection[{recv}]{\setlength{\rightskip}{0pt plus 5cm}int recv (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{sck\+\_\+fd, }
+\item[{uint8\+\_\+t $\ast$}]{buf, }
+\item[{uint16\+\_\+t}]{len, }
+\item[{uint16\+\_\+t}]{flag}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8h_aa4a183e9cf844ab7f012eb8baf0cbe31}
+
+
+Receive data to buffer via socket. 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em sck\+\_\+fd} & -\/ socket file descriptor \\
+\hline
+{\em $\ast$buf} & -\/ pointer to memory buffer data \\
+\hline
+{\em len} & -\/ length of buffered data \\
+\hline
+{\em flag} & -\/ socket flag N\+O\+T U\+S\+E\+D !!!!! \\
+\hline
+\end{DoxyParams}
+\hypertarget{_w5200_8h_ad60595785c5d0b70f82d0c1db13caca3}{\index{W5200.\+h@{W5200.\+h}!send@{send}}
+\index{send@{send}!W5200.\+h@{W5200.\+h}}
+\subsubsection[{send}]{\setlength{\rightskip}{0pt plus 5cm}int send (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{sck\+\_\+fd, }
+\item[{uint8\+\_\+t $\ast$}]{buf, }
+\item[{uint16\+\_\+t}]{len, }
+\item[{uint16\+\_\+t}]{flag}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8h_ad60595785c5d0b70f82d0c1db13caca3}
+
+
+Send buf data via socket. 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em sck\+\_\+fd} & -\/ socket file descriptor \\
+\hline
+{\em $\ast$buf} & -\/ pointer to memory buffer data \\
+\hline
+{\em len} & -\/ length of buffered data \\
+\hline
+{\em flag} & -\/ socket flag N\+O\+T U\+S\+E\+D !!!!! \\
+\hline
+\end{DoxyParams}
+get real len \hypertarget{_w5200_8h_a4c450c01f7c7ae1e2b3067bd9de7848f}{\index{W5200.\+h@{W5200.\+h}!socket@{socket}}
+\index{socket@{socket}!W5200.\+h@{W5200.\+h}}
+\subsubsection[{socket}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t socket (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{mode, }
+\item[{uint16\+\_\+t}]{port, }
+\item[{uint8\+\_\+t}]{ip\+\_\+proto}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8h_a4c450c01f7c7ae1e2b3067bd9de7848f}
+
+
+Create socket return socket handle. 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em mode} & -\/ socket mode (T\+C\+P, U\+D\+P, ...) \\
+\hline
+{\em port} & -\/ socket port \\
+\hline
+{\em ip\+\_\+proto} & -\/ ip protocol number \\
+\hline
+\end{DoxyParams}
+\hypertarget{_w5200_8h_a7f9352edc21463cca4e19782bbf6394a}{\index{W5200.\+h@{W5200.\+h}!tcp\+\_\+srv\+\_\+\+Task@{tcp\+\_\+srv\+\_\+\+Task}}
+\index{tcp\+\_\+srv\+\_\+\+Task@{tcp\+\_\+srv\+\_\+\+Task}!W5200.\+h@{W5200.\+h}}
+\subsubsection[{tcp\+\_\+srv\+\_\+\+Task}]{\setlength{\rightskip}{0pt plus 5cm}void tcp\+\_\+srv\+\_\+\+Task (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{pv\+Parameters}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8h_a7f9352edc21463cca4e19782bbf6394a}
+
+
+Test task T\+C\+P simple server. 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$pv\+Parameters} & -\/ possible parameters for task \\
+\hline
+\end{DoxyParams}
+
+
+
+
+Task opens socket on port 80, starts listening on port and susped suspend itself. If interrupt occures it process C\+L\+I command\hypertarget{_w5200_8h_a40cf245893230e906da7356d4664441d}{\index{W5200.\+h@{W5200.\+h}!W5200\+\_\+configure\+\_\+network@{W5200\+\_\+configure\+\_\+network}}
+\index{W5200\+\_\+configure\+\_\+network@{W5200\+\_\+configure\+\_\+network}!W5200.\+h@{W5200.\+h}}
+\subsubsection[{W5200\+\_\+configure\+\_\+network}]{\setlength{\rightskip}{0pt plus 5cm}void W5200\+\_\+configure\+\_\+network (
+\begin{DoxyParamCaption}
+\item[{const ipv4address\+\_\+t}]{address, }
+\item[{const ipv4address\+\_\+t}]{subnet, }
+\item[{const ipv4address\+\_\+t}]{gateway}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8h_a40cf245893230e906da7356d4664441d}
+
+
+Configures network of wiznet. 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & -\/ ip addres in hex \\
+\hline
+{\em subnet} & -\/ subnet in dec \\
+\hline
+{\em gateway} & -\/ gateway address in hex \\
+\hline
+\end{DoxyParams}
+It configures ip, subnet and gateway \hypertarget{_w5200_8h_a5c215a901aed0bf72288c723c76453ef}{\index{W5200.\+h@{W5200.\+h}!W5200\+\_\+get\+\_\+hardware\+\_\+address@{W5200\+\_\+get\+\_\+hardware\+\_\+address}}
+\index{W5200\+\_\+get\+\_\+hardware\+\_\+address@{W5200\+\_\+get\+\_\+hardware\+\_\+address}!W5200.\+h@{W5200.\+h}}
+\subsubsection[{W5200\+\_\+get\+\_\+hardware\+\_\+address}]{\setlength{\rightskip}{0pt plus 5cm}void W5200\+\_\+get\+\_\+hardware\+\_\+address (
+\begin{DoxyParamCaption}
+\item[{macaddress\+\_\+t}]{address}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8h_a5c215a901aed0bf72288c723c76453ef}
+
+
+get W5200 mac address 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & -\/ mac address \\
+\hline
+\end{DoxyParams}
+Function reads wiznet register mac address and copies it to address\hypertarget{_w5200_8h_a5946b2751fcfd947ba8f41af28e8b578}{\index{W5200.\+h@{W5200.\+h}!W5200\+\_\+get\+\_\+ipaddress@{W5200\+\_\+get\+\_\+ipaddress}}
+\index{W5200\+\_\+get\+\_\+ipaddress@{W5200\+\_\+get\+\_\+ipaddress}!W5200.\+h@{W5200.\+h}}
+\subsubsection[{W5200\+\_\+get\+\_\+ipaddress}]{\setlength{\rightskip}{0pt plus 5cm}void W5200\+\_\+get\+\_\+ipaddress (
+\begin{DoxyParamCaption}
+\item[{ipv4address\+\_\+t}]{address}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8h_a5946b2751fcfd947ba8f41af28e8b578}
+
+
+sets ip address to Wiznet 
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & -\/ ip address in hex \\
+\hline
+\end{DoxyParams}
+\hypertarget{_w5200_8h_a968c4f334a2cf2815edb46974368be48}{\index{W5200.\+h@{W5200.\+h}!W5200\+\_\+set\+\_\+hardware\+\_\+address@{W5200\+\_\+set\+\_\+hardware\+\_\+address}}
+\index{W5200\+\_\+set\+\_\+hardware\+\_\+address@{W5200\+\_\+set\+\_\+hardware\+\_\+address}!W5200.\+h@{W5200.\+h}}
+\subsubsection[{W5200\+\_\+set\+\_\+hardware\+\_\+address}]{\setlength{\rightskip}{0pt plus 5cm}void W5200\+\_\+set\+\_\+hardware\+\_\+address (
+\begin{DoxyParamCaption}
+\item[{const macaddress\+\_\+t}]{address}
+\end{DoxyParamCaption}
+)}}\label{_w5200_8h_a968c4f334a2cf2815edb46974368be48}
+
+
+set W5200 mac address 
+
+
+
+ \begin{DoxyVerb}\param address - mac address \end{DoxyVerb}
+ Function set wiznet register to address via S\+P\+I D\+M\+A

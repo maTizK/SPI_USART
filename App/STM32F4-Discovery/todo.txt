@@ -1,0 +1,64 @@
+- iz set_macTask je treba skopirat nastavitve v W5200_setup_network () 
+
+
+potrebno je ustvariti interface za task za ustvarjanje socketa in poslušanje na tem socketu
+
+======================= motor command ================================
+
+--------------------------------------------------------------------------------------
+
+COMMAND : motor speed n [%]	sets speed of motor to n percents [10-100%]
+
+RETURN :  Motor speed set to : n % .
+	  Motor speed set error : [ error description ]
+	
+--------------------------------------------------------------------------------------
+
+COMMAND : motor stop		stops motor 
+
+RETURN : Motor has succsessfully stopped.
+	 Motor stop error: [ error description ]
+--------------------------------------------------------------------------------------
+			   
+COMMAND : motor run   		run motor at 10% speed 
+
+RETURN : Motor run at 10% speed 
+--------------------------------------------------------------------------------------
+COMMAND : motor status  		return status of a motor 
+
+RETURN : Motor status :
+	
+	 Power In 	[powin]
+	 Iout	 	[iout]
+	 Vin		[vin]
+	 PrcOut		[prcout]
+	 RPMOut		[rpmout]
+	 InternalTemp	[internalT]
+ 
+	 Motor status error : [ error description ]		
+--------------------------------------------------------------------------------------
+
+COMMAND : motor upramp	n	sets up ramp time	 	  [15-300]
+
+RETURN : Motor upramp time succsessfully set to [n] sec.
+	 Motor upramp error : [ error description ] 
+	
+
+--------------------------------------------------------------------------------------
+
+COMMAND : motor downramp	n	sets down ramp time		  [15-300]
+
+
+RETURN : Motor down ramp time succsessfully set to [n] sec.
+	 Motor down ramp error : [ error description ]
+--------------------------------------------------------------------------------------
+
+COMMAND : motor maxrpm n		sets max rpm 			  [0 - ?]
+
+RETURN : Motor max rpm succsessfully set to n rpm. 
+	 Motor maxrpm error : [ error description ] 
+
+--------------------------------------------------------------------------------------
+
+
+

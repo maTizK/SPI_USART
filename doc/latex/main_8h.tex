@@ -1,0 +1,113 @@
+\hypertarget{main_8h}{\section{main.\+h File Reference}
+\label{main_8h}\index{main.\+h@{main.\+h}}
+}
+
+
+A main header file.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Free\+R\+T\+O\+S.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}task.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}timers.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}semphr.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stm32f4xx.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stm32f4xx\+\_\+conf.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stm32f4xx\+\_\+usart.\+h$>$}\\*
+{\ttfamily \#include $<$stm32f4xx\+\_\+spi.\+h$>$}\\*
+{\ttfamily \#include $<$stm32f4xx\+\_\+dma.\+h$>$}\\*
+{\ttfamily \#include $<$stm32f4xx\+\_\+rcc.\+h$>$}\\*
+{\ttfamily \#include $<$stm32f4xx\+\_\+gpio.\+h$>$}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_queue_telegram}{Queue\+Telegram}
+\begin{DoxyCompactList}\small\item\em Telegram communication betwen task. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4}{Queue\+Command} \{ \\*
+\hyperlink{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a7995720bec61b7882018851addf5a8c8}{S\+E\+T\+D\+A\+T\+A}, 
+\hyperlink{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4aa7f267ca6094278c49f99a82d68d6431}{G\+E\+T\+D\+A\+T\+A}, 
+\hyperlink{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4afd6a0e4343048b10646dd2976cc5ad18}{I\+D\+L\+E}, 
+\hyperlink{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a9d61e82a9a12752f10aece1b22183913}{D\+E\+L\+E\+T\+E}, 
+\\*
+\hyperlink{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a13d000b4d7dc70d90239b7430d1eb6b2}{S\+T\+A\+R\+T}, 
+\hyperlink{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a679ee5320d66c8322e310daeb2ee99b8}{S\+T\+O\+P}, 
+\hyperlink{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4aa394b7e63a9b0574bd305c84ee4ef5e8}{S\+U\+C\+C\+S\+E\+S\+S}, 
+\hyperlink{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4ac2e89dbe963510e61bac1b770df6ac3f}{E\+R\+R\+O\+R\+\_\+\+M\+O\+D\+B\+U\+S}, 
+\\*
+\hyperlink{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a75c4de61cf6d89d395f016e779caf4f7}{T\+C\+P\+\_\+\+C\+O\+N\+N\+E\+C\+T\+E\+D}, 
+\hyperlink{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a504788fa86a3142a609f7b5e7673ae4f}{T\+C\+P\+\_\+\+R\+E\+C\+E\+I\+V\+E}, 
+\hyperlink{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a43f7039dc343381801e5811bd05bf3d1}{T\+C\+P\+\_\+\+C\+L\+O\+S\+E}
+ \}
+\begin{DoxyCompactList}\small\item\em Queue telegram command. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{main_8h_a87421f4b65a7d84d03985751b7ab1aa4}{x\+Semaphore\+Handle \hyperlink{main_8h_a87421f4b65a7d84d03985751b7ab1aa4}{x\+Semaphore\+D\+M\+A\+S\+P\+I}}\label{main_8h_a87421f4b65a7d84d03985751b7ab1aa4}
+
+\begin{DoxyCompactList}\small\item\em Semaphore handle for D\+M\+A S\+P\+I pheriphal. \end{DoxyCompactList}\item 
+\hypertarget{main_8h_adaefe37213ca9bf424e589f433a7cd50}{x\+Semaphore\+Handle \hyperlink{main_8h_adaefe37213ca9bf424e589f433a7cd50}{x\+Smphr\+U\+S\+A\+R\+T}}\label{main_8h_adaefe37213ca9bf424e589f433a7cd50}
+
+\begin{DoxyCompactList}\small\item\em Sempahore handle for U\+S\+A\+R\+T port. \end{DoxyCompactList}\item 
+\hypertarget{main_8h_a9eb88548b8b43c1dea8088aa0095c42b}{x\+Task\+Handle {\bfseries motor\+Heart\+Beat\+Handle}}\label{main_8h_a9eb88548b8b43c1dea8088aa0095c42b}
+
+\item 
+\hypertarget{main_8h_aead1f9185b05dea9ad0905cc182d88f9}{\hyperlink{main_8h_aead1f9185b05dea9ad0905cc182d88f9}{motor\+H\+B\+Handle}}\label{main_8h_aead1f9185b05dea9ad0905cc182d88f9}
+
+\begin{DoxyCompactList}\small\item\em Task handles for motor heart bit tasks. \end{DoxyCompactList}\item 
+\hypertarget{main_8h_a4e68fc8e3d5a08a1f5d331db50b6f66a}{x\+Queue\+Handle \hyperlink{main_8h_a4e68fc8e3d5a08a1f5d331db50b6f66a}{Q\+Spd\+\_\+handle}}\label{main_8h_a4e68fc8e3d5a08a1f5d331db50b6f66a}
+
+\begin{DoxyCompactList}\small\item\em Queue handles. \end{DoxyCompactList}\item 
+\hypertarget{main_8h_a78c4872cb6d1237286c2cd16250f83be}{\hyperlink{main_8h_a78c4872cb6d1237286c2cd16250f83be}{Q\+T\+C\+P\+\_\+handle}}\label{main_8h_a78c4872cb6d1237286c2cd16250f83be}
+
+\begin{DoxyCompactList}\small\item\em Queue handles. \end{DoxyCompactList}\item 
+\hypertarget{main_8h_a7a5b3ff2160706f0aa5a84dad2012fba}{int \hyperlink{main_8h_a7a5b3ff2160706f0aa5a84dad2012fba}{socket\+\_\+0}}\label{main_8h_a7a5b3ff2160706f0aa5a84dad2012fba}
+
+\begin{DoxyCompactList}\small\item\em Socket 0 descriptor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A main header file. 
+
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4}{\index{main.\+h@{main.\+h}!Queue\+Command@{Queue\+Command}}
+\index{Queue\+Command@{Queue\+Command}!main.\+h@{main.\+h}}
+\subsubsection[{Queue\+Command}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Queue\+Command}}}\label{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4}
+
+
+Queue telegram command. 
+
+Queue telegram command for tasks commmunication \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{S\+E\+T\+D\+A\+T\+A@{S\+E\+T\+D\+A\+T\+A}!main.\+h@{main.\+h}}\index{main.\+h@{main.\+h}!S\+E\+T\+D\+A\+T\+A@{S\+E\+T\+D\+A\+T\+A}}\item[{\em 
+\hypertarget{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a7995720bec61b7882018851addf5a8c8}{S\+E\+T\+D\+A\+T\+A}\label{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a7995720bec61b7882018851addf5a8c8}
+}]enum D\+A\+T\+A if sending data. \index{G\+E\+T\+D\+A\+T\+A@{G\+E\+T\+D\+A\+T\+A}!main.\+h@{main.\+h}}\index{main.\+h@{main.\+h}!G\+E\+T\+D\+A\+T\+A@{G\+E\+T\+D\+A\+T\+A}}\item[{\em 
+\hypertarget{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4aa7f267ca6094278c49f99a82d68d6431}{G\+E\+T\+D\+A\+T\+A}\label{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4aa7f267ca6094278c49f99a82d68d6431}
+}]enum G\+E\+T\+D\+A\+T\+A if getting data $\ast$/ \index{I\+D\+L\+E@{I\+D\+L\+E}!main.\+h@{main.\+h}}\index{main.\+h@{main.\+h}!I\+D\+L\+E@{I\+D\+L\+E}}\item[{\em 
+\hypertarget{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4afd6a0e4343048b10646dd2976cc5ad18}{I\+D\+L\+E}\label{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4afd6a0e4343048b10646dd2976cc5ad18}
+}]enum I\+D\+L\+E if task has to go to idle mode. \index{D\+E\+L\+E\+T\+E@{D\+E\+L\+E\+T\+E}!main.\+h@{main.\+h}}\index{main.\+h@{main.\+h}!D\+E\+L\+E\+T\+E@{D\+E\+L\+E\+T\+E}}\item[{\em 
+\hypertarget{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a9d61e82a9a12752f10aece1b22183913}{D\+E\+L\+E\+T\+E}\label{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a9d61e82a9a12752f10aece1b22183913}
+}]enum D\+E\+L\+E\+T\+E if task has to delete itself. \index{S\+T\+A\+R\+T@{S\+T\+A\+R\+T}!main.\+h@{main.\+h}}\index{main.\+h@{main.\+h}!S\+T\+A\+R\+T@{S\+T\+A\+R\+T}}\item[{\em 
+\hypertarget{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a13d000b4d7dc70d90239b7430d1eb6b2}{S\+T\+A\+R\+T}\label{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a13d000b4d7dc70d90239b7430d1eb6b2}
+}]enum S\+T\+A\+R\+T if task has to start motor \index{S\+T\+O\+P@{S\+T\+O\+P}!main.\+h@{main.\+h}}\index{main.\+h@{main.\+h}!S\+T\+O\+P@{S\+T\+O\+P}}\item[{\em 
+\hypertarget{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a679ee5320d66c8322e310daeb2ee99b8}{S\+T\+O\+P}\label{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a679ee5320d66c8322e310daeb2ee99b8}
+}]enum S\+T\+O\+P if task has to stop motor \index{S\+U\+C\+C\+S\+E\+S\+S@{S\+U\+C\+C\+S\+E\+S\+S}!main.\+h@{main.\+h}}\index{main.\+h@{main.\+h}!S\+U\+C\+C\+S\+E\+S\+S@{S\+U\+C\+C\+S\+E\+S\+S}}\item[{\em 
+\hypertarget{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4aa394b7e63a9b0574bd305c84ee4ef5e8}{S\+U\+C\+C\+S\+E\+S\+S}\label{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4aa394b7e63a9b0574bd305c84ee4ef5e8}
+}]enum S\+U\+C\+C\+S\+E\+S\+S if command has been succssessfully receieved \index{E\+R\+R\+O\+R\+\_\+\+M\+O\+D\+B\+U\+S@{E\+R\+R\+O\+R\+\_\+\+M\+O\+D\+B\+U\+S}!main.\+h@{main.\+h}}\index{main.\+h@{main.\+h}!E\+R\+R\+O\+R\+\_\+\+M\+O\+D\+B\+U\+S@{E\+R\+R\+O\+R\+\_\+\+M\+O\+D\+B\+U\+S}}\item[{\em 
+\hypertarget{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4ac2e89dbe963510e61bac1b770df6ac3f}{E\+R\+R\+O\+R\+\_\+\+M\+O\+D\+B\+U\+S}\label{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4ac2e89dbe963510e61bac1b770df6ac3f}
+}]enum E\+R\+R\+O\+R if error has occured \index{T\+C\+P\+\_\+\+C\+O\+N\+N\+E\+C\+T\+E\+D@{T\+C\+P\+\_\+\+C\+O\+N\+N\+E\+C\+T\+E\+D}!main.\+h@{main.\+h}}\index{main.\+h@{main.\+h}!T\+C\+P\+\_\+\+C\+O\+N\+N\+E\+C\+T\+E\+D@{T\+C\+P\+\_\+\+C\+O\+N\+N\+E\+C\+T\+E\+D}}\item[{\em 
+\hypertarget{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a75c4de61cf6d89d395f016e779caf4f7}{T\+C\+P\+\_\+\+C\+O\+N\+N\+E\+C\+T\+E\+D}\label{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a75c4de61cf6d89d395f016e779caf4f7}
+}]enum T\+C\+P connected status \index{T\+C\+P\+\_\+\+R\+E\+C\+E\+I\+V\+E@{T\+C\+P\+\_\+\+R\+E\+C\+E\+I\+V\+E}!main.\+h@{main.\+h}}\index{main.\+h@{main.\+h}!T\+C\+P\+\_\+\+R\+E\+C\+E\+I\+V\+E@{T\+C\+P\+\_\+\+R\+E\+C\+E\+I\+V\+E}}\item[{\em 
+\hypertarget{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a504788fa86a3142a609f7b5e7673ae4f}{T\+C\+P\+\_\+\+R\+E\+C\+E\+I\+V\+E}\label{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a504788fa86a3142a609f7b5e7673ae4f}
+}]enum T\+C\+P recieve T\+C\+P data packet \index{T\+C\+P\+\_\+\+C\+L\+O\+S\+E@{T\+C\+P\+\_\+\+C\+L\+O\+S\+E}!main.\+h@{main.\+h}}\index{main.\+h@{main.\+h}!T\+C\+P\+\_\+\+C\+L\+O\+S\+E@{T\+C\+P\+\_\+\+C\+L\+O\+S\+E}}\item[{\em 
+\hypertarget{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a43f7039dc343381801e5811bd05bf3d1}{T\+C\+P\+\_\+\+C\+L\+O\+S\+E}\label{main_8h_a87d564e7bd6c8ad9e1088c17ba0f91f4a43f7039dc343381801e5811bd05bf3d1}
+}]enum close T\+C\+P connection \end{description}
+\end{Desc}

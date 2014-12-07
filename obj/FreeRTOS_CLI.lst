@@ -1,0 +1,1120 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"FreeRTOS_CLI.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.rodata
+  20              		.align	2
+  21              	.LC0:
+  22 0000 68656C70 		.ascii	"help\000"
+  22      00
+  23 0005 000000   		.align	2
+  24              	.LC1:
+  25 0008 0D0A6865 		.ascii	"\015\012help:\015\012 Lists all the registered comm"
+  25      6C703A0D 
+  25      0A204C69 
+  25      73747320 
+  25      616C6C20 
+  26 002f 616E6473 		.ascii	"ands\015\012\015\012\000"
+  26      0D0A0D0A 
+  26      00
+  27              		.section	.rodata.xHelpCommand,"a",%progbits
+  28              		.align	2
+  31              	xHelpCommand:
+  32 0000 00000000 		.word	.LC0
+  33 0004 08000000 		.word	.LC1
+  34 0008 00000000 		.word	prvHelpCommand
+  35 000c 00       		.byte	0
+  36 000d 000000   		.space	3
+  37              		.section	.data.xRegisteredCommands,"aw",%progbits
+  38              		.align	2
+  41              	xRegisteredCommands:
+  42 0000 00000000 		.word	xHelpCommand
+  43 0004 00000000 		.word	0
+  44              		.section	.bss.cOutputBuffer,"aw",%nobits
+  45              		.align	2
+  48              	cOutputBuffer:
+  49 0000 00       		.space	1
+  50 0001 000000   		.section	.text.FreeRTOS_CLIRegisterCommand,"ax",%progbits
+  51              		.align	2
+  52              		.global	FreeRTOS_CLIRegisterCommand
+  53              		.thumb
+  54              		.thumb_func
+  56              	FreeRTOS_CLIRegisterCommand:
+  57              	.LFB110:
+  58              		.file 1 "Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c"
+   1:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** /*
+   2:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * FreeRTOS+CLI V1.0.2 (C) 2013 Real Time Engineers ltd.  All rights reserved.
+   3:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  *
+   4:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * This file is part of the FreeRTOS+CLI distribution.  The FreeRTOS+CLI license 
+   5:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * terms are different to the FreeRTOS license terms.
+   6:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  *
+   7:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * FreeRTOS+CLI uses a dual license model that allows the software to be used 
+   8:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * under a standard GPL open source license, or a commercial license.  The 
+   9:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * standard GPL license (unlike the modified GPL license under which FreeRTOS 
+  10:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * itself is distributed) requires that all software statically linked with 
+  11:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * FreeRTOS+CLI is also distributed under the same GPL V2 license terms.  
+  12:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * Details of both license options follow:
+  13:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  *
+  14:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * - Open source licensing -
+  15:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * FreeRTOS+CLI is a free download and may be used, modified, evaluated and
+  16:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * distributed without charge provided the user adheres to version two of the
+  17:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * GNU General Public License (GPL) and does not remove the copyright notice or
+  18:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * this text.  The GPL V2 text is available on the gnu.org web site, and on the
+  19:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * following URL: http://www.FreeRTOS.org/gpl-2.0.txt.
+  20:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  *
+  21:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * - Commercial licensing -
+  22:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * Businesses and individuals that for commercial or other reasons cannot comply
+  23:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * with the terms of the GPL V2 license must obtain a low cost commercial
+  24:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * license before incorporating FreeRTOS+CLI into proprietary software for
+  25:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * distribution in any form.  Commercial licenses can be purchased from
+  26:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * http://shop.freertos.org/cli and do not require any source files to be
+  27:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * changed.
+  28:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  *
+  29:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * FreeRTOS+CLI is distributed in the hope that it will be useful.  You cannot
+  30:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * use FreeRTOS+CLI unless you agree that you use the software 'as is'.
+  31:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * FreeRTOS+CLI is provided WITHOUT ANY WARRANTY; without even the implied
+  32:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * warranties of NON-INFRINGEMENT, MERCHANTABILITY or FITNESS FOR A PARTICULAR
+  33:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * PURPOSE. Real Time Engineers Ltd. disclaims all conditions and terms, be they
+  34:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * implied, expressed, or statutory.
+  35:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  *
+  36:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * 1 tab == 4 spaces!
+  37:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  *
+  38:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * http://www.FreeRTOS.org
+  39:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * http://www.FreeRTOS.org/FreeRTOS-Plus
+  40:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  *
+  41:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  */
+  42:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+  43:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** /* Standard includes. */
+  44:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** #include <string.h>
+  45:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** #include <stdint.h>
+  46:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+  47:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** /* FreeRTOS includes. */
+  48:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** #include "FreeRTOS.h"
+  49:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** #include "task.h"
+  50:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+  51:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** /* Utils includes. */
+  52:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** #include "FreeRTOS_CLI.h"
+  53:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+  54:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** typedef struct xCOMMAND_INPUT_LIST
+  55:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** {
+  56:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	const CLI_Command_Definition_t *pxCommandLineDefinition;
+  57:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	struct xCOMMAND_INPUT_LIST *pxNext;
+  58:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** } CLI_Definition_List_Item_t;
+  59:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+  60:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** /*
+  61:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * The callback function that is executed when "help" is entered.  This is the
+  62:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * only default command that is always present.
+  63:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  */
+  64:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** //portBASE_TYPE prvHelpCommand( int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcComm
+  65:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+  66:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** /*
+  67:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  * Return the number of parameters that follow the command name.
+  68:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c ****  */
+  69:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** static int8_t prvGetNumberOfParameters( const int8_t * pcCommandString );
+  70:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+  71:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** /* The definition of the "help" command.  This command is always at the front
+  72:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** of the list of registered commands. */
+  73:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** static const CLI_Command_Definition_t xHelpCommand =
+  74:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** {
+  75:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	( const int8_t * const ) "help",
+  76:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	( const int8_t * const ) "\r\nhelp:\r\n Lists all the registered commands\r\n\r\n",
+  77:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	prvHelpCommand,
+  78:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	0
+  79:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** };
+  80:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+  81:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** /* The definition of the list of commands.  Commands that are registered are
+  82:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** added to this list. */
+  83:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** static CLI_Definition_List_Item_t xRegisteredCommands =
+  84:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** {
+  85:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	&xHelpCommand,	/* The first command in the list is always the help command, defined in this file. 
+  86:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	NULL			/* The next pointer is initialised to NULL, as there are no other registered commands yet. 
+  87:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** };
+  88:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+  89:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** /* A buffer into which command outputs can be written is declared here, rather
+  90:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** than in the command console implementation, to allow multiple command consoles
+  91:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** to share the same buffer.  For example, an application may allow access to the
+  92:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** command interpreter by UART and by Ethernet.  Sharing a buffer is done purely
+  93:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** to save RAM.  Note, however, that the command console itself is not re-entrant,
+  94:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** so only one command interpreter interface can be used at any one time.  For that
+  95:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** reason, no attempt at providing mutual exclusion to the cOutputBuffer array is
+  96:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** attempted. */
+  97:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** static int8_t cOutputBuffer[ configCOMMAND_INT_MAX_OUTPUT_SIZE ];
+  98:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+  99:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** /*-----------------------------------------------------------*/
+ 100:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 101:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** portBASE_TYPE FreeRTOS_CLIRegisterCommand( const CLI_Command_Definition_t * const pxCommandToRegist
+ 102:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** {
+  59              		.loc 1 102 0
+  60              		.cfi_startproc
+  61              		@ args = 0, pretend = 0, frame = 16
+  62              		@ frame_needed = 1, uses_anonymous_args = 0
+  63 0000 80B5     		push	{r7, lr}
+  64              	.LCFI0:
+  65              		.cfi_def_cfa_offset 8
+  66              		.cfi_offset 7, -8
+  67              		.cfi_offset 14, -4
+  68 0002 84B0     		sub	sp, sp, #16
+  69              	.LCFI1:
+  70              		.cfi_def_cfa_offset 24
+  71 0004 00AF     		add	r7, sp, #0
+  72              	.LCFI2:
+  73              		.cfi_def_cfa_register 7
+  74 0006 7860     		str	r0, [r7, #4]
+ 103:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** static CLI_Definition_List_Item_t *pxLastCommandInList = &xRegisteredCommands;
+ 104:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** CLI_Definition_List_Item_t *pxNewListItem;
+ 105:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** portBASE_TYPE xReturn = pdFAIL;
+  75              		.loc 1 105 0
+  76 0008 0023     		movs	r3, #0
+  77 000a FB60     		str	r3, [r7, #12]
+ 106:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 107:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	/* Check the parameter is not NULL. */
+ 108:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	configASSERT( pxCommandToRegister );
+  78              		.loc 1 108 0
+  79 000c 7B68     		ldr	r3, [r7, #4]
+  80 000e 002B     		cmp	r3, #0
+  81 0010 02D1     		bne	.L2
+  82              		.loc 1 108 0 is_stmt 0 discriminator 1
+  83 0012 FFF7FEFF 		bl	ulPortSetInterruptMask
+  84              	.L3:
+  85 0016 FEE7     		b	.L3
+  86              	.L2:
+ 109:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 110:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	/* Create a new list item that will reference the command being registered. */
+ 111:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	pxNewListItem = ( CLI_Definition_List_Item_t * ) pvPortMalloc( sizeof( CLI_Definition_List_Item_t 
+  87              		.loc 1 111 0 is_stmt 1
+  88 0018 0820     		movs	r0, #8
+  89 001a FFF7FEFF 		bl	pvPortMalloc
+  90 001e B860     		str	r0, [r7, #8]
+ 112:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	configASSERT( pxNewListItem );
+  91              		.loc 1 112 0
+  92 0020 BB68     		ldr	r3, [r7, #8]
+  93 0022 002B     		cmp	r3, #0
+  94 0024 02D1     		bne	.L4
+  95              		.loc 1 112 0 is_stmt 0 discriminator 1
+  96 0026 FFF7FEFF 		bl	ulPortSetInterruptMask
+  97              	.L5:
+  98 002a FEE7     		b	.L5
+  99              	.L4:
+ 113:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 114:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	if( pxNewListItem != NULL )
+ 100              		.loc 1 114 0 is_stmt 1
+ 101 002c BB68     		ldr	r3, [r7, #8]
+ 102 002e 002B     		cmp	r3, #0
+ 103 0030 12D0     		beq	.L6
+ 115:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	{
+ 116:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		taskENTER_CRITICAL();
+ 104              		.loc 1 116 0
+ 105 0032 FFF7FEFF 		bl	vPortEnterCritical
+ 117:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		{
+ 118:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			/* Reference the command being registered from the newly created
+ 119:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			list item. */
+ 120:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			pxNewListItem->pxCommandLineDefinition = pxCommandToRegister;
+ 106              		.loc 1 120 0
+ 107 0036 BB68     		ldr	r3, [r7, #8]
+ 108 0038 7A68     		ldr	r2, [r7, #4]
+ 109 003a 1A60     		str	r2, [r3]
+ 121:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 122:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			/* The new list item will get added to the end of the list, so
+ 123:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			pxNext has nowhere to point. */
+ 124:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			pxNewListItem->pxNext = NULL;
+ 110              		.loc 1 124 0
+ 111 003c BB68     		ldr	r3, [r7, #8]
+ 112 003e 0022     		movs	r2, #0
+ 113 0040 5A60     		str	r2, [r3, #4]
+ 125:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 126:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			/* Add the newly created list item to the end of the already existing
+ 127:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			list. */
+ 128:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			pxLastCommandInList->pxNext = pxNewListItem;
+ 114              		.loc 1 128 0
+ 115 0042 084B     		ldr	r3, .L8
+ 116 0044 1B68     		ldr	r3, [r3]
+ 117 0046 BA68     		ldr	r2, [r7, #8]
+ 118 0048 5A60     		str	r2, [r3, #4]
+ 129:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 130:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			/* Set the end of list marker to the new list item. */
+ 131:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			pxLastCommandInList = pxNewListItem;
+ 119              		.loc 1 131 0
+ 120 004a 064B     		ldr	r3, .L8
+ 121 004c BA68     		ldr	r2, [r7, #8]
+ 122 004e 1A60     		str	r2, [r3]
+ 132:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		}
+ 133:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		taskEXIT_CRITICAL();
+ 123              		.loc 1 133 0
+ 124 0050 FFF7FEFF 		bl	vPortExitCritical
+ 134:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 135:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		xReturn = pdPASS;
+ 125              		.loc 1 135 0
+ 126 0054 0123     		movs	r3, #1
+ 127 0056 FB60     		str	r3, [r7, #12]
+ 128              	.L6:
+ 136:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	}
+ 137:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 138:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	return xReturn;
+ 129              		.loc 1 138 0
+ 130 0058 FB68     		ldr	r3, [r7, #12]
+ 139:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** }
+ 131              		.loc 1 139 0
+ 132 005a 1846     		mov	r0, r3
+ 133 005c 1037     		adds	r7, r7, #16
+ 134 005e BD46     		mov	sp, r7
+ 135              		@ sp needed
+ 136 0060 80BD     		pop	{r7, pc}
+ 137              	.L9:
+ 138 0062 00BF     		.align	2
+ 139              	.L8:
+ 140 0064 00000000 		.word	pxLastCommandInList.7899
+ 141              		.cfi_endproc
+ 142              	.LFE110:
+ 144              		.section	.rodata
+ 145              		.align	2
+ 146              	.LC2:
+ 147 0038 496E636F 		.ascii	"Incorrect command parameter(s).  Enter \"help\" to "
+ 147      72726563 
+ 147      7420636F 
+ 147      6D6D616E 
+ 147      64207061 
+ 148 0069 76696577 		.ascii	"view a list of available commands.\015\012\015\012\000"
+ 148      2061206C 
+ 148      69737420 
+ 148      6F662061 
+ 148      7661696C 
+ 149              		.align	2
+ 150              	.LC3:
+ 151 0090 436F6D6D 		.ascii	"Command not recognised.  Enter 'help' to view a lis"
+ 151      616E6420 
+ 151      6E6F7420 
+ 151      7265636F 
+ 151      676E6973 
+ 152 00c3 74206F66 		.ascii	"t of available commands.\015\012\015\012\000"
+ 152      20617661 
+ 152      696C6162 
+ 152      6C652063 
+ 152      6F6D6D61 
+ 153              		.section	.text.FreeRTOS_CLIProcessCommand,"ax",%progbits
+ 154              		.align	2
+ 155              		.global	FreeRTOS_CLIProcessCommand
+ 156              		.thumb
+ 157              		.thumb_func
+ 159              	FreeRTOS_CLIProcessCommand:
+ 160              	.LFB111:
+ 140:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** /*-----------------------------------------------------------*/
+ 141:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 142:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** portBASE_TYPE FreeRTOS_CLIProcessCommand( const int8_t * const pcCommandInput, int8_t * pcWriteBuff
+ 143:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** {
+ 161              		.loc 1 143 0
+ 162              		.cfi_startproc
+ 163              		@ args = 0, pretend = 0, frame = 32
+ 164              		@ frame_needed = 1, uses_anonymous_args = 0
+ 165 0000 80B5     		push	{r7, lr}
+ 166              	.LCFI3:
+ 167              		.cfi_def_cfa_offset 8
+ 168              		.cfi_offset 7, -8
+ 169              		.cfi_offset 14, -4
+ 170 0002 88B0     		sub	sp, sp, #32
+ 171              	.LCFI4:
+ 172              		.cfi_def_cfa_offset 40
+ 173 0004 00AF     		add	r7, sp, #0
+ 174              	.LCFI5:
+ 175              		.cfi_def_cfa_register 7
+ 176 0006 F860     		str	r0, [r7, #12]
+ 177 0008 B960     		str	r1, [r7, #8]
+ 178 000a 7A60     		str	r2, [r7, #4]
+ 144:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** static const CLI_Definition_List_Item_t *pxCommand = NULL;
+ 145:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** portBASE_TYPE xReturn = pdTRUE;
+ 179              		.loc 1 145 0
+ 180 000c 0123     		movs	r3, #1
+ 181 000e FB61     		str	r3, [r7, #28]
+ 146:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** const int8_t *pcRegisteredCommandString;
+ 147:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** size_t xCommandStringLength;
+ 148:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 149:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	/* Note:  This function is not re-entrant.  It must not be called from more
+ 150:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	thank one task. */
+ 151:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 152:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	if( pxCommand == NULL )
+ 182              		.loc 1 152 0
+ 183 0010 3A4B     		ldr	r3, .L22
+ 184 0012 1B68     		ldr	r3, [r3]
+ 185 0014 002B     		cmp	r3, #0
+ 186 0016 41D1     		bne	.L11
+ 153:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	{
+ 154:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		/* Search for the command string in the list of registered commands. */
+ 155:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		for( pxCommand = &xRegisteredCommands; pxCommand != NULL; pxCommand = pxCommand->pxNext )
+ 187              		.loc 1 155 0
+ 188 0018 384B     		ldr	r3, .L22
+ 189 001a 394A     		ldr	r2, .L22+4
+ 190 001c 1A60     		str	r2, [r3]
+ 191 001e 39E0     		b	.L12
+ 192              	.L16:
+ 156:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		{
+ 157:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			pcRegisteredCommandString = pxCommand->pxCommandLineDefinition->pcCommand;
+ 193              		.loc 1 157 0
+ 194 0020 364B     		ldr	r3, .L22
+ 195 0022 1B68     		ldr	r3, [r3]
+ 196 0024 1B68     		ldr	r3, [r3]
+ 197 0026 1B68     		ldr	r3, [r3]
+ 198 0028 BB61     		str	r3, [r7, #24]
+ 158:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			xCommandStringLength = strlen( ( const char * ) pcRegisteredCommandString );
+ 199              		.loc 1 158 0
+ 200 002a B869     		ldr	r0, [r7, #24]
+ 201 002c FFF7FEFF 		bl	strlen
+ 202 0030 7861     		str	r0, [r7, #20]
+ 159:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 160:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			/* To ensure the string lengths match exactly, so as not to pick up
+ 161:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			a sub-string of a longer command, check the byte after the expected
+ 162:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			end of the string is either the end of the string or a space before
+ 163:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			a parameter. */
+ 164:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			if( ( pcCommandInput[ xCommandStringLength ] == ' ' ) || ( pcCommandInput[ xCommandStringLength 
+ 203              		.loc 1 164 0
+ 204 0032 FA68     		ldr	r2, [r7, #12]
+ 205 0034 7B69     		ldr	r3, [r7, #20]
+ 206 0036 1344     		add	r3, r3, r2
+ 207 0038 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 208 003a 5BB2     		sxtb	r3, r3
+ 209 003c 202B     		cmp	r3, #32
+ 210 003e 05D0     		beq	.L13
+ 211              		.loc 1 164 0 is_stmt 0 discriminator 1
+ 212 0040 FA68     		ldr	r2, [r7, #12]
+ 213 0042 7B69     		ldr	r3, [r7, #20]
+ 214 0044 1344     		add	r3, r3, r2
+ 215 0046 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 216 0048 002B     		cmp	r3, #0
+ 217 004a 1ED1     		bne	.L14
+ 218              	.L13:
+ 165:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			{
+ 166:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 				if( strncmp( ( const char * ) pcCommandInput, ( const char * ) pcRegisteredCommandString, xComm
+ 219              		.loc 1 166 0 is_stmt 1
+ 220 004c F868     		ldr	r0, [r7, #12]
+ 221 004e B969     		ldr	r1, [r7, #24]
+ 222 0050 7A69     		ldr	r2, [r7, #20]
+ 223 0052 FFF7FEFF 		bl	strncmp
+ 224 0056 0346     		mov	r3, r0
+ 225 0058 002B     		cmp	r3, #0
+ 226 005a 16D1     		bne	.L14
+ 167:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 				{
+ 168:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 					/* The command has been found.  Check it has the expected
+ 169:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 					number of parameters.  If cExpectedNumberOfParameters is -1,
+ 170:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 					then there could be a variable number of parameters and no
+ 171:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 					check is made. */
+ 172:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 					if( pxCommand->pxCommandLineDefinition->cExpectedNumberOfParameters >= 0 )
+ 227              		.loc 1 172 0
+ 228 005c 274B     		ldr	r3, .L22
+ 229 005e 1B68     		ldr	r3, [r3]
+ 230 0060 1B68     		ldr	r3, [r3]
+ 231 0062 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
+ 232 0064 5BB2     		sxtb	r3, r3
+ 233 0066 002B     		cmp	r3, #0
+ 234 0068 0EDB     		blt	.L15
+ 173:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 					{
+ 174:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 						if( prvGetNumberOfParameters( pcCommandInput ) != pxCommand->pxCommandLineDefinition->cExpect
+ 235              		.loc 1 174 0
+ 236 006a F868     		ldr	r0, [r7, #12]
+ 237 006c FFF7FEFF 		bl	prvGetNumberOfParameters
+ 238 0070 0346     		mov	r3, r0
+ 239 0072 1A46     		mov	r2, r3
+ 240 0074 214B     		ldr	r3, .L22
+ 241 0076 1B68     		ldr	r3, [r3]
+ 242 0078 1B68     		ldr	r3, [r3]
+ 243 007a 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
+ 244 007c 5BB2     		sxtb	r3, r3
+ 245 007e 9A42     		cmp	r2, r3
+ 246 0080 02D0     		beq	.L15
+ 175:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 						{
+ 176:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 							xReturn = pdFALSE;
+ 247              		.loc 1 176 0
+ 248 0082 0023     		movs	r3, #0
+ 249 0084 FB61     		str	r3, [r7, #28]
+ 177:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 						}
+ 178:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 					}
+ 179:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 180:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 					break;
+ 250              		.loc 1 180 0
+ 251 0086 09E0     		b	.L11
+ 252              	.L15:
+ 253 0088 08E0     		b	.L11
+ 254              	.L14:
+ 155:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		for( pxCommand = &xRegisteredCommands; pxCommand != NULL; pxCommand = pxCommand->pxNext )
+ 255              		.loc 1 155 0
+ 256 008a 1C4B     		ldr	r3, .L22
+ 257 008c 1B68     		ldr	r3, [r3]
+ 258 008e 5A68     		ldr	r2, [r3, #4]
+ 259 0090 1A4B     		ldr	r3, .L22
+ 260 0092 1A60     		str	r2, [r3]
+ 261              	.L12:
+ 155:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		for( pxCommand = &xRegisteredCommands; pxCommand != NULL; pxCommand = pxCommand->pxNext )
+ 262              		.loc 1 155 0 is_stmt 0 discriminator 1
+ 263 0094 194B     		ldr	r3, .L22
+ 264 0096 1B68     		ldr	r3, [r3]
+ 265 0098 002B     		cmp	r3, #0
+ 266 009a C1D1     		bne	.L16
+ 267              	.L11:
+ 181:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 				}
+ 182:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			}
+ 183:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		}
+ 184:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	}
+ 185:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 186:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	if( ( pxCommand != NULL ) && ( xReturn == pdFALSE ) )
+ 268              		.loc 1 186 0 is_stmt 1
+ 269 009c 174B     		ldr	r3, .L22
+ 270 009e 1B68     		ldr	r3, [r3]
+ 271 00a0 002B     		cmp	r3, #0
+ 272 00a2 0BD0     		beq	.L17
+ 273              		.loc 1 186 0 is_stmt 0 discriminator 1
+ 274 00a4 FB69     		ldr	r3, [r7, #28]
+ 275 00a6 002B     		cmp	r3, #0
+ 276 00a8 08D1     		bne	.L17
+ 187:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	{
+ 188:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		/* The command was found, but the number of parameters with the command
+ 189:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		was incorrect. */
+ 190:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		strncpy( ( char * ) pcWriteBuffer, "Incorrect command parameter(s).  Enter \"help\" to view a lis
+ 277              		.loc 1 190 0 is_stmt 1
+ 278 00aa B868     		ldr	r0, [r7, #8]
+ 279 00ac 1549     		ldr	r1, .L22+8
+ 280 00ae 7A68     		ldr	r2, [r7, #4]
+ 281 00b0 FFF7FEFF 		bl	strncpy
+ 191:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		pxCommand = NULL;
+ 282              		.loc 1 191 0
+ 283 00b4 114B     		ldr	r3, .L22
+ 284 00b6 0022     		movs	r2, #0
+ 285 00b8 1A60     		str	r2, [r3]
+ 286 00ba 1AE0     		b	.L18
+ 287              	.L17:
+ 192:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	}
+ 193:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	else if( pxCommand != NULL )
+ 288              		.loc 1 193 0
+ 289 00bc 0F4B     		ldr	r3, .L22
+ 290 00be 1B68     		ldr	r3, [r3]
+ 291 00c0 002B     		cmp	r3, #0
+ 292 00c2 0FD0     		beq	.L19
+ 194:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	{
+ 195:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		/* Call the callback function that is registered to this command. */
+ 196:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		xReturn = pxCommand->pxCommandLineDefinition->pxCommandInterpreter( pcWriteBuffer, xWriteBufferLe
+ 293              		.loc 1 196 0
+ 294 00c4 0D4B     		ldr	r3, .L22
+ 295 00c6 1B68     		ldr	r3, [r3]
+ 296 00c8 1B68     		ldr	r3, [r3]
+ 297 00ca 9B68     		ldr	r3, [r3, #8]
+ 298 00cc B868     		ldr	r0, [r7, #8]
+ 299 00ce 7968     		ldr	r1, [r7, #4]
+ 300 00d0 FA68     		ldr	r2, [r7, #12]
+ 301 00d2 9847     		blx	r3
+ 302 00d4 F861     		str	r0, [r7, #28]
+ 197:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 198:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		/* If xReturn is pdFALSE, then no further strings will be returned
+ 199:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		after this one, and	pxCommand can be reset to NULL ready to search
+ 200:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		for the next entered command. */
+ 201:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		if( xReturn == pdFALSE )
+ 303              		.loc 1 201 0
+ 304 00d6 FB69     		ldr	r3, [r7, #28]
+ 305 00d8 002B     		cmp	r3, #0
+ 306 00da 0AD1     		bne	.L18
+ 202:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		{
+ 203:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			pxCommand = NULL;
+ 307              		.loc 1 203 0
+ 308 00dc 074B     		ldr	r3, .L22
+ 309 00de 0022     		movs	r2, #0
+ 310 00e0 1A60     		str	r2, [r3]
+ 311 00e2 06E0     		b	.L18
+ 312              	.L19:
+ 204:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		}
+ 205:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	}
+ 206:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	else
+ 207:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	{
+ 208:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		/* pxCommand was NULL, the command was not found. */
+ 209:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		strncpy( ( char * ) pcWriteBuffer, ( const char * const ) "Command not recognised.  Enter 'help' 
+ 313              		.loc 1 209 0
+ 314 00e4 B868     		ldr	r0, [r7, #8]
+ 315 00e6 0849     		ldr	r1, .L22+12
+ 316 00e8 7A68     		ldr	r2, [r7, #4]
+ 317 00ea FFF7FEFF 		bl	strncpy
+ 210:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		xReturn = pdFALSE;
+ 318              		.loc 1 210 0
+ 319 00ee 0023     		movs	r3, #0
+ 320 00f0 FB61     		str	r3, [r7, #28]
+ 321              	.L18:
+ 211:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	}
+ 212:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 213:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	return xReturn;
+ 322              		.loc 1 213 0
+ 323 00f2 FB69     		ldr	r3, [r7, #28]
+ 214:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** }
+ 324              		.loc 1 214 0
+ 325 00f4 1846     		mov	r0, r3
+ 326 00f6 2037     		adds	r7, r7, #32
+ 327 00f8 BD46     		mov	sp, r7
+ 328              		@ sp needed
+ 329 00fa 80BD     		pop	{r7, pc}
+ 330              	.L23:
+ 331              		.align	2
+ 332              	.L22:
+ 333 00fc 00000000 		.word	pxCommand.7909
+ 334 0100 00000000 		.word	xRegisteredCommands
+ 335 0104 38000000 		.word	.LC2
+ 336 0108 90000000 		.word	.LC3
+ 337              		.cfi_endproc
+ 338              	.LFE111:
+ 340              		.section	.text.FreeRTOS_CLIGetOutputBuffer,"ax",%progbits
+ 341              		.align	2
+ 342              		.global	FreeRTOS_CLIGetOutputBuffer
+ 343              		.thumb
+ 344              		.thumb_func
+ 346              	FreeRTOS_CLIGetOutputBuffer:
+ 347              	.LFB112:
+ 215:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** /*-----------------------------------------------------------*/
+ 216:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 217:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** int8_t *FreeRTOS_CLIGetOutputBuffer( void )
+ 218:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** {
+ 348              		.loc 1 218 0
+ 349              		.cfi_startproc
+ 350              		@ args = 0, pretend = 0, frame = 0
+ 351              		@ frame_needed = 1, uses_anonymous_args = 0
+ 352              		@ link register save eliminated.
+ 353 0000 80B4     		push	{r7}
+ 354              	.LCFI6:
+ 355              		.cfi_def_cfa_offset 4
+ 356              		.cfi_offset 7, -4
+ 357 0002 00AF     		add	r7, sp, #0
+ 358              	.LCFI7:
+ 359              		.cfi_def_cfa_register 7
+ 219:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	return cOutputBuffer;
+ 360              		.loc 1 219 0
+ 361 0004 024B     		ldr	r3, .L26
+ 220:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** }
+ 362              		.loc 1 220 0
+ 363 0006 1846     		mov	r0, r3
+ 364 0008 BD46     		mov	sp, r7
+ 365              		@ sp needed
+ 366 000a 5DF8047B 		ldr	r7, [sp], #4
+ 367 000e 7047     		bx	lr
+ 368              	.L27:
+ 369              		.align	2
+ 370              	.L26:
+ 371 0010 00000000 		.word	cOutputBuffer
+ 372              		.cfi_endproc
+ 373              	.LFE112:
+ 375              		.section	.text.FreeRTOS_CLIGetParameter,"ax",%progbits
+ 376              		.align	2
+ 377              		.global	FreeRTOS_CLIGetParameter
+ 378              		.thumb
+ 379              		.thumb_func
+ 381              	FreeRTOS_CLIGetParameter:
+ 382              	.LFB113:
+ 221:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** /*-----------------------------------------------------------*/
+ 222:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 223:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** const int8_t *FreeRTOS_CLIGetParameter( const int8_t *pcCommandString, unsigned portBASE_TYPE uxWan
+ 224:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** {
+ 383              		.loc 1 224 0
+ 384              		.cfi_startproc
+ 385              		@ args = 0, pretend = 0, frame = 24
+ 386              		@ frame_needed = 1, uses_anonymous_args = 0
+ 387              		@ link register save eliminated.
+ 388 0000 80B4     		push	{r7}
+ 389              	.LCFI8:
+ 390              		.cfi_def_cfa_offset 4
+ 391              		.cfi_offset 7, -4
+ 392 0002 87B0     		sub	sp, sp, #28
+ 393              	.LCFI9:
+ 394              		.cfi_def_cfa_offset 32
+ 395 0004 00AF     		add	r7, sp, #0
+ 396              	.LCFI10:
+ 397              		.cfi_def_cfa_register 7
+ 398 0006 F860     		str	r0, [r7, #12]
+ 399 0008 B960     		str	r1, [r7, #8]
+ 400 000a 7A60     		str	r2, [r7, #4]
+ 225:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** unsigned portBASE_TYPE uxParametersFound = 0;
+ 401              		.loc 1 225 0
+ 402 000c 0023     		movs	r3, #0
+ 403 000e 7B61     		str	r3, [r7, #20]
+ 226:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** const int8_t *pcReturn = NULL;
+ 404              		.loc 1 226 0
+ 405 0010 0023     		movs	r3, #0
+ 406 0012 3B61     		str	r3, [r7, #16]
+ 227:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 228:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	*pxParameterStringLength = 0;
+ 407              		.loc 1 228 0
+ 408 0014 7B68     		ldr	r3, [r7, #4]
+ 409 0016 0022     		movs	r2, #0
+ 410 0018 1A60     		str	r2, [r3]
+ 229:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 230:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	while( uxParametersFound < uxWantedParameter )
+ 411              		.loc 1 230 0
+ 412 001a 41E0     		b	.L29
+ 413              	.L42:
+ 231:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	{
+ 232:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		/* Index the character pointer past the current word.  If this is the start
+ 233:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		of the command string then the first word is the command itself. */
+ 234:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		while( ( ( *pcCommandString ) != 0x00 ) && ( ( *pcCommandString ) != ' ' ) )
+ 414              		.loc 1 234 0
+ 415 001c 02E0     		b	.L30
+ 416              	.L32:
+ 235:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		{
+ 236:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			pcCommandString++;
+ 417              		.loc 1 236 0
+ 418 001e FB68     		ldr	r3, [r7, #12]
+ 419 0020 0133     		adds	r3, r3, #1
+ 420 0022 FB60     		str	r3, [r7, #12]
+ 421              	.L30:
+ 234:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		while( ( ( *pcCommandString ) != 0x00 ) && ( ( *pcCommandString ) != ' ' ) )
+ 422              		.loc 1 234 0 discriminator 1
+ 423 0024 FB68     		ldr	r3, [r7, #12]
+ 424 0026 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 425 0028 002B     		cmp	r3, #0
+ 426 002a 04D0     		beq	.L31
+ 234:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		while( ( ( *pcCommandString ) != 0x00 ) && ( ( *pcCommandString ) != ' ' ) )
+ 427              		.loc 1 234 0 is_stmt 0 discriminator 2
+ 428 002c FB68     		ldr	r3, [r7, #12]
+ 429 002e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 430 0030 5BB2     		sxtb	r3, r3
+ 431 0032 202B     		cmp	r3, #32
+ 432 0034 F3D1     		bne	.L32
+ 433              	.L31:
+ 237:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		}
+ 238:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 239:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		/* Find the start of the next string. */
+ 240:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		while( ( ( *pcCommandString ) != 0x00 ) && ( ( *pcCommandString ) == ' ' ) )
+ 434              		.loc 1 240 0 is_stmt 1
+ 435 0036 02E0     		b	.L33
+ 436              	.L35:
+ 241:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		{
+ 242:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			pcCommandString++;
+ 437              		.loc 1 242 0
+ 438 0038 FB68     		ldr	r3, [r7, #12]
+ 439 003a 0133     		adds	r3, r3, #1
+ 440 003c FB60     		str	r3, [r7, #12]
+ 441              	.L33:
+ 240:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		while( ( ( *pcCommandString ) != 0x00 ) && ( ( *pcCommandString ) == ' ' ) )
+ 442              		.loc 1 240 0 discriminator 1
+ 443 003e FB68     		ldr	r3, [r7, #12]
+ 444 0040 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 445 0042 002B     		cmp	r3, #0
+ 446 0044 04D0     		beq	.L34
+ 240:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		while( ( ( *pcCommandString ) != 0x00 ) && ( ( *pcCommandString ) == ' ' ) )
+ 447              		.loc 1 240 0 is_stmt 0 discriminator 2
+ 448 0046 FB68     		ldr	r3, [r7, #12]
+ 449 0048 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 450 004a 5BB2     		sxtb	r3, r3
+ 451 004c 202B     		cmp	r3, #32
+ 452 004e F3D0     		beq	.L35
+ 453              	.L34:
+ 243:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		}
+ 244:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 245:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		/* Was a string found? */
+ 246:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		if( *pcCommandString != 0x00 )
+ 454              		.loc 1 246 0 is_stmt 1
+ 455 0050 FB68     		ldr	r3, [r7, #12]
+ 456 0052 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 457 0054 002B     		cmp	r3, #0
+ 458 0056 22D0     		beq	.L36
+ 247:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		{
+ 248:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			/* Is this the start of the required parameter? */
+ 249:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			uxParametersFound++;
+ 459              		.loc 1 249 0
+ 460 0058 7B69     		ldr	r3, [r7, #20]
+ 461 005a 0133     		adds	r3, r3, #1
+ 462 005c 7B61     		str	r3, [r7, #20]
+ 250:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 251:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			if( uxParametersFound == uxWantedParameter )
+ 463              		.loc 1 251 0
+ 464 005e 7A69     		ldr	r2, [r7, #20]
+ 465 0060 BB68     		ldr	r3, [r7, #8]
+ 466 0062 9A42     		cmp	r2, r3
+ 467 0064 1CD1     		bne	.L29
+ 252:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			{
+ 253:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 				/* How long is the parameter? */
+ 254:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 				pcReturn = pcCommandString;
+ 468              		.loc 1 254 0
+ 469 0066 FB68     		ldr	r3, [r7, #12]
+ 470 0068 3B61     		str	r3, [r7, #16]
+ 255:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 				while( ( ( *pcCommandString ) != 0x00 ) && ( ( *pcCommandString ) != ' ' ) )
+ 471              		.loc 1 255 0
+ 472 006a 07E0     		b	.L37
+ 473              	.L39:
+ 256:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 				{
+ 257:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 					( *pxParameterStringLength )++;
+ 474              		.loc 1 257 0
+ 475 006c 7B68     		ldr	r3, [r7, #4]
+ 476 006e 1B68     		ldr	r3, [r3]
+ 477 0070 5A1C     		adds	r2, r3, #1
+ 478 0072 7B68     		ldr	r3, [r7, #4]
+ 479 0074 1A60     		str	r2, [r3]
+ 258:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 					pcCommandString++;
+ 480              		.loc 1 258 0
+ 481 0076 FB68     		ldr	r3, [r7, #12]
+ 482 0078 0133     		adds	r3, r3, #1
+ 483 007a FB60     		str	r3, [r7, #12]
+ 484              	.L37:
+ 255:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 				while( ( ( *pcCommandString ) != 0x00 ) && ( ( *pcCommandString ) != ' ' ) )
+ 485              		.loc 1 255 0 discriminator 1
+ 486 007c FB68     		ldr	r3, [r7, #12]
+ 487 007e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 488 0080 002B     		cmp	r3, #0
+ 489 0082 04D0     		beq	.L38
+ 255:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 				while( ( ( *pcCommandString ) != 0x00 ) && ( ( *pcCommandString ) != ' ' ) )
+ 490              		.loc 1 255 0 is_stmt 0 discriminator 2
+ 491 0084 FB68     		ldr	r3, [r7, #12]
+ 492 0086 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 493 0088 5BB2     		sxtb	r3, r3
+ 494 008a 202B     		cmp	r3, #32
+ 495 008c EED1     		bne	.L39
+ 496              	.L38:
+ 259:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 				}
+ 260:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 261:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 				if( *pxParameterStringLength == 0 )
+ 497              		.loc 1 261 0 is_stmt 1
+ 498 008e 7B68     		ldr	r3, [r7, #4]
+ 499 0090 1B68     		ldr	r3, [r3]
+ 500 0092 002B     		cmp	r3, #0
+ 501 0094 02D1     		bne	.L40
+ 262:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 				{
+ 263:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 					pcReturn = NULL;
+ 502              		.loc 1 263 0
+ 503 0096 0023     		movs	r3, #0
+ 504 0098 3B61     		str	r3, [r7, #16]
+ 264:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 				}
+ 265:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 266:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 				break;
+ 505              		.loc 1 266 0
+ 506 009a 05E0     		b	.L41
+ 507              	.L40:
+ 508 009c 04E0     		b	.L41
+ 509              	.L36:
+ 267:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			}
+ 268:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		}
+ 269:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		else
+ 270:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		{
+ 271:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			break;
+ 510              		.loc 1 271 0
+ 511 009e 03E0     		b	.L41
+ 512              	.L29:
+ 230:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	while( uxParametersFound < uxWantedParameter )
+ 513              		.loc 1 230 0 discriminator 1
+ 514 00a0 7A69     		ldr	r2, [r7, #20]
+ 515 00a2 BB68     		ldr	r3, [r7, #8]
+ 516 00a4 9A42     		cmp	r2, r3
+ 517 00a6 B9D3     		bcc	.L42
+ 518              	.L41:
+ 272:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		}
+ 273:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	}
+ 274:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 275:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	return pcReturn;
+ 519              		.loc 1 275 0
+ 520 00a8 3B69     		ldr	r3, [r7, #16]
+ 276:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** }
+ 521              		.loc 1 276 0
+ 522 00aa 1846     		mov	r0, r3
+ 523 00ac 1C37     		adds	r7, r7, #28
+ 524 00ae BD46     		mov	sp, r7
+ 525              		@ sp needed
+ 526 00b0 5DF8047B 		ldr	r7, [sp], #4
+ 527 00b4 7047     		bx	lr
+ 528              		.cfi_endproc
+ 529              	.LFE113:
+ 531 00b6 00BF     		.section	.text.prvHelpCommand,"ax",%progbits
+ 532              		.align	2
+ 533              		.global	prvHelpCommand
+ 534              		.thumb
+ 535              		.thumb_func
+ 537              	prvHelpCommand:
+ 538              	.LFB114:
+ 277:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** /*-----------------------------------------------------------*/
+ 278:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 279:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** portBASE_TYPE prvHelpCommand( int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcComman
+ 280:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** {
+ 539              		.loc 1 280 0
+ 540              		.cfi_startproc
+ 541              		@ args = 0, pretend = 0, frame = 24
+ 542              		@ frame_needed = 1, uses_anonymous_args = 0
+ 543 0000 80B5     		push	{r7, lr}
+ 544              	.LCFI11:
+ 545              		.cfi_def_cfa_offset 8
+ 546              		.cfi_offset 7, -8
+ 547              		.cfi_offset 14, -4
+ 548 0002 86B0     		sub	sp, sp, #24
+ 549              	.LCFI12:
+ 550              		.cfi_def_cfa_offset 32
+ 551 0004 00AF     		add	r7, sp, #0
+ 552              	.LCFI13:
+ 553              		.cfi_def_cfa_register 7
+ 554 0006 F860     		str	r0, [r7, #12]
+ 555 0008 B960     		str	r1, [r7, #8]
+ 556 000a 7A60     		str	r2, [r7, #4]
+ 281:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** static const CLI_Definition_List_Item_t * pxCommand = NULL;
+ 282:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** signed portBASE_TYPE xReturn;
+ 283:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 284:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	( void ) pcCommandString;
+ 285:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 286:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	if( pxCommand == NULL )
+ 557              		.loc 1 286 0
+ 558 000c 114B     		ldr	r3, .L49
+ 559 000e 1B68     		ldr	r3, [r3]
+ 560 0010 002B     		cmp	r3, #0
+ 561 0012 02D1     		bne	.L45
+ 287:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	{
+ 288:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		/* Reset the pxCommand pointer back to the start of the list. */
+ 289:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		pxCommand = &xRegisteredCommands;
+ 562              		.loc 1 289 0
+ 563 0014 0F4B     		ldr	r3, .L49
+ 564 0016 104A     		ldr	r2, .L49+4
+ 565 0018 1A60     		str	r2, [r3]
+ 566              	.L45:
+ 290:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	}
+ 291:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 292:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	/* Return the next command help string, before moving the pointer on to
+ 293:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	the next command in the list. */
+ 294:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	strncpy( ( char * ) pcWriteBuffer, ( const char * ) pxCommand->pxCommandLineDefinition->pcHelpStri
+ 567              		.loc 1 294 0
+ 568 001a 0E4B     		ldr	r3, .L49
+ 569 001c 1B68     		ldr	r3, [r3]
+ 570 001e 1B68     		ldr	r3, [r3]
+ 571 0020 5B68     		ldr	r3, [r3, #4]
+ 572 0022 F868     		ldr	r0, [r7, #12]
+ 573 0024 1946     		mov	r1, r3
+ 574 0026 BA68     		ldr	r2, [r7, #8]
+ 575 0028 FFF7FEFF 		bl	strncpy
+ 295:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	pxCommand = pxCommand->pxNext;
+ 576              		.loc 1 295 0
+ 577 002c 094B     		ldr	r3, .L49
+ 578 002e 1B68     		ldr	r3, [r3]
+ 579 0030 5A68     		ldr	r2, [r3, #4]
+ 580 0032 084B     		ldr	r3, .L49
+ 581 0034 1A60     		str	r2, [r3]
+ 296:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 297:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	if( pxCommand == NULL )
+ 582              		.loc 1 297 0
+ 583 0036 074B     		ldr	r3, .L49
+ 584 0038 1B68     		ldr	r3, [r3]
+ 585 003a 002B     		cmp	r3, #0
+ 586 003c 02D1     		bne	.L46
+ 298:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	{
+ 299:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		/* There are no more commands in the list, so there will be no more
+ 300:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		strings to return after this one and pdFALSE should be returned. */
+ 301:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	//	strcat ( (char * ) pcWriteBuffer, "\nend help\n\n\0");
+ 302:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		xReturn = pdFALSE;
+ 587              		.loc 1 302 0
+ 588 003e 0023     		movs	r3, #0
+ 589 0040 7B61     		str	r3, [r7, #20]
+ 590 0042 01E0     		b	.L47
+ 591              	.L46:
+ 303:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	}
+ 304:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	else
+ 305:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	{
+ 306:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		xReturn = pdTRUE;
+ 592              		.loc 1 306 0
+ 593 0044 0123     		movs	r3, #1
+ 594 0046 7B61     		str	r3, [r7, #20]
+ 595              	.L47:
+ 307:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	}
+ 308:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 309:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	return xReturn;
+ 596              		.loc 1 309 0
+ 597 0048 7B69     		ldr	r3, [r7, #20]
+ 310:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** }
+ 598              		.loc 1 310 0
+ 599 004a 1846     		mov	r0, r3
+ 600 004c 1837     		adds	r7, r7, #24
+ 601 004e BD46     		mov	sp, r7
+ 602              		@ sp needed
+ 603 0050 80BD     		pop	{r7, pc}
+ 604              	.L50:
+ 605 0052 00BF     		.align	2
+ 606              	.L49:
+ 607 0054 00000000 		.word	pxCommand.7943
+ 608 0058 00000000 		.word	xRegisteredCommands
+ 609              		.cfi_endproc
+ 610              	.LFE114:
+ 612              		.section	.text.prvGetNumberOfParameters,"ax",%progbits
+ 613              		.align	2
+ 614              		.thumb
+ 615              		.thumb_func
+ 617              	prvGetNumberOfParameters:
+ 618              	.LFB115:
+ 311:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** /*-----------------------------------------------------------*/
+ 312:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 313:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** static int8_t prvGetNumberOfParameters( const int8_t * pcCommandString )
+ 314:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** {
+ 619              		.loc 1 314 0
+ 620              		.cfi_startproc
+ 621              		@ args = 0, pretend = 0, frame = 16
+ 622              		@ frame_needed = 1, uses_anonymous_args = 0
+ 623              		@ link register save eliminated.
+ 624 0000 80B4     		push	{r7}
+ 625              	.LCFI14:
+ 626              		.cfi_def_cfa_offset 4
+ 627              		.cfi_offset 7, -4
+ 628 0002 85B0     		sub	sp, sp, #20
+ 629              	.LCFI15:
+ 630              		.cfi_def_cfa_offset 24
+ 631 0004 00AF     		add	r7, sp, #0
+ 632              	.LCFI16:
+ 633              		.cfi_def_cfa_register 7
+ 634 0006 7860     		str	r0, [r7, #4]
+ 315:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** int8_t cParameters = 0;
+ 635              		.loc 1 315 0
+ 636 0008 0023     		movs	r3, #0
+ 637 000a FB73     		strb	r3, [r7, #15]
+ 316:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** portBASE_TYPE xLastCharacterWasSpace = pdFALSE;
+ 638              		.loc 1 316 0
+ 639 000c 0023     		movs	r3, #0
+ 640 000e BB60     		str	r3, [r7, #8]
+ 317:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 318:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	/* Count the number of space delimited words in pcCommandString. */
+ 319:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	while( *pcCommandString != 0x00 )
+ 641              		.loc 1 319 0
+ 642 0010 12E0     		b	.L52
+ 643              	.L56:
+ 320:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	{
+ 321:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		if( ( *pcCommandString ) == ' ' )
+ 644              		.loc 1 321 0
+ 645 0012 7B68     		ldr	r3, [r7, #4]
+ 646 0014 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 647 0016 5BB2     		sxtb	r3, r3
+ 648 0018 202B     		cmp	r3, #32
+ 649 001a 08D1     		bne	.L53
+ 322:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		{
+ 323:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			if( xLastCharacterWasSpace != pdTRUE )
+ 650              		.loc 1 323 0
+ 651 001c BB68     		ldr	r3, [r7, #8]
+ 652 001e 012B     		cmp	r3, #1
+ 653 0020 07D0     		beq	.L55
+ 324:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			{
+ 325:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 				cParameters++;
+ 654              		.loc 1 325 0
+ 655 0022 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 656 0024 0133     		adds	r3, r3, #1
+ 657 0026 FB73     		strb	r3, [r7, #15]
+ 326:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 				xLastCharacterWasSpace = pdTRUE;
+ 658              		.loc 1 326 0
+ 659 0028 0123     		movs	r3, #1
+ 660 002a BB60     		str	r3, [r7, #8]
+ 661 002c 01E0     		b	.L55
+ 662              	.L53:
+ 327:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			}
+ 328:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		}
+ 329:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		else
+ 330:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		{
+ 331:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 			xLastCharacterWasSpace = pdFALSE;
+ 663              		.loc 1 331 0
+ 664 002e 0023     		movs	r3, #0
+ 665 0030 BB60     		str	r3, [r7, #8]
+ 666              	.L55:
+ 332:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		}
+ 333:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 334:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		pcCommandString++;
+ 667              		.loc 1 334 0
+ 668 0032 7B68     		ldr	r3, [r7, #4]
+ 669 0034 0133     		adds	r3, r3, #1
+ 670 0036 7B60     		str	r3, [r7, #4]
+ 671              	.L52:
+ 319:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	while( *pcCommandString != 0x00 )
+ 672              		.loc 1 319 0 discriminator 1
+ 673 0038 7B68     		ldr	r3, [r7, #4]
+ 674 003a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 675 003c 002B     		cmp	r3, #0
+ 676 003e E8D1     		bne	.L56
+ 335:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	}
+ 336:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 337:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	/* If the command string ended with spaces, then there will have been too
+ 338:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	many parameters counted. */
+ 339:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	if( xLastCharacterWasSpace == pdTRUE )
+ 677              		.loc 1 339 0
+ 678 0040 BB68     		ldr	r3, [r7, #8]
+ 679 0042 012B     		cmp	r3, #1
+ 680 0044 02D1     		bne	.L57
+ 340:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	{
+ 341:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 		cParameters--;
+ 681              		.loc 1 341 0
+ 682 0046 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 683 0048 013B     		subs	r3, r3, #1
+ 684 004a FB73     		strb	r3, [r7, #15]
+ 685              	.L57:
+ 342:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	}
+ 343:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 
+ 344:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	/* The value returned is one less than the number of space delimited words,
+ 345:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	as the first word should be the command itself. */
+ 346:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** 	return cParameters;
+ 686              		.loc 1 346 0
+ 687 004c FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 688 004e 5BB2     		sxtb	r3, r3
+ 347:Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.c **** }
+ 689              		.loc 1 347 0
+ 690 0050 1846     		mov	r0, r3
+ 691 0052 1437     		adds	r7, r7, #20
+ 692 0054 BD46     		mov	sp, r7
+ 693              		@ sp needed
+ 694 0056 5DF8047B 		ldr	r7, [sp], #4
+ 695 005a 7047     		bx	lr
+ 696              		.cfi_endproc
+ 697              	.LFE115:
+ 699              		.section	.data.pxLastCommandInList.7899,"aw",%progbits
+ 700              		.align	2
+ 703              	pxLastCommandInList.7899:
+ 704 0000 00000000 		.word	xRegisteredCommands
+ 705              		.section	.bss.pxCommand.7909,"aw",%nobits
+ 706              		.align	2
+ 709              	pxCommand.7909:
+ 710 0000 00000000 		.space	4
+ 711              		.section	.bss.pxCommand.7943,"aw",%nobits
+ 712              		.align	2
+ 715              	pxCommand.7943:
+ 716 0000 00000000 		.space	4
+ 717              		.text
+ 718              	.Letext0:
+ 719              		.file 2 "/Users/maticknap/ARM/gcc-arm-none-eabi-4_8-2014q2/lib/gcc/arm-none-eabi/4.8.4/include/std
+ 720              		.file 3 "/Users/maticknap/ARM/gcc-arm-none-eabi-4_8-2014q2/arm-none-eabi/include/machine/_default_
+ 721              		.file 4 "/Users/maticknap/ARM/gcc-arm-none-eabi-4_8-2014q2/arm-none-eabi/include/stdint.h"
+ 722              		.file 5 "Source/FreeRTOS-Plus-CLI/FreeRTOS_CLI.h"
+ 723              		.file 6 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 FreeRTOS_CLI.c
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:20     .rodata:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:28     .rodata.xHelpCommand:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:31     .rodata.xHelpCommand:0000000000000000 xHelpCommand
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:537    .text.prvHelpCommand:0000000000000000 prvHelpCommand
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:38     .data.xRegisteredCommands:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:41     .data.xRegisteredCommands:0000000000000000 xRegisteredCommands
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:45     .bss.cOutputBuffer:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:48     .bss.cOutputBuffer:0000000000000000 cOutputBuffer
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:51     .text.FreeRTOS_CLIRegisterCommand:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:56     .text.FreeRTOS_CLIRegisterCommand:0000000000000000 FreeRTOS_CLIRegisterCommand
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:140    .text.FreeRTOS_CLIRegisterCommand:0000000000000064 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:703    .data.pxLastCommandInList.7899:0000000000000000 pxLastCommandInList.7899
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:154    .text.FreeRTOS_CLIProcessCommand:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:159    .text.FreeRTOS_CLIProcessCommand:0000000000000000 FreeRTOS_CLIProcessCommand
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:617    .text.prvGetNumberOfParameters:0000000000000000 prvGetNumberOfParameters
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:333    .text.FreeRTOS_CLIProcessCommand:00000000000000fc $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:709    .bss.pxCommand.7909:0000000000000000 pxCommand.7909
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:341    .text.FreeRTOS_CLIGetOutputBuffer:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:346    .text.FreeRTOS_CLIGetOutputBuffer:0000000000000000 FreeRTOS_CLIGetOutputBuffer
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:371    .text.FreeRTOS_CLIGetOutputBuffer:0000000000000010 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:376    .text.FreeRTOS_CLIGetParameter:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:381    .text.FreeRTOS_CLIGetParameter:0000000000000000 FreeRTOS_CLIGetParameter
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:532    .text.prvHelpCommand:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:607    .text.prvHelpCommand:0000000000000054 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:715    .bss.pxCommand.7943:0000000000000000 pxCommand.7943
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:613    .text.prvGetNumberOfParameters:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:700    .data.pxLastCommandInList.7899:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:706    .bss.pxCommand.7909:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccIY4nhe.s:712    .bss.pxCommand.7943:0000000000000000 $d
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+ulPortSetInterruptMask
+pvPortMalloc
+vPortEnterCritical
+vPortExitCritical
+strlen
+strncmp
+strncpy

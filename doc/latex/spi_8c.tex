@@ -1,0 +1,156 @@
+\hypertarget{spi_8c}{\section{spi.\+c File Reference}
+\label{spi_8c}\index{spi.\+c@{spi.\+c}}
+}
+{\ttfamily \#include \char`\"{}spi.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{spi_8c_a04716c1d2be0c2f823c18456a5e0bf96}{\#define {\bfseries pd\+False}~0}\label{spi_8c_a04716c1d2be0c2f823c18456a5e0bf96}
+
+\item 
+\hypertarget{spi_8c_a6d7f993681572e6e8682d8a7942cb50e}{\#define {\bfseries pd\+True}~1}\label{spi_8c_a6d7f993681572e6e8682d8a7942cb50e}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{spi_8c_a4ebd81539d31503cd2d858491e85a229}{init\+\_\+\+S\+P\+Ix} (void)
+\begin{DoxyCompactList}\small\item\em initialize S\+P\+I pheriphal for work with wiznet \end{DoxyCompactList}\item 
+void \hyperlink{spi_8c_a1a134ecb1e96d534aeab2ebea75b1d9d}{spi\+\_\+dma\+\_\+send} (uint16\+\_\+t address, uint16\+\_\+t data\+\_\+len, uint8\+\_\+t $\ast$data\+\_\+buf)
+\begin{DoxyCompactList}\small\item\em send data via spi to wiznet \end{DoxyCompactList}\item 
+void \hyperlink{spi_8c_a3c6116ca24459086780e70ecfa0b93c7}{spi\+\_\+dma\+\_\+send2\+B} (uint16\+\_\+t address, uint16\+\_\+t data\+\_\+buf)
+\begin{DoxyCompactList}\small\item\em send two bytes of data \end{DoxyCompactList}\item 
+void \hyperlink{spi_8c_ad95e8d35a18bf4693f0cf50b68671abe}{spi\+\_\+dma\+\_\+send\+Byte} (uint16\+\_\+t address, uint8\+\_\+t data\+\_\+buf)
+\begin{DoxyCompactList}\small\item\em send byte to spi \end{DoxyCompactList}\item 
+uint16\+\_\+t \hyperlink{spi_8c_ad8c491c38ec945ab510d8eef89564e7f}{spi\+\_\+dma\+\_\+read2\+B} (uint16\+\_\+t address)
+\begin{DoxyCompactList}\small\item\em sends request to receieve 2 bytes \end{DoxyCompactList}\item 
+void \hyperlink{spi_8c_a9549d183c4cc3ae5109b16c648fd41bc}{spi\+\_\+dma\+\_\+read} (uint16\+\_\+t address, uint16\+\_\+t data\+\_\+len)
+\begin{DoxyCompactList}\small\item\em receive data -\/$>$ R\+E\+A\+D N\+O\+T\+E !!! \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{spi_8c_a4ebd81539d31503cd2d858491e85a229}{\index{spi.\+c@{spi.\+c}!init\+\_\+\+S\+P\+Ix@{init\+\_\+\+S\+P\+Ix}}
+\index{init\+\_\+\+S\+P\+Ix@{init\+\_\+\+S\+P\+Ix}!spi.\+c@{spi.\+c}}
+\subsubsection[{init\+\_\+\+S\+P\+Ix}]{\setlength{\rightskip}{0pt plus 5cm}void init\+\_\+\+S\+P\+Ix (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{spi_8c_a4ebd81539d31503cd2d858491e85a229}
+
+
+initialize S\+P\+I pheriphal for work with wiznet 
+
+Initialize S\+P\+I pheriphial with D\+M\+A controller ~\newline
+
+\begin{DoxyItemize}
+\item S\+P\+I setup
+\begin{DoxyItemize}
+\item M\+I\+S\+O P\+A6
+\item M\+O\+S\+I P\+A7
+\item S\+C\+K P\+A5
+\item C\+S P\+A4
+\item H\+R pin P\+C5 ~\newline
+
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+W\+I\+Z\+N\+E\+T setup
+\begin{DoxyItemize}
+\item I\+T P\+C4
+\end{DoxyItemize}\hypertarget{spi_8c_a9549d183c4cc3ae5109b16c648fd41bc}{\index{spi.\+c@{spi.\+c}!spi\+\_\+dma\+\_\+read@{spi\+\_\+dma\+\_\+read}}
+\index{spi\+\_\+dma\+\_\+read@{spi\+\_\+dma\+\_\+read}!spi.\+c@{spi.\+c}}
+\subsubsection[{spi\+\_\+dma\+\_\+read}]{\setlength{\rightskip}{0pt plus 5cm}void spi\+\_\+dma\+\_\+read (
+\begin{DoxyParamCaption}
+\item[{uint16\+\_\+t}]{address, }
+\item[{uint16\+\_\+t}]{data\+\_\+len}
+\end{DoxyParamCaption}
+)}}\label{spi_8c_a9549d183c4cc3ae5109b16c648fd41bc}
+
+
+receive data -\/$>$ R\+E\+A\+D N\+O\+T\+E !!! 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & -\/ memory location address on wiznet \\
+\hline
+{\em data\+\_\+len} & -\/ length ofg data to receieve \\
+\hline
+\end{DoxyParams}
+spi\+\_\+dma\+\_\+read it has to be used with ~\newline
+memcpy from buffer\+R\+X right after it has recieve ~\newline
+data on S\+P\+I. \hypertarget{spi_8c_ad8c491c38ec945ab510d8eef89564e7f}{\index{spi.\+c@{spi.\+c}!spi\+\_\+dma\+\_\+read2\+B@{spi\+\_\+dma\+\_\+read2\+B}}
+\index{spi\+\_\+dma\+\_\+read2\+B@{spi\+\_\+dma\+\_\+read2\+B}!spi.\+c@{spi.\+c}}
+\subsubsection[{spi\+\_\+dma\+\_\+read2\+B}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t spi\+\_\+dma\+\_\+read2\+B (
+\begin{DoxyParamCaption}
+\item[{uint16\+\_\+t}]{address}
+\end{DoxyParamCaption}
+)}}\label{spi_8c_ad8c491c38ec945ab510d8eef89564e7f}
+
+
+sends request to receieve 2 bytes 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & -\/ memory location address on wiznet \\
+\hline
+\end{DoxyParams}
+\hypertarget{spi_8c_a1a134ecb1e96d534aeab2ebea75b1d9d}{\index{spi.\+c@{spi.\+c}!spi\+\_\+dma\+\_\+send@{spi\+\_\+dma\+\_\+send}}
+\index{spi\+\_\+dma\+\_\+send@{spi\+\_\+dma\+\_\+send}!spi.\+c@{spi.\+c}}
+\subsubsection[{spi\+\_\+dma\+\_\+send}]{\setlength{\rightskip}{0pt plus 5cm}void spi\+\_\+dma\+\_\+send (
+\begin{DoxyParamCaption}
+\item[{uint16\+\_\+t}]{address, }
+\item[{uint16\+\_\+t}]{data\+\_\+len, }
+\item[{uint8\+\_\+t $\ast$}]{data\+\_\+buf}
+\end{DoxyParamCaption}
+)}}\label{spi_8c_a1a134ecb1e96d534aeab2ebea75b1d9d}
+
+
+send data via spi to wiznet 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & -\/ memory location address on wiznet \\
+\hline
+{\em data\+\_\+len} & -\/ length of data to send \\
+\hline
+{\em $\ast$data\+\_\+buf} & -\/ pointer to data to send \\
+\hline
+\end{DoxyParams}
+\hypertarget{spi_8c_a3c6116ca24459086780e70ecfa0b93c7}{\index{spi.\+c@{spi.\+c}!spi\+\_\+dma\+\_\+send2\+B@{spi\+\_\+dma\+\_\+send2\+B}}
+\index{spi\+\_\+dma\+\_\+send2\+B@{spi\+\_\+dma\+\_\+send2\+B}!spi.\+c@{spi.\+c}}
+\subsubsection[{spi\+\_\+dma\+\_\+send2\+B}]{\setlength{\rightskip}{0pt plus 5cm}void spi\+\_\+dma\+\_\+send2\+B (
+\begin{DoxyParamCaption}
+\item[{uint16\+\_\+t}]{address, }
+\item[{uint16\+\_\+t}]{data\+\_\+buf}
+\end{DoxyParamCaption}
+)}}\label{spi_8c_a3c6116ca24459086780e70ecfa0b93c7}
+
+
+send two bytes of data 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & -\/ memory location address on wiznet \\
+\hline
+{\em data\+\_\+buf} & -\/ value where 2 bytes are stored \\
+\hline
+\end{DoxyParams}
+\hypertarget{spi_8c_ad95e8d35a18bf4693f0cf50b68671abe}{\index{spi.\+c@{spi.\+c}!spi\+\_\+dma\+\_\+send\+Byte@{spi\+\_\+dma\+\_\+send\+Byte}}
+\index{spi\+\_\+dma\+\_\+send\+Byte@{spi\+\_\+dma\+\_\+send\+Byte}!spi.\+c@{spi.\+c}}
+\subsubsection[{spi\+\_\+dma\+\_\+send\+Byte}]{\setlength{\rightskip}{0pt plus 5cm}void spi\+\_\+dma\+\_\+send\+Byte (
+\begin{DoxyParamCaption}
+\item[{uint16\+\_\+t}]{address, }
+\item[{uint8\+\_\+t}]{data\+\_\+buf}
+\end{DoxyParamCaption}
+)}}\label{spi_8c_ad95e8d35a18bf4693f0cf50b68671abe}
+
+
+send byte to spi 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & -\/ memory location address on wiznet \\
+\hline
+{\em data\+\_\+buf} & -\/ value where data to send is stored \\
+\hline
+\end{DoxyParams}
