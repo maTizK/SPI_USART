@@ -12,9 +12,7 @@
 
 #include "main.h"
 #include "spi.h"
-#include "W5200.h"
-#include "modbus_mk.h"
-#include "tcpCLI.h"
+#include "usart.h"
 
 
 #ifdef DEBUG
@@ -50,6 +48,7 @@ information. */
 #define mainCREATE_SIMPLE_LED_FLASHER_DEMO_ONLY		0
 
 /*-----------------------------------------------------------*/
+void usart_task(void * ); 
 
 /** setup hardware for system */ 
 static void prvSetupHardware( void );
@@ -167,63 +166,21 @@ int main(void)
 #endif
 	prvSetupHardware();
 
-	xSmphrUSART = xSemaphoreCreateBinary();
+	xSemaphoreDMASPI = xSemaphoreCreateBinary();
 	
 	// ============now register CLI commands ===================
 	
-	FreeRTOS_CLIRegisterCommand( &xMotorCommand );
-       	FreeRTOS_CLIRegisterCommand( &xTaskStatsCommand);		
 
-	// create queues 
-	QSpd_handle = xQueueCreate(2, sizeof(QueueTelegram));
-	QTCP_handle = xQueueCreate(2, sizeof(QueueTelegram));
 	
 
 /*------------------added by Matic Knap 24 Jun 2014 ---------------------------------*/
 
 
 
-	// echo server task 
-	if ( xTaskCreate(tcp_srv_Task, "TCPsrv", configMINIMAL_STACK_SIZE * 10, 
-			NULL, mainFLASH_TASK_PRIORITY , &set_macTaskHandle)
-			!= pdTRUE) 
-	{
-		#ifdef DEBUG
-		t_printf("Error creating tcp_srv_task\n");
-		#endif
-		return -1;
-	}
-	else
-	{
-		#ifdef DEBUG
-		t_printf("Succsessfully created tcp_srv_task\n");
-		#endif
-			
-	}
-	
-	// run motor task
-	if (xTaskCreate(motorControl_task, "motor", configMINIMAL_STACK_SIZE * 10,
-		       	NULL, mainFLASH_TASK_PRIORITY , &motorHBHandle)
-		!= pdTRUE)
-	{
-		#ifdef DEBUG
-		t_printf("Error creating motor task.\n");
-		#endif
-		return -1;
-
-	}
-	else
-	{
-		#ifdef DEBUG
-		t_printf("Succsessfully created motor task\n");
-		#endif
-			
-	}
-
 
 	// set motor task 
-	if (xTaskCreate(motorHeartBeat_task, "motorHB", configMINIMAL_STACK_SIZE * 5,		       				
-			NULL, mainFLASH_TASK_PRIORITY  , &motorHeartBeatHandle)
+	if (xTaskCreate(usart_task, "usart", configMINIMAL_STACK_SIZE * 5,		       				
+			NULL, mainFLASH_TASK_PRIORITY  , NULL)
 			!= pdTRUE)
 	{
 		#ifdef DEBUG
@@ -267,6 +224,18 @@ int main(void)
 }
 
 
+void usart_task(void * pvParameters) 
+{
+
+
+	char * str = "Testni string\n";
+	int len = 14;
+	for(;;)
+	{
+		usart_dma_send(len, str);
+		vTaskDelay(1000/portTICK_RATE_MS);
+	}
+}
 
 /*! 	\fn static void prvSetupHardware(void) 
  *	\brief Sets up hardware
@@ -285,18 +254,6 @@ void prvSetupHardware( void )
 	
 	// init USARTx 
 	init_USARTx();
-
-	/*
-	 * Create task - initialize Wiznet
-	 * It creates task for Wiznet initialization and at end delete it. 
-	 * Function : 		init_W5200 from W5200.c file 
-	 * Stack size :		5 times minimial stack size 
-	 * Task priority :	main flash task priority + 2 
-	 * Parameters 	 :	no parameters (NULL)
-	 */  
-	xTaskCreate(init_W5200, "init_W5200", configMINIMAL_STACK_SIZE, 
-			NULL, mainFLASH_TASK_PRIORITY + 2 , NULL);
-
 
 	
 	

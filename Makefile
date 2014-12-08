@@ -19,9 +19,9 @@ TARGET = $(OBJDIR)/STM32F4_Test
 #---------- added Matic Knap 26 Jun 2014 -----------------
 
 SOURCES += App/STM32F4-Discovery/spi.c
-SOURCES += App/STM32F4-Discovery/W5200.c
-SOURCES += App/STM32F4-Discovery/modbus_mk.c
-SOURCES += App/STM32F4-Discovery/tcpCLI.c
+#SOURCES += App/STM32F4-Discovery/W5200.c
+SOURCES += App/STM32F4-Discovery/usart.c
+#SOURCES += App/STM32F4-Discovery/tcpCLI.c
 
 #SOURCES += App/STM32F4-Discovery/printf_my.c
 SOURCES += App/STM32F4-Discovery/printf-stdarg.c

@@ -13,8 +13,8 @@ int main(int argc, char **argv) {
 
     fd = open( argv[1], O_RDONLY | O_NOCTTY | O_NONBLOCK );
     cfmakeraw(&tio);
-    cfsetispeed(&tio,B230400);
-    cfsetospeed(&tio,B230400);
+    cfsetispeed(&tio,B38400);
+    cfsetospeed(&tio,B38400);
     tio.c_cflag = (tio.c_cflag & ~CSIZE) | CS8; 
     tio.c_iflag &= ~IGNBRK; 
     tio.c_lflag = 0; 

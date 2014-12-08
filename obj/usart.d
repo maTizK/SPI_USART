@@ -1,6 +1,7 @@
-obj/App/STM32F4-Discovery/main.o: App/STM32F4-Discovery/main.c \
- App/STM32F4-Discovery/main.h Source/include/FreeRTOS.h \
- Source/include/projdefs.h App/STM32F4-Discovery/FreeRTOSConfig.h \
+obj/App/STM32F4-Discovery/usart.o: App/STM32F4-Discovery/usart.c \
+ App/STM32F4-Discovery/usart.h App/STM32F4-Discovery/main.h \
+ Source/include/FreeRTOS.h Source/include/projdefs.h \
+ App/STM32F4-Discovery/FreeRTOSConfig.h \
  App/STM32F4-Discovery/Libraries/CMSIS/ST/STM32F4xx/Include/stm32f4xx.h \
  App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h \
  App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cmInstr.h \
@@ -38,8 +39,9 @@ obj/App/STM32F4-Discovery/main.o: App/STM32F4-Discovery/main.c \
  Source/include/mpu_wrappers.h Source/include/task.h \
  Source/include/list.h Source/include/timers.h Source/include/task.h \
  Source/include/semphr.h Source/include/queue.h \
- App/STM32F4-Discovery/stm32f4xx_conf.h App/STM32F4-Discovery/spi.h \
- App/STM32F4-Discovery/usart.h bojan/printf.h
+ App/STM32F4-Discovery/stm32f4xx_conf.h bojan/printf.h
+
+App/STM32F4-Discovery/usart.h:
 
 App/STM32F4-Discovery/main.h:
 
@@ -134,9 +136,5 @@ Source/include/semphr.h:
 Source/include/queue.h:
 
 App/STM32F4-Discovery/stm32f4xx_conf.h:
-
-App/STM32F4-Discovery/spi.h:
-
-App/STM32F4-Discovery/usart.h:
 
 bojan/printf.h:
