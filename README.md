@@ -1,4 +1,4 @@
-MOTOR_TCP_CLI_v2010
+SPI USART communication
 ====================
 
 Program provides simple control of motor via MODBUS communication. It sets up a simple telnet server. 
