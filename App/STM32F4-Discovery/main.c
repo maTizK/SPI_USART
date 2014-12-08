@@ -228,11 +228,13 @@ void usart_task(void * pvParameters)
 {
 
 
-	char * str = "Testni string\n";
-	int len = 14;
+	char  str[30];
+	int i = 0;
+	for (i = 0; i < 29; i++) str[i] =  i; 
+	int len = 13;
 	for(;;)
 	{
-		usart_dma_send(len, str);
+		usart_send(NULL, 0x0);
 		vTaskDelay(1000/portTICK_RATE_MS);
 	}
 }

@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
         for(i=0; i<len; i++)
         {
           if (buf[i]==0x01) continue;
-          printf("%c", buf[i]);
+          printf("|%x|", buf[i]);
         }
         if (len > 0) printf("\n");
         sleep(1);
