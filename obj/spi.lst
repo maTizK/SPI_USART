@@ -595,17 +595,17 @@
  190:App/STM32F4-Discovery/spi.c **** 	// enable clock for used IO pins
  191:App/STM32F4-Discovery/spi.c **** 	RCC_AHB1PeriphClockCmd(SPIy_MOSI_GPIO_CLK, ENABLE);
  413              		.loc 1 191 0
- 414 0006 0120     		movs	r0, #1
+ 414 0006 0220     		movs	r0, #2
  415 0008 0121     		movs	r1, #1
  416 000a FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
  192:App/STM32F4-Discovery/spi.c **** 	RCC_AHB1PeriphClockCmd(SPIy_MISO_GPIO_CLK, ENABLE);
  417              		.loc 1 192 0
- 418 000e 0120     		movs	r0, #1
+ 418 000e 0220     		movs	r0, #2
  419 0010 0121     		movs	r1, #1
  420 0012 FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
  193:App/STM32F4-Discovery/spi.c **** 	RCC_AHB1PeriphClockCmd(SPIy_SCK_GPIO_CLK, ENABLE);
  421              		.loc 1 193 0
- 422 0016 0120     		movs	r0, #1
+ 422 0016 0220     		movs	r0, #2
  423 0018 0121     		movs	r1, #1
  424 001a FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
  194:App/STM32F4-Discovery/spi.c **** 	
@@ -617,152 +617,152 @@
  200:App/STM32F4-Discovery/spi.c **** 	// MOSI PA7
  201:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_Pin = SPIy_MOSI_PIN ;
  425              		.loc 1 201 0
- 426 001e 8023     		movs	r3, #128
- 427 0020 BB65     		str	r3, [r7, #88]
+ 426 001e 4FF40043 		mov	r3, #32768
+ 427 0022 BB65     		str	r3, [r7, #88]
  202:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
  428              		.loc 1 202 0
- 429 0022 0223     		movs	r3, #2
- 430 0024 87F85C30 		strb	r3, [r7, #92]
+ 429 0024 0223     		movs	r3, #2
+ 430 0026 87F85C30 		strb	r3, [r7, #92]
  203:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
  431              		.loc 1 203 0
- 432 0028 0023     		movs	r3, #0
- 433 002a 87F85E30 		strb	r3, [r7, #94]
+ 432 002a 0023     		movs	r3, #0
+ 433 002c 87F85E30 		strb	r3, [r7, #94]
  204:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
  434              		.loc 1 204 0
- 435 002e 0323     		movs	r3, #3
- 436 0030 87F85D30 		strb	r3, [r7, #93]
+ 435 0030 0323     		movs	r3, #3
+ 436 0032 87F85D30 		strb	r3, [r7, #93]
  205:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
  437              		.loc 1 205 0
- 438 0034 0223     		movs	r3, #2
- 439 0036 87F85F30 		strb	r3, [r7, #95]
+ 438 0036 0223     		movs	r3, #2
+ 439 0038 87F85F30 		strb	r3, [r7, #95]
  206:App/STM32F4-Discovery/spi.c **** 	GPIO_Init(SPIy_MOSI_GPIO_PORT, &GPIO_InitStruct);
  440              		.loc 1 206 0
- 441 003a 07F15803 		add	r3, r7, #88
- 442 003e 8748     		ldr	r0, .L9
- 443 0040 1946     		mov	r1, r3
- 444 0042 FFF7FEFF 		bl	GPIO_Init
+ 441 003c 07F15803 		add	r3, r7, #88
+ 442 0040 8748     		ldr	r0, .L9
+ 443 0042 1946     		mov	r1, r3
+ 444 0044 FFF7FEFF 		bl	GPIO_Init
  207:App/STM32F4-Discovery/spi.c **** 	// SCK PA5
  208:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_Pin = SPIy_SCK_PIN;
  445              		.loc 1 208 0
- 446 0046 2023     		movs	r3, #32
- 447 0048 BB65     		str	r3, [r7, #88]
+ 446 0048 4FF40053 		mov	r3, #8192
+ 447 004c BB65     		str	r3, [r7, #88]
  209:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
  448              		.loc 1 209 0
- 449 004a 0223     		movs	r3, #2
- 450 004c 87F85C30 		strb	r3, [r7, #92]
+ 449 004e 0223     		movs	r3, #2
+ 450 0050 87F85C30 		strb	r3, [r7, #92]
  210:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
  451              		.loc 1 210 0
- 452 0050 0023     		movs	r3, #0
- 453 0052 87F85E30 		strb	r3, [r7, #94]
+ 452 0054 0023     		movs	r3, #0
+ 453 0056 87F85E30 		strb	r3, [r7, #94]
  211:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
  454              		.loc 1 211 0
- 455 0056 0323     		movs	r3, #3
- 456 0058 87F85D30 		strb	r3, [r7, #93]
+ 455 005a 0323     		movs	r3, #3
+ 456 005c 87F85D30 		strb	r3, [r7, #93]
  212:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
  457              		.loc 1 212 0
- 458 005c 0223     		movs	r3, #2
- 459 005e 87F85F30 		strb	r3, [r7, #95]
+ 458 0060 0223     		movs	r3, #2
+ 459 0062 87F85F30 		strb	r3, [r7, #95]
  213:App/STM32F4-Discovery/spi.c **** 	GPIO_Init(SPIy_SCK_GPIO_PORT, &GPIO_InitStruct);
  460              		.loc 1 213 0
- 461 0062 07F15803 		add	r3, r7, #88
- 462 0066 7D48     		ldr	r0, .L9
- 463 0068 1946     		mov	r1, r3
- 464 006a FFF7FEFF 		bl	GPIO_Init
+ 461 0066 07F15803 		add	r3, r7, #88
+ 462 006a 7D48     		ldr	r0, .L9
+ 463 006c 1946     		mov	r1, r3
+ 464 006e FFF7FEFF 		bl	GPIO_Init
  214:App/STM32F4-Discovery/spi.c **** 	// MISO PA6
  215:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_Pin = SPIy_MISO_PIN;
  465              		.loc 1 215 0
- 466 006e 4023     		movs	r3, #64
- 467 0070 BB65     		str	r3, [r7, #88]
+ 466 0072 4FF48043 		mov	r3, #16384
+ 467 0076 BB65     		str	r3, [r7, #88]
  216:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
  468              		.loc 1 216 0
- 469 0072 0223     		movs	r3, #2
- 470 0074 87F85C30 		strb	r3, [r7, #92]
+ 469 0078 0223     		movs	r3, #2
+ 470 007a 87F85C30 		strb	r3, [r7, #92]
  217:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_OType = GPIO_OType_OD;
  471              		.loc 1 217 0
- 472 0078 0123     		movs	r3, #1
- 473 007a 87F85E30 		strb	r3, [r7, #94]
+ 472 007e 0123     		movs	r3, #1
+ 473 0080 87F85E30 		strb	r3, [r7, #94]
  218:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
  474              		.loc 1 218 0
- 475 007e 0323     		movs	r3, #3
- 476 0080 87F85D30 		strb	r3, [r7, #93]
+ 475 0084 0323     		movs	r3, #3
+ 476 0086 87F85D30 		strb	r3, [r7, #93]
  219:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
  477              		.loc 1 219 0
- 478 0084 0023     		movs	r3, #0
- 479 0086 87F85F30 		strb	r3, [r7, #95]
+ 478 008a 0023     		movs	r3, #0
+ 479 008c 87F85F30 		strb	r3, [r7, #95]
  220:App/STM32F4-Discovery/spi.c **** 	GPIO_Init(SPIy_MISO_GPIO_PORT, &GPIO_InitStruct);
  480              		.loc 1 220 0
- 481 008a 07F15803 		add	r3, r7, #88
- 482 008e 7348     		ldr	r0, .L9
- 483 0090 1946     		mov	r1, r3
- 484 0092 FFF7FEFF 		bl	GPIO_Init
+ 481 0090 07F15803 		add	r3, r7, #88
+ 482 0094 7248     		ldr	r0, .L9
+ 483 0096 1946     		mov	r1, r3
+ 484 0098 FFF7FEFF 		bl	GPIO_Init
  221:App/STM32F4-Discovery/spi.c **** 	
  222:App/STM32F4-Discovery/spi.c **** 	// connect SPIx pins to SPI alternate function
  223:App/STM32F4-Discovery/spi.c **** 	GPIO_PinAFConfig(SPIy_MISO_GPIO_PORT, SPIy_MISO_SOURCE, SPIy_MISO_AF);
  485              		.loc 1 223 0
- 486 0096 7148     		ldr	r0, .L9
- 487 0098 0621     		movs	r1, #6
- 488 009a 0522     		movs	r2, #5
- 489 009c FFF7FEFF 		bl	GPIO_PinAFConfig
+ 486 009c 7048     		ldr	r0, .L9
+ 487 009e 0E21     		movs	r1, #14
+ 488 00a0 0522     		movs	r2, #5
+ 489 00a2 FFF7FEFF 		bl	GPIO_PinAFConfig
  224:App/STM32F4-Discovery/spi.c **** 	GPIO_PinAFConfig(SPIy_MOSI_GPIO_PORT, SPIy_MOSI_SOURCE, SPIy_MOSI_AF);
  490              		.loc 1 224 0
- 491 00a0 6E48     		ldr	r0, .L9
- 492 00a2 0721     		movs	r1, #7
- 493 00a4 0522     		movs	r2, #5
- 494 00a6 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 491 00a6 6E48     		ldr	r0, .L9
+ 492 00a8 0F21     		movs	r1, #15
+ 493 00aa 0522     		movs	r2, #5
+ 494 00ac FFF7FEFF 		bl	GPIO_PinAFConfig
  225:App/STM32F4-Discovery/spi.c **** 	GPIO_PinAFConfig(SPIy_SCK_GPIO_PORT,  SPIy_SCK_SOURCE,  SPIy_SCK_AF);
  495              		.loc 1 225 0
- 496 00aa 6C48     		ldr	r0, .L9
- 497 00ac 0521     		movs	r1, #5
- 498 00ae 0522     		movs	r2, #5
- 499 00b0 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 496 00b0 6B48     		ldr	r0, .L9
+ 497 00b2 0D21     		movs	r1, #13
+ 498 00b4 0522     		movs	r2, #5
+ 499 00b6 FFF7FEFF 		bl	GPIO_PinAFConfig
  226:App/STM32F4-Discovery/spi.c **** 
  227:App/STM32F4-Discovery/spi.c **** 		
  228:App/STM32F4-Discovery/spi.c **** 	/* Configure the chip select pin
  229:App/STM32F4-Discovery/spi.c **** 	   in this case we will use PA4 */
  230:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_Pin = SPIy_CS_PIN;
  500              		.loc 1 230 0
- 501 00b4 1023     		movs	r3, #16
- 502 00b6 BB65     		str	r3, [r7, #88]
+ 501 00ba 4FF48053 		mov	r3, #4096
+ 502 00be BB65     		str	r3, [r7, #88]
  231:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
  503              		.loc 1 231 0
- 504 00b8 0123     		movs	r3, #1
- 505 00ba 87F85C30 		strb	r3, [r7, #92]
+ 504 00c0 0123     		movs	r3, #1
+ 505 00c2 87F85C30 		strb	r3, [r7, #92]
  232:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
  506              		.loc 1 232 0
- 507 00be 0023     		movs	r3, #0
- 508 00c0 87F85E30 		strb	r3, [r7, #94]
+ 507 00c6 0023     		movs	r3, #0
+ 508 00c8 87F85E30 		strb	r3, [r7, #94]
  233:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
  509              		.loc 1 233 0
- 510 00c4 0323     		movs	r3, #3
- 511 00c6 87F85D30 		strb	r3, [r7, #93]
+ 510 00cc 0323     		movs	r3, #3
+ 511 00ce 87F85D30 		strb	r3, [r7, #93]
  234:App/STM32F4-Discovery/spi.c **** 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
  512              		.loc 1 234 0
- 513 00ca 0123     		movs	r3, #1
- 514 00cc 87F85F30 		strb	r3, [r7, #95]
+ 513 00d2 0123     		movs	r3, #1
+ 514 00d4 87F85F30 		strb	r3, [r7, #95]
  235:App/STM32F4-Discovery/spi.c **** 	GPIO_Init(SPIy_CS_GPIO_PORT, &GPIO_InitStruct);
  515              		.loc 1 235 0
- 516 00d0 07F15803 		add	r3, r7, #88
- 517 00d4 6148     		ldr	r0, .L9
- 518 00d6 1946     		mov	r1, r3
- 519 00d8 FFF7FEFF 		bl	GPIO_Init
+ 516 00d8 07F15803 		add	r3, r7, #88
+ 517 00dc 6048     		ldr	r0, .L9
+ 518 00de 1946     		mov	r1, r3
+ 519 00e0 FFF7FEFF 		bl	GPIO_Init
  236:App/STM32F4-Discovery/spi.c **** 	
  237:App/STM32F4-Discovery/spi.c **** 	CSOFFy(); // set PA4 high
  520              		.loc 1 237 0
- 521 00dc 5F4B     		ldr	r3, .L9
- 522 00de 5F4A     		ldr	r2, .L9
- 523 00e0 128B     		ldrh	r2, [r2, #24]	@ movhi
- 524 00e2 92B2     		uxth	r2, r2
- 525 00e4 42F01002 		orr	r2, r2, #16
- 526 00e8 92B2     		uxth	r2, r2
- 527 00ea 1A83     		strh	r2, [r3, #24]	@ movhi
+ 521 00e4 5E4B     		ldr	r3, .L9
+ 522 00e6 5E4A     		ldr	r2, .L9
+ 523 00e8 128B     		ldrh	r2, [r2, #24]	@ movhi
+ 524 00ea 92B2     		uxth	r2, r2
+ 525 00ec 42F48052 		orr	r2, r2, #4096
+ 526 00f0 92B2     		uxth	r2, r2
+ 527 00f2 1A83     		strh	r2, [r3, #24]	@ movhi
  238:App/STM32F4-Discovery/spi.c **** 
  239:App/STM32F4-Discovery/spi.c **** 
  240:App/STM32F4-Discovery/spi.c **** 	// enable peripheral clock
  241:App/STM32F4-Discovery/spi.c **** 	RCC_APB2PeriphClockCmd(SPIy_CLK, ENABLE);
  528              		.loc 1 241 0
- 529 00ec 4FF48050 		mov	r0, #4096
- 530 00f0 0121     		movs	r1, #1
- 531 00f2 FFF7FEFF 		bl	RCC_APB2PeriphClockCmd
+ 529 00f4 4FF48040 		mov	r0, #16384
+ 530 00f8 0121     		movs	r1, #1
+ 531 00fa FFF7FEFF 		bl	RCC_APB2PeriphClockCmd
  242:App/STM32F4-Discovery/spi.c **** 	
  243:App/STM32F4-Discovery/spi.c **** 	/* configure SPIx in Mode 0 
  244:App/STM32F4-Discovery/spi.c **** 	 * CPOL = 0 --> clock is low when idle
@@ -770,48 +770,48 @@
  246:App/STM32F4-Discovery/spi.c **** 	 */
  247:App/STM32F4-Discovery/spi.c **** 	SPI_InitStruct.SPI_Direction = SPI_Direction_2Lines_FullDuplex; // set to full duplex mode, sepera
  532              		.loc 1 247 0
- 533 00f6 0023     		movs	r3, #0
- 534 00f8 A7F84430 		strh	r3, [r7, #68]	@ movhi
+ 533 00fe 0023     		movs	r3, #0
+ 534 0100 A7F84430 		strh	r3, [r7, #68]	@ movhi
  248:App/STM32F4-Discovery/spi.c **** 	SPI_InitStruct.SPI_Mode = SPI_Mode_Master;     // transmit in master mode, NSS pin has to be alway
  535              		.loc 1 248 0
- 536 00fc 4FF48273 		mov	r3, #260
- 537 0100 A7F84630 		strh	r3, [r7, #70]	@ movhi
+ 536 0104 4FF48273 		mov	r3, #260
+ 537 0108 A7F84630 		strh	r3, [r7, #70]	@ movhi
  249:App/STM32F4-Discovery/spi.c **** 	SPI_InitStruct.SPI_DataSize = SPI_DataSize_8b; // one packet of data is 8 bits wide
  538              		.loc 1 249 0
- 539 0104 0023     		movs	r3, #0
- 540 0106 A7F84830 		strh	r3, [r7, #72]	@ movhi
+ 539 010c 0023     		movs	r3, #0
+ 540 010e A7F84830 		strh	r3, [r7, #72]	@ movhi
  250:App/STM32F4-Discovery/spi.c **** 	SPI_InitStruct.SPI_CPOL = SPI_CPOL_Low;        // clock is low when idle
  541              		.loc 1 250 0
- 542 010a 0023     		movs	r3, #0
- 543 010c A7F84A30 		strh	r3, [r7, #74]	@ movhi
+ 542 0112 0023     		movs	r3, #0
+ 543 0114 A7F84A30 		strh	r3, [r7, #74]	@ movhi
  251:App/STM32F4-Discovery/spi.c **** 	SPI_InitStruct.SPI_CPHA = SPI_CPHA_1Edge;      // data sampled at second edge
  544              		.loc 1 251 0
- 545 0110 0023     		movs	r3, #0
- 546 0112 A7F84C30 		strh	r3, [r7, #76]	@ movhi
+ 545 0118 0023     		movs	r3, #0
+ 546 011a A7F84C30 		strh	r3, [r7, #76]	@ movhi
  252:App/STM32F4-Discovery/spi.c **** 	SPI_InitStruct.SPI_NSS = SPI_NSS_Soft | SPI_NSSInternalSoft_Set; // set the NSS management to inte
  547              		.loc 1 252 0
- 548 0116 4FF44073 		mov	r3, #768
- 549 011a A7F84E30 		strh	r3, [r7, #78]	@ movhi
+ 548 011e 4FF44073 		mov	r3, #768
+ 549 0122 A7F84E30 		strh	r3, [r7, #78]	@ movhi
  253:App/STM32F4-Discovery/spi.c **** 	SPI_InitStruct.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_4; // SPI frequency is APB2 frequency
  550              		.loc 1 253 0
- 551 011e 0823     		movs	r3, #8
- 552 0120 A7F85030 		strh	r3, [r7, #80]	@ movhi
+ 551 0126 0823     		movs	r3, #8
+ 552 0128 A7F85030 		strh	r3, [r7, #80]	@ movhi
  254:App/STM32F4-Discovery/spi.c **** 	SPI_InitStruct.SPI_FirstBit = SPI_FirstBit_MSB;// data is transmitted MSB first
  553              		.loc 1 254 0
- 554 0124 0023     		movs	r3, #0
- 555 0126 A7F85230 		strh	r3, [r7, #82]	@ movhi
+ 554 012c 0023     		movs	r3, #0
+ 555 012e A7F85230 		strh	r3, [r7, #82]	@ movhi
  255:App/STM32F4-Discovery/spi.c **** 	SPI_Init(SPIy, &SPI_InitStruct); 
  556              		.loc 1 255 0
- 557 012a 07F14403 		add	r3, r7, #68
- 558 012e 4C48     		ldr	r0, .L9+4
- 559 0130 1946     		mov	r1, r3
- 560 0132 FFF7FEFF 		bl	SPI_Init
+ 557 0132 07F14403 		add	r3, r7, #68
+ 558 0136 4B48     		ldr	r0, .L9+4
+ 559 0138 1946     		mov	r1, r3
+ 560 013a FFF7FEFF 		bl	SPI_Init
  256:App/STM32F4-Discovery/spi.c **** 	
  257:App/STM32F4-Discovery/spi.c **** 	SPI_Cmd(SPIy, ENABLE);			
  561              		.loc 1 257 0
- 562 0136 4A48     		ldr	r0, .L9+4
- 563 0138 0121     		movs	r1, #1
- 564 013a FFF7FEFF 		bl	SPI_Cmd
+ 562 013e 4948     		ldr	r0, .L9+4
+ 563 0140 0121     		movs	r1, #1
+ 564 0142 FFF7FEFF 		bl	SPI_Cmd
  258:App/STM32F4-Discovery/spi.c **** 	
  259:App/STM32F4-Discovery/spi.c **** 
  260:App/STM32F4-Discovery/spi.c **** 	/* setup DMA */
@@ -819,241 +819,241 @@
  262:App/STM32F4-Discovery/spi.c **** 	// enable clock 
  263:App/STM32F4-Discovery/spi.c **** 	RCC_AHB1PeriphClockCmd (SPIy_DMA_CLK, ENABLE); 
  565              		.loc 1 263 0
- 566 013e 4FF48000 		mov	r0, #4194304
- 567 0142 0121     		movs	r1, #1
- 568 0144 FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
+ 566 0146 4FF40010 		mov	r0, #2097152
+ 567 014a 0121     		movs	r1, #1
+ 568 014c FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
  264:App/STM32F4-Discovery/spi.c **** 	
  265:App/STM32F4-Discovery/spi.c **** 	// start with blank DMA configuration
  266:App/STM32F4-Discovery/spi.c **** 	DMA_DeInit (SPIy_TX_DMA_STREAM);
  569              		.loc 1 266 0
- 570 0148 4648     		ldr	r0, .L9+8
- 571 014a FFF7FEFF 		bl	DMA_DeInit
+ 570 0150 4548     		ldr	r0, .L9+8
+ 571 0152 FFF7FEFF 		bl	DMA_DeInit
  267:App/STM32F4-Discovery/spi.c **** 	DMA_DeInit (SPIy_RX_DMA_STREAM);
  572              		.loc 1 267 0
- 573 014e 4648     		ldr	r0, .L9+12
- 574 0150 FFF7FEFF 		bl	DMA_DeInit
+ 573 0156 4548     		ldr	r0, .L9+12
+ 574 0158 FFF7FEFF 		bl	DMA_DeInit
  268:App/STM32F4-Discovery/spi.c **** 
  269:App/STM32F4-Discovery/spi.c **** 	// check if DMA stream is disabled before enabling 
  270:App/STM32F4-Discovery/spi.c **** 	// this is useful when stream is enabled and disabled multiple times. 
  271:App/STM32F4-Discovery/spi.c **** 	while (DMA_GetCmdStatus (SPIy_TX_DMA_STREAM) != DISABLE);
  575              		.loc 1 271 0
- 576 0154 00BF     		nop
+ 576 015c 00BF     		nop
  577              	.L7:
  578              		.loc 1 271 0 is_stmt 0 discriminator 1
- 579 0156 4348     		ldr	r0, .L9+8
- 580 0158 FFF7FEFF 		bl	DMA_GetCmdStatus
- 581 015c 0346     		mov	r3, r0
- 582 015e 002B     		cmp	r3, #0
- 583 0160 F9D1     		bne	.L7
+ 579 015e 4248     		ldr	r0, .L9+8
+ 580 0160 FFF7FEFF 		bl	DMA_GetCmdStatus
+ 581 0164 0346     		mov	r3, r0
+ 582 0166 002B     		cmp	r3, #0
+ 583 0168 F9D1     		bne	.L7
  272:App/STM32F4-Discovery/spi.c **** 	while (DMA_GetCmdStatus (SPIy_RX_DMA_STREAM) != DISABLE);
  584              		.loc 1 272 0 is_stmt 1
- 585 0162 00BF     		nop
+ 585 016a 00BF     		nop
  586              	.L8:
  587              		.loc 1 272 0 is_stmt 0 discriminator 1
- 588 0164 4048     		ldr	r0, .L9+12
- 589 0166 FFF7FEFF 		bl	DMA_GetCmdStatus
- 590 016a 0346     		mov	r3, r0
- 591 016c 002B     		cmp	r3, #0
- 592 016e F9D1     		bne	.L8
+ 588 016c 3F48     		ldr	r0, .L9+12
+ 589 016e FFF7FEFF 		bl	DMA_GetCmdStatus
+ 590 0172 0346     		mov	r3, r0
+ 591 0174 002B     		cmp	r3, #0
+ 592 0176 F9D1     		bne	.L8
  273:App/STM32F4-Discovery/spi.c **** 	
  274:App/STM32F4-Discovery/spi.c **** 	
  275:App/STM32F4-Discovery/spi.c **** 	DMA_StructInit(&DMA_InitStruct);
  593              		.loc 1 275 0 is_stmt 1
- 594 0170 07F10803 		add	r3, r7, #8
- 595 0174 1846     		mov	r0, r3
- 596 0176 FFF7FEFF 		bl	DMA_StructInit
+ 594 0178 07F10803 		add	r3, r7, #8
+ 595 017c 1846     		mov	r0, r3
+ 596 017e FFF7FEFF 		bl	DMA_StructInit
  276:App/STM32F4-Discovery/spi.c ****   	//Configure DMA Initialization Structure
  277:App/STM32F4-Discovery/spi.c **** 	//DMA_InitStruct.DMA_FIFOMode = DMA_FIFOMode_Disable ;
  278:App/STM32F4-Discovery/spi.c ****  	//DMA_InitStruct.DMA_FIFOThreshold = DMA_FIFOThreshold_HalfFull ;
  279:App/STM32F4-Discovery/spi.c ****   	//DMA_InitStruct.DMA_MemoryBurst = DMA_MemoryBurst_Single ;
  280:App/STM32F4-Discovery/spi.c ****   	DMA_InitStruct.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
  597              		.loc 1 280 0
- 598 017a 0023     		movs	r3, #0
- 599 017c BB62     		str	r3, [r7, #40]
+ 598 0182 0023     		movs	r3, #0
+ 599 0184 BB62     		str	r3, [r7, #40]
  281:App/STM32F4-Discovery/spi.c ****   	DMA_InitStruct.DMA_MemoryInc = DMA_MemoryInc_Enable;
  600              		.loc 1 281 0
- 601 017e 4FF48063 		mov	r3, #1024
- 602 0182 3B62     		str	r3, [r7, #32]
+ 601 0186 4FF48063 		mov	r3, #1024
+ 602 018a 3B62     		str	r3, [r7, #32]
  282:App/STM32F4-Discovery/spi.c ****   	DMA_InitStruct.DMA_Mode = DMA_Mode_Normal;
  603              		.loc 1 282 0
- 604 0184 0023     		movs	r3, #0
- 605 0186 FB62     		str	r3, [r7, #44]
+ 604 018c 0023     		movs	r3, #0
+ 605 018e FB62     		str	r3, [r7, #44]
  283:App/STM32F4-Discovery/spi.c ****   	DMA_InitStruct.DMA_PeripheralBaseAddr =(uint32_t) (&(SPIy->DR)) ;
  606              		.loc 1 283 0
- 607 0188 384B     		ldr	r3, .L9+16
- 608 018a FB60     		str	r3, [r7, #12]
+ 607 0190 374B     		ldr	r3, .L9+16
+ 608 0192 FB60     		str	r3, [r7, #12]
  284:App/STM32F4-Discovery/spi.c ****   	DMA_InitStruct.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
  609              		.loc 1 284 0
- 610 018c 0023     		movs	r3, #0
- 611 018e 3B64     		str	r3, [r7, #64]
+ 610 0194 0023     		movs	r3, #0
+ 611 0196 3B64     		str	r3, [r7, #64]
  285:App/STM32F4-Discovery/spi.c ****   	DMA_InitStruct.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
  612              		.loc 1 285 0
- 613 0190 0023     		movs	r3, #0
- 614 0192 7B62     		str	r3, [r7, #36]
+ 613 0198 0023     		movs	r3, #0
+ 614 019a 7B62     		str	r3, [r7, #36]
  286:App/STM32F4-Discovery/spi.c ****   	DMA_InitStruct.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
  615              		.loc 1 286 0
- 616 0194 0023     		movs	r3, #0
- 617 0196 FB61     		str	r3, [r7, #28]
+ 616 019c 0023     		movs	r3, #0
+ 617 019e FB61     		str	r3, [r7, #28]
  287:App/STM32F4-Discovery/spi.c ****   	DMA_InitStruct.DMA_Priority = DMA_Priority_High;
  618              		.loc 1 287 0
- 619 0198 4FF40033 		mov	r3, #131072
- 620 019c 3B63     		str	r3, [r7, #48]
+ 619 01a0 4FF40033 		mov	r3, #131072
+ 620 01a4 3B63     		str	r3, [r7, #48]
  288:App/STM32F4-Discovery/spi.c ****   	// Configure TX DMA 
  289:App/STM32F4-Discovery/spi.c ****   	DMA_InitStruct.DMA_Channel = SPIy_TX_DMA_CHANNEL ;
  621              		.loc 1 289 0
- 622 019e 4FF0C063 		mov	r3, #100663296
- 623 01a2 BB60     		str	r3, [r7, #8]
+ 622 01a6 0023     		movs	r3, #0
+ 623 01a8 BB60     		str	r3, [r7, #8]
  290:App/STM32F4-Discovery/spi.c ****   	DMA_InitStruct.DMA_DIR = DMA_DIR_MemoryToPeripheral ;
  624              		.loc 1 290 0
- 625 01a4 4023     		movs	r3, #64
- 626 01a6 7B61     		str	r3, [r7, #20]
+ 625 01aa 4023     		movs	r3, #64
+ 626 01ac 7B61     		str	r3, [r7, #20]
  291:App/STM32F4-Discovery/spi.c ****   	DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t) &bufferTX ;
  627              		.loc 1 291 0
- 628 01a8 314B     		ldr	r3, .L9+20
- 629 01aa 3B61     		str	r3, [r7, #16]
+ 628 01ae 314B     		ldr	r3, .L9+20
+ 629 01b0 3B61     		str	r3, [r7, #16]
  292:App/STM32F4-Discovery/spi.c **** 	DMA_InitStruct.DMA_BufferSize = MAX_BUFFER_LENGTH;
  630              		.loc 1 292 0
- 631 01ac 4FF4FA63 		mov	r3, #2000
- 632 01b0 BB61     		str	r3, [r7, #24]
+ 631 01b2 4FF4FA63 		mov	r3, #2000
+ 632 01b6 BB61     		str	r3, [r7, #24]
  293:App/STM32F4-Discovery/spi.c ****   	DMA_Init(SPIy_TX_DMA_STREAM, &DMA_InitStruct);
  633              		.loc 1 293 0
- 634 01b2 07F10803 		add	r3, r7, #8
- 635 01b6 2B48     		ldr	r0, .L9+8
- 636 01b8 1946     		mov	r1, r3
- 637 01ba FFF7FEFF 		bl	DMA_Init
+ 634 01b8 07F10803 		add	r3, r7, #8
+ 635 01bc 2A48     		ldr	r0, .L9+8
+ 636 01be 1946     		mov	r1, r3
+ 637 01c0 FFF7FEFF 		bl	DMA_Init
  294:App/STM32F4-Discovery/spi.c **** 	// Configure RX DMA 
  295:App/STM32F4-Discovery/spi.c ****   	DMA_InitStruct.DMA_Channel = SPIy_RX_DMA_CHANNEL ;
  638              		.loc 1 295 0
- 639 01be 4FF0C063 		mov	r3, #100663296
- 640 01c2 BB60     		str	r3, [r7, #8]
+ 639 01c4 0023     		movs	r3, #0
+ 640 01c6 BB60     		str	r3, [r7, #8]
  296:App/STM32F4-Discovery/spi.c **** 	DMA_InitStruct.DMA_DIR = DMA_DIR_PeripheralToMemory ;
  641              		.loc 1 296 0
- 642 01c4 0023     		movs	r3, #0
- 643 01c6 7B61     		str	r3, [r7, #20]
+ 642 01c8 0023     		movs	r3, #0
+ 643 01ca 7B61     		str	r3, [r7, #20]
  297:App/STM32F4-Discovery/spi.c **** 	DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t)&bufferRX; 
  644              		.loc 1 297 0
- 645 01c8 2A4B     		ldr	r3, .L9+24
- 646 01ca 3B61     		str	r3, [r7, #16]
+ 645 01cc 2A4B     		ldr	r3, .L9+24
+ 646 01ce 3B61     		str	r3, [r7, #16]
  298:App/STM32F4-Discovery/spi.c **** 	DMA_InitStruct.DMA_BufferSize = MAX_BUFFER_LENGTH;
  647              		.loc 1 298 0
- 648 01cc 4FF4FA63 		mov	r3, #2000
- 649 01d0 BB61     		str	r3, [r7, #24]
+ 648 01d0 4FF4FA63 		mov	r3, #2000
+ 649 01d4 BB61     		str	r3, [r7, #24]
  299:App/STM32F4-Discovery/spi.c **** 	DMA_Init(SPIy_RX_DMA_STREAM, &DMA_InitStruct);	
  650              		.loc 1 299 0
- 651 01d2 07F10803 		add	r3, r7, #8
- 652 01d6 2448     		ldr	r0, .L9+12
- 653 01d8 1946     		mov	r1, r3
- 654 01da FFF7FEFF 		bl	DMA_Init
+ 651 01d6 07F10803 		add	r3, r7, #8
+ 652 01da 2448     		ldr	r0, .L9+12
+ 653 01dc 1946     		mov	r1, r3
+ 654 01de FFF7FEFF 		bl	DMA_Init
  300:App/STM32F4-Discovery/spi.c **** 	
  301:App/STM32F4-Discovery/spi.c **** 	DMA_ITConfig(SPIy_TX_DMA_STREAM, DMA_IT_TC, ENABLE); 
  655              		.loc 1 301 0
- 656 01de 2148     		ldr	r0, .L9+8
- 657 01e0 1021     		movs	r1, #16
- 658 01e2 0122     		movs	r2, #1
- 659 01e4 FFF7FEFF 		bl	DMA_ITConfig
+ 656 01e2 2148     		ldr	r0, .L9+8
+ 657 01e4 1021     		movs	r1, #16
+ 658 01e6 0122     		movs	r2, #1
+ 659 01e8 FFF7FEFF 		bl	DMA_ITConfig
  302:App/STM32F4-Discovery/spi.c **** 	DMA_ITConfig(SPIy_RX_DMA_STREAM, DMA_IT_TC, ENABLE); 
  660              		.loc 1 302 0
- 661 01e8 1F48     		ldr	r0, .L9+12
- 662 01ea 1021     		movs	r1, #16
- 663 01ec 0122     		movs	r2, #1
- 664 01ee FFF7FEFF 		bl	DMA_ITConfig
+ 661 01ec 1F48     		ldr	r0, .L9+12
+ 662 01ee 1021     		movs	r1, #16
+ 663 01f0 0122     		movs	r2, #1
+ 664 01f2 FFF7FEFF 		bl	DMA_ITConfig
  303:App/STM32F4-Discovery/spi.c ****   
  304:App/STM32F4-Discovery/spi.c **** 	SPI_I2S_ClearFlag(SPIy, SPI_I2S_FLAG_TXE);
  665              		.loc 1 304 0
- 666 01f2 1B48     		ldr	r0, .L9+4
- 667 01f4 0221     		movs	r1, #2
- 668 01f6 FFF7FEFF 		bl	SPI_I2S_ClearFlag
+ 666 01f6 1B48     		ldr	r0, .L9+4
+ 667 01f8 0221     		movs	r1, #2
+ 668 01fa FFF7FEFF 		bl	SPI_I2S_ClearFlag
  305:App/STM32F4-Discovery/spi.c **** 	SPI_I2S_ClearFlag(SPIy, SPI_I2S_FLAG_RXNE);
  669              		.loc 1 305 0
- 670 01fa 1948     		ldr	r0, .L9+4
- 671 01fc 0121     		movs	r1, #1
- 672 01fe FFF7FEFF 		bl	SPI_I2S_ClearFlag
+ 670 01fe 1948     		ldr	r0, .L9+4
+ 671 0200 0121     		movs	r1, #1
+ 672 0202 FFF7FEFF 		bl	SPI_I2S_ClearFlag
  306:App/STM32F4-Discovery/spi.c ****   	
  307:App/STM32F4-Discovery/spi.c **** 	// enable the interrupt in the NVIC
  308:App/STM32F4-Discovery/spi.c ****  	NVIC_InitStruct.NVIC_IRQChannel = SPIy_TX_DMA_IRQn;
  673              		.loc 1 308 0
- 674 0202 3B23     		movs	r3, #59
- 675 0204 3B71     		strb	r3, [r7, #4]
+ 674 0206 0F23     		movs	r3, #15
+ 675 0208 3B71     		strb	r3, [r7, #4]
  309:App/STM32F4-Discovery/spi.c ****   	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY
  676              		.loc 1 309 0
- 677 0206 0723     		movs	r3, #7
- 678 0208 7B71     		strb	r3, [r7, #5]
+ 677 020a 0723     		movs	r3, #7
+ 678 020c 7B71     		strb	r3, [r7, #5]
  310:App/STM32F4-Discovery/spi.c ****  	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0x1;
  679              		.loc 1 310 0
- 680 020a 0123     		movs	r3, #1
- 681 020c BB71     		strb	r3, [r7, #6]
+ 680 020e 0123     		movs	r3, #1
+ 681 0210 BB71     		strb	r3, [r7, #6]
  311:App/STM32F4-Discovery/spi.c ****   	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
  682              		.loc 1 311 0
- 683 020e 0123     		movs	r3, #1
- 684 0210 FB71     		strb	r3, [r7, #7]
+ 683 0212 0123     		movs	r3, #1
+ 684 0214 FB71     		strb	r3, [r7, #7]
  312:App/STM32F4-Discovery/spi.c ****   	NVIC_Init (&NVIC_InitStruct);
  685              		.loc 1 312 0
- 686 0212 3B1D     		adds	r3, r7, #4
- 687 0214 1846     		mov	r0, r3
- 688 0216 FFF7FEFF 		bl	NVIC_Init
+ 686 0216 3B1D     		adds	r3, r7, #4
+ 687 0218 1846     		mov	r0, r3
+ 688 021a FFF7FEFF 		bl	NVIC_Init
  313:App/STM32F4-Discovery/spi.c **** 	// enable the interrupt in the NVIC
  314:App/STM32F4-Discovery/spi.c ****  	NVIC_InitStruct.NVIC_IRQChannel = SPIy_RX_DMA_IRQn;
  689              		.loc 1 314 0
- 690 021a 3A23     		movs	r3, #58
- 691 021c 3B71     		strb	r3, [r7, #4]
+ 690 021e 0E23     		movs	r3, #14
+ 691 0220 3B71     		strb	r3, [r7, #4]
  315:App/STM32F4-Discovery/spi.c ****    	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORIT
  692              		.loc 1 315 0
- 693 021e 0723     		movs	r3, #7
- 694 0220 7B71     		strb	r3, [r7, #5]
+ 693 0222 0723     		movs	r3, #7
+ 694 0224 7B71     		strb	r3, [r7, #5]
  316:App/STM32F4-Discovery/spi.c ****  	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0x1;
  695              		.loc 1 316 0
- 696 0222 0123     		movs	r3, #1
- 697 0224 BB71     		strb	r3, [r7, #6]
+ 696 0226 0123     		movs	r3, #1
+ 697 0228 BB71     		strb	r3, [r7, #6]
  317:App/STM32F4-Discovery/spi.c ****   	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
  698              		.loc 1 317 0
- 699 0226 0123     		movs	r3, #1
- 700 0228 FB71     		strb	r3, [r7, #7]
+ 699 022a 0123     		movs	r3, #1
+ 700 022c FB71     		strb	r3, [r7, #7]
  318:App/STM32F4-Discovery/spi.c ****   	NVIC_Init (&NVIC_InitStruct);
  701              		.loc 1 318 0
- 702 022a 3B1D     		adds	r3, r7, #4
- 703 022c 1846     		mov	r0, r3
- 704 022e FFF7FEFF 		bl	NVIC_Init
+ 702 022e 3B1D     		adds	r3, r7, #4
+ 703 0230 1846     		mov	r0, r3
+ 704 0232 FFF7FEFF 		bl	NVIC_Init
  319:App/STM32F4-Discovery/spi.c ****   	// Enable dma tx and rx request
  320:App/STM32F4-Discovery/spi.c **** 	SPI_I2S_DMACmd (SPIy, SPI_I2S_DMAReq_Tx, ENABLE);	
  705              		.loc 1 320 0
- 706 0232 0B48     		ldr	r0, .L9+4
- 707 0234 0221     		movs	r1, #2
- 708 0236 0122     		movs	r2, #1
- 709 0238 FFF7FEFF 		bl	SPI_I2S_DMACmd
+ 706 0236 0B48     		ldr	r0, .L9+4
+ 707 0238 0221     		movs	r1, #2
+ 708 023a 0122     		movs	r2, #1
+ 709 023c FFF7FEFF 		bl	SPI_I2S_DMACmd
  321:App/STM32F4-Discovery/spi.c **** 	SPI_I2S_DMACmd (SPIy, SPI_I2S_DMAReq_Rx, ENABLE);	
  710              		.loc 1 321 0
- 711 023c 0848     		ldr	r0, .L9+4
- 712 023e 0121     		movs	r1, #1
- 713 0240 0122     		movs	r2, #1
- 714 0242 FFF7FEFF 		bl	SPI_I2S_DMACmd
+ 711 0240 0848     		ldr	r0, .L9+4
+ 712 0242 0121     		movs	r1, #1
+ 713 0244 0122     		movs	r2, #1
+ 714 0246 FFF7FEFF 		bl	SPI_I2S_DMACmd
  322:App/STM32F4-Discovery/spi.c **** 
  323:App/STM32F4-Discovery/spi.c **** 	xSemaphoreDMASPIy = xSemaphoreCreateBinary();
  715              		.loc 1 323 0
- 716 0246 0120     		movs	r0, #1
- 717 0248 0021     		movs	r1, #0
- 718 024a 0322     		movs	r2, #3
- 719 024c FFF7FEFF 		bl	xQueueGenericCreate
- 720 0250 0246     		mov	r2, r0
- 721 0252 094B     		ldr	r3, .L9+28
- 722 0254 1A60     		str	r2, [r3]
+ 716 024a 0120     		movs	r0, #1
+ 717 024c 0021     		movs	r1, #0
+ 718 024e 0322     		movs	r2, #3
+ 719 0250 FFF7FEFF 		bl	xQueueGenericCreate
+ 720 0254 0246     		mov	r2, r0
+ 721 0256 094B     		ldr	r3, .L9+28
+ 722 0258 1A60     		str	r2, [r3]
  324:App/STM32F4-Discovery/spi.c **** 	
  325:App/STM32F4-Discovery/spi.c **** }
  723              		.loc 1 325 0
- 724 0256 6037     		adds	r7, r7, #96
- 725 0258 BD46     		mov	sp, r7
+ 724 025a 6037     		adds	r7, r7, #96
+ 725 025c BD46     		mov	sp, r7
  726              		@ sp needed
- 727 025a 80BD     		pop	{r7, pc}
+ 727 025e 80BD     		pop	{r7, pc}
  728              	.L10:
  729              		.align	2
  730              	.L9:
- 731 025c 00000240 		.word	1073872896
- 732 0260 00300140 		.word	1073819648
- 733 0264 58640240 		.word	1073898584
- 734 0268 40640240 		.word	1073898560
- 735 026c 0C300140 		.word	1073819660
- 736 0270 00000000 		.word	bufferTX
- 737 0274 00000000 		.word	bufferRX
- 738 0278 00000000 		.word	xSemaphoreDMASPIy
+ 731 0260 00040240 		.word	1073873920
+ 732 0264 00380040 		.word	1073756160
+ 733 0268 70600240 		.word	1073897584
+ 734 026c 58600240 		.word	1073897560
+ 735 0270 0C380040 		.word	1073756172
+ 736 0274 00000000 		.word	bufferTX
+ 737 0278 00000000 		.word	bufferRX
+ 738 027c 00000000 		.word	xSemaphoreDMASPIy
  739              		.cfi_endproc
  740              	.LFE111:
  742              		.section	.text.DMA2_Stream2_IRQHandler,"ax",%progbits
@@ -1314,187 +1314,447 @@
  937 0090 04ED00E0 		.word	-536810236
  938              		.cfi_endproc
  939              	.LFE113:
- 941              		.section	.text.spi_dma_write_read,"ax",%progbits
+ 941              		.section	.text.DMA1_Stream3_IRQHandler,"ax",%progbits
  942              		.align	2
- 943              		.global	spi_dma_write_read
+ 943              		.global	DMA1_Stream3_IRQHandler
  944              		.thumb
  945              		.thumb_func
- 947              	spi_dma_write_read:
+ 947              	DMA1_Stream3_IRQHandler:
  948              	.LFB114:
  389:App/STM32F4-Discovery/spi.c **** 
- 390:App/STM32F4-Discovery/spi.c **** 
- 391:App/STM32F4-Discovery/spi.c **** /*---------------------------- Matic Knap 25 Jun 2014 ---------------------*/
- 392:App/STM32F4-Discovery/spi.c **** 
- 393:App/STM32F4-Discovery/spi.c **** void spi_dma_write_read(uint32_t spi, uint8_t *bufRX, uint8_t *bufTX, uint16_t lenRX,  uint16_t len
- 394:App/STM32F4-Discovery/spi.c **** {
- 949              		.loc 1 394 0
+ 390:App/STM32F4-Discovery/spi.c **** void DMA1_Stream3_IRQHandler()
+ 391:App/STM32F4-Discovery/spi.c **** {
+ 949              		.loc 1 391 0
  950              		.cfi_startproc
- 951              		@ args = 4, pretend = 0, frame = 16
+ 951              		@ args = 0, pretend = 0, frame = 8
  952              		@ frame_needed = 1, uses_anonymous_args = 0
  953 0000 80B5     		push	{r7, lr}
  954              	.LCFI12:
  955              		.cfi_def_cfa_offset 8
  956              		.cfi_offset 7, -8
  957              		.cfi_offset 14, -4
- 958 0002 84B0     		sub	sp, sp, #16
+ 958 0002 82B0     		sub	sp, sp, #8
  959              	.LCFI13:
- 960              		.cfi_def_cfa_offset 24
+ 960              		.cfi_def_cfa_offset 16
  961 0004 00AF     		add	r7, sp, #0
  962              	.LCFI14:
  963              		.cfi_def_cfa_register 7
- 964 0006 F860     		str	r0, [r7, #12]
- 965 0008 B960     		str	r1, [r7, #8]
- 966 000a 7A60     		str	r2, [r7, #4]
- 967 000c 7B80     		strh	r3, [r7, #2]	@ movhi
- 395:App/STM32F4-Discovery/spi.c **** 		
- 396:App/STM32F4-Discovery/spi.c **** 		/*! spi_dma_read it has to be used with \n
- 397:App/STM32F4-Discovery/spi.c **** 		 * memcpy from bufferRX right after it has recieve \n
- 398:App/STM32F4-Discovery/spi.c **** 		 * data on SPI. */
- 399:App/STM32F4-Discovery/spi.c **** 	if (spi == SPIy)
- 968              		.loc 1 399 0
- 969 000e FA68     		ldr	r2, [r7, #12]
- 970 0010 254B     		ldr	r3, .L26
- 971 0012 9A42     		cmp	r2, r3
- 972 0014 22D1     		bne	.L24
- 973              	.LBB2:
- 400:App/STM32F4-Discovery/spi.c **** 	{
- 401:App/STM32F4-Discovery/spi.c **** 		DMA_SetCurrDataCounter(SPIy_RX_DMA_STREAM, lenRX);
+ 392:App/STM32F4-Discovery/spi.c **** 	/*!	\var static unsigned portBASE_TYPE xHigherPriorityTaskWoken
+ 393:App/STM32F4-Discovery/spi.c **** 	 * 	\brief Indicates if higher priority has been woken
+ 394:App/STM32F4-Discovery/spi.c **** 	 */
+ 395:App/STM32F4-Discovery/spi.c **** 
+ 396:App/STM32F4-Discovery/spi.c **** 	unsigned portBASE_TYPE xHigherPriorityTaskWoken = pdFalse;
+ 964              		.loc 1 396 0
+ 965 0006 0023     		movs	r3, #0
+ 966 0008 7B60     		str	r3, [r7, #4]
+ 397:App/STM32F4-Discovery/spi.c **** 
+ 398:App/STM32F4-Discovery/spi.c ****   // Test if DMA Stream Transfer Complete interrupt
+ 399:App/STM32F4-Discovery/spi.c ****   if (DMA_GetITStatus (SPIy_RX_DMA_STREAM, SPIy_RX_DMA_FLAG_TCIF)) {
+ 967              		.loc 1 399 0
+ 968 000a 1B48     		ldr	r0, .L27
+ 969 000c 1B49     		ldr	r1, .L27+4
+ 970 000e FFF7FEFF 		bl	DMA_GetITStatus
+ 971 0012 0346     		mov	r3, r0
+ 972 0014 002B     		cmp	r3, #0
+ 973 0016 24D0     		beq	.L24
+ 400:App/STM32F4-Discovery/spi.c ****     
+ 401:App/STM32F4-Discovery/spi.c **** 	DMA_ClearITPendingBit (SPIy_RX_DMA_STREAM, SPIy_RX_DMA_FLAG_TCIF);
  974              		.loc 1 401 0
- 975 0016 7B88     		ldrh	r3, [r7, #2]
- 976 0018 2448     		ldr	r0, .L26+4
- 977 001a 1946     		mov	r1, r3
- 978 001c FFF7FEFF 		bl	DMA_SetCurrDataCounter
- 402:App/STM32F4-Discovery/spi.c **** 		DMA_SetCurrDataCounter(SPIy_TX_DMA_STREAM, lenTX);
- 979              		.loc 1 402 0
- 980 0020 3B8B     		ldrh	r3, [r7, #24]
- 981 0022 2348     		ldr	r0, .L26+8
- 982 0024 1946     		mov	r1, r3
- 983 0026 FFF7FEFF 		bl	DMA_SetCurrDataCounter
- 403:App/STM32F4-Discovery/spi.c **** 		SPIy_TX_DMA_STREAM->M0AR =(uint32_t)bufTX;	
- 984              		.loc 1 403 0
- 985 002a 214B     		ldr	r3, .L26+8
- 986 002c 7A68     		ldr	r2, [r7, #4]
- 987 002e DA60     		str	r2, [r3, #12]
- 404:App/STM32F4-Discovery/spi.c **** 		SPIy_RX_DMA_STREAM->M0AR =(uint32_t)bufRX;	
- 988              		.loc 1 404 0
- 989 0030 1E4B     		ldr	r3, .L26+4
- 990 0032 BA68     		ldr	r2, [r7, #8]
- 991 0034 DA60     		str	r2, [r3, #12]
- 405:App/STM32F4-Discovery/spi.c **** 
- 406:App/STM32F4-Discovery/spi.c **** 		CSON2(); // chip select 
- 992              		.loc 1 406 0
- 993 0036 FFF7FEFF 		bl	CSON2
- 407:App/STM32F4-Discovery/spi.c **** 		DMA_Cmd(SPIy_TX_DMA_STREAM, ENABLE);		
- 994              		.loc 1 407 0
- 995 003a 1D48     		ldr	r0, .L26+8
- 996 003c 0121     		movs	r1, #1
- 997 003e FFF7FEFF 		bl	DMA_Cmd
- 408:App/STM32F4-Discovery/spi.c **** 		DMA_Cmd(SPIy_RX_DMA_STREAM, ENABLE);
- 998              		.loc 1 408 0
- 999 0042 1A48     		ldr	r0, .L26+4
- 1000 0044 0121     		movs	r1, #1
- 1001 0046 FFF7FEFF 		bl	DMA_Cmd
- 409:App/STM32F4-Discovery/spi.c **** 		/* Block until the semaphore is given */
- 410:App/STM32F4-Discovery/spi.c ****         	xSemaphoreTake(xSemaphoreDMASPIy, 10/portTICK_RATE_MS);	
- 1002              		.loc 1 410 0
- 1003 004a 1A4B     		ldr	r3, .L26+12
- 1004 004c 1B68     		ldr	r3, [r3]
- 1005 004e 1846     		mov	r0, r3
- 1006 0050 0021     		movs	r1, #0
- 1007 0052 0A22     		movs	r2, #10
- 1008 0054 0023     		movs	r3, #0
- 1009 0056 FFF7FEFF 		bl	xQueueGenericReceive
- 1010              	.LBE2:
- 1011 005a 21E0     		b	.L23
- 1012              	.L24:
- 1013              	.LBB3:
- 411:App/STM32F4-Discovery/spi.c **** 		//CSOFF(); // chip deselect		
- 412:App/STM32F4-Discovery/spi.c **** 	}
- 413:App/STM32F4-Discovery/spi.c **** 	else
- 414:App/STM32F4-Discovery/spi.c **** 	{
- 415:App/STM32F4-Discovery/spi.c **** 		DMA_SetCurrDataCounter(SPIx_RX_DMA_STREAM, lenRX);
- 1014              		.loc 1 415 0
- 1015 005c 7B88     		ldrh	r3, [r7, #2]
- 1016 005e 1348     		ldr	r0, .L26+4
- 1017 0060 1946     		mov	r1, r3
- 1018 0062 FFF7FEFF 		bl	DMA_SetCurrDataCounter
- 416:App/STM32F4-Discovery/spi.c **** 		DMA_SetCurrDataCounter(SPIx_TX_DMA_STREAM, lenTX);
- 1019              		.loc 1 416 0
- 1020 0066 3B8B     		ldrh	r3, [r7, #24]
- 1021 0068 1148     		ldr	r0, .L26+8
- 1022 006a 1946     		mov	r1, r3
- 1023 006c FFF7FEFF 		bl	DMA_SetCurrDataCounter
- 417:App/STM32F4-Discovery/spi.c **** 		SPIx_TX_DMA_STREAM->M0AR =(uint32_t)bufTX;	
- 1024              		.loc 1 417 0
- 1025 0070 0F4B     		ldr	r3, .L26+8
- 1026 0072 7A68     		ldr	r2, [r7, #4]
- 1027 0074 DA60     		str	r2, [r3, #12]
- 418:App/STM32F4-Discovery/spi.c **** 		SPIx_RX_DMA_STREAM->M0AR =(uint32_t)bufRX;	
- 1028              		.loc 1 418 0
- 1029 0076 0D4B     		ldr	r3, .L26+4
- 1030 0078 BA68     		ldr	r2, [r7, #8]
- 1031 007a DA60     		str	r2, [r3, #12]
- 419:App/STM32F4-Discovery/spi.c **** 
- 420:App/STM32F4-Discovery/spi.c **** 		CSON1(); // chip select 
- 1032              		.loc 1 420 0
- 1033 007c FFF7FEFF 		bl	CSON1
- 421:App/STM32F4-Discovery/spi.c **** 		DMA_Cmd(SPIx_TX_DMA_STREAM, ENABLE);		
- 1034              		.loc 1 421 0
- 1035 0080 0B48     		ldr	r0, .L26+8
- 1036 0082 0121     		movs	r1, #1
- 1037 0084 FFF7FEFF 		bl	DMA_Cmd
- 422:App/STM32F4-Discovery/spi.c **** 		DMA_Cmd(SPIx_RX_DMA_STREAM, ENABLE);
- 1038              		.loc 1 422 0
- 1039 0088 0848     		ldr	r0, .L26+4
- 1040 008a 0121     		movs	r1, #1
- 1041 008c FFF7FEFF 		bl	DMA_Cmd
- 423:App/STM32F4-Discovery/spi.c **** 		/* Block until the semaphore is given */
- 424:App/STM32F4-Discovery/spi.c ****         	xSemaphoreTake(xSemaphoreDMASPIx, 10/portTICK_RATE_MS);	
- 1042              		.loc 1 424 0
- 1043 0090 094B     		ldr	r3, .L26+16
- 1044 0092 1B68     		ldr	r3, [r3]
- 1045 0094 1846     		mov	r0, r3
- 1046 0096 0021     		movs	r1, #0
- 1047 0098 0A22     		movs	r2, #10
- 1048 009a 0023     		movs	r3, #0
- 1049 009c FFF7FEFF 		bl	xQueueGenericReceive
- 1050              	.L23:
- 1051              	.LBE3:
- 425:App/STM32F4-Discovery/spi.c **** 		//CSOFF(); // chip deselect	
- 426:App/STM32F4-Discovery/spi.c **** 	}
- 427:App/STM32F4-Discovery/spi.c **** 
+ 975 0018 1748     		ldr	r0, .L27
+ 976 001a 1849     		ldr	r1, .L27+4
+ 977 001c FFF7FEFF 		bl	DMA_ClearITPendingBit
+ 402:App/STM32F4-Discovery/spi.c **** 	
+ 403:App/STM32F4-Discovery/spi.c **** 	while (SPI_I2S_GetFlagStatus (SPIy, SPI_I2S_FLAG_BSY) == SET);
+ 978              		.loc 1 403 0
+ 979 0020 00BF     		nop
+ 980              	.L25:
+ 981              		.loc 1 403 0 is_stmt 0 discriminator 1
+ 982 0022 1748     		ldr	r0, .L27+8
+ 983 0024 8021     		movs	r1, #128
+ 984 0026 FFF7FEFF 		bl	SPI_I2S_GetFlagStatus
+ 985 002a 0346     		mov	r3, r0
+ 986 002c 012B     		cmp	r3, #1
+ 987 002e F8D0     		beq	.L25
+ 404:App/STM32F4-Discovery/spi.c ****     /*
+ 405:App/STM32F4-Discovery/spi.c ****      * The DMA stream is disabled in hardware at the end of the transfer
+ 406:App/STM32F4-Discovery/spi.c ****      * Now we can deselect the display. If more than one peripheral was being run
+ 407:App/STM32F4-Discovery/spi.c ****      * on this SPI peripheral, we would have to do both/all of them, or work out
+ 408:App/STM32F4-Discovery/spi.c ****      * which one was active and deselect that one.i
+ 409:App/STM32F4-Discovery/spi.c **** 	
+ 410:App/STM32F4-Discovery/spi.c ****      */
+ 411:App/STM32F4-Discovery/spi.c **** 	CSOFFy();
+ 988              		.loc 1 411 0 is_stmt 1
+ 989 0030 144B     		ldr	r3, .L27+12
+ 990 0032 144A     		ldr	r2, .L27+12
+ 991 0034 128B     		ldrh	r2, [r2, #24]	@ movhi
+ 992 0036 92B2     		uxth	r2, r2
+ 993 0038 42F48052 		orr	r2, r2, #4096
+ 994 003c 92B2     		uxth	r2, r2
+ 995 003e 1A83     		strh	r2, [r3, #24]	@ movhi
+ 412:App/STM32F4-Discovery/spi.c **** 	DMA_Cmd(SPIy_RX_DMA_STREAM, DISABLE);		
+ 996              		.loc 1 412 0
+ 997 0040 0D48     		ldr	r0, .L27
+ 998 0042 0021     		movs	r1, #0
+ 999 0044 FFF7FEFF 		bl	DMA_Cmd
+ 413:App/STM32F4-Discovery/spi.c ****  
+ 414:App/STM32F4-Discovery/spi.c **** 	taskENTER_CRITICAL(); 
+ 1000              		.loc 1 414 0
+ 1001 0048 FFF7FEFF 		bl	vPortEnterCritical
+ 415:App/STM32F4-Discovery/spi.c **** //       xSemaphoreGive( xSemaphoreDMASPI);
+ 416:App/STM32F4-Discovery/spi.c **** 	xSemaphoreGiveFromISR( xSemaphoreDMASPIy, &xHigherPriorityTaskWoken );
+ 1002              		.loc 1 416 0
+ 1003 004c 0E4B     		ldr	r3, .L27+16
+ 1004 004e 1A68     		ldr	r2, [r3]
+ 1005 0050 3B1D     		adds	r3, r7, #4
+ 1006 0052 1046     		mov	r0, r2
+ 1007 0054 0021     		movs	r1, #0
+ 1008 0056 1A46     		mov	r2, r3
+ 1009 0058 0023     		movs	r3, #0
+ 1010 005a FFF7FEFF 		bl	xQueueGenericSendFromISR
+ 417:App/STM32F4-Discovery/spi.c **** 	taskEXIT_CRITICAL(); //
+ 1011              		.loc 1 417 0
+ 1012 005e FFF7FEFF 		bl	vPortExitCritical
+ 1013              	.L24:
+ 418:App/STM32F4-Discovery/spi.c ****   }	
+ 419:App/STM32F4-Discovery/spi.c ****  portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
+ 1014              		.loc 1 419 0
+ 1015 0062 7B68     		ldr	r3, [r7, #4]
+ 1016 0064 002B     		cmp	r3, #0
+ 1017 0066 03D0     		beq	.L23
+ 1018              		.loc 1 419 0 is_stmt 0 discriminator 1
+ 1019 0068 084B     		ldr	r3, .L27+20
+ 1020 006a 4FF08052 		mov	r2, #268435456
+ 1021 006e 1A60     		str	r2, [r3]
+ 1022              	.L23:
+ 420:App/STM32F4-Discovery/spi.c **** }
+ 1023              		.loc 1 420 0 is_stmt 1
+ 1024 0070 0837     		adds	r7, r7, #8
+ 1025 0072 BD46     		mov	sp, r7
+ 1026              		@ sp needed
+ 1027 0074 80BD     		pop	{r7, pc}
+ 1028              	.L28:
+ 1029 0076 00BF     		.align	2
+ 1030              	.L27:
+ 1031 0078 58600240 		.word	1073897560
+ 1032 007c 00800018 		.word	402685952
+ 1033 0080 00380040 		.word	1073756160
+ 1034 0084 00040240 		.word	1073873920
+ 1035 0088 00000000 		.word	xSemaphoreDMASPIy
+ 1036 008c 04ED00E0 		.word	-536810236
+ 1037              		.cfi_endproc
+ 1038              	.LFE114:
+ 1040              		.section	.text.DMA1_Stream4_IRQHandler,"ax",%progbits
+ 1041              		.align	2
+ 1042              		.global	DMA1_Stream4_IRQHandler
+ 1043              		.thumb
+ 1044              		.thumb_func
+ 1046              	DMA1_Stream4_IRQHandler:
+ 1047              	.LFB115:
+ 421:App/STM32F4-Discovery/spi.c **** void DMA1_Stream4_IRQHandler()
+ 422:App/STM32F4-Discovery/spi.c **** {
+ 1048              		.loc 1 422 0
+ 1049              		.cfi_startproc
+ 1050              		@ args = 0, pretend = 0, frame = 8
+ 1051              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1052 0000 80B5     		push	{r7, lr}
+ 1053              	.LCFI15:
+ 1054              		.cfi_def_cfa_offset 8
+ 1055              		.cfi_offset 7, -8
+ 1056              		.cfi_offset 14, -4
+ 1057 0002 82B0     		sub	sp, sp, #8
+ 1058              	.LCFI16:
+ 1059              		.cfi_def_cfa_offset 16
+ 1060 0004 00AF     		add	r7, sp, #0
+ 1061              	.LCFI17:
+ 1062              		.cfi_def_cfa_register 7
+ 423:App/STM32F4-Discovery/spi.c **** 	/*!	\var static unsigned portBASE_TYPE xHigherPriorityTaskWoken
+ 424:App/STM32F4-Discovery/spi.c **** 	 * 	\brief Indicates if higher priority has been woken
+ 425:App/STM32F4-Discovery/spi.c **** 	 */
+ 426:App/STM32F4-Discovery/spi.c **** 
+ 427:App/STM32F4-Discovery/spi.c **** 	unsigned portBASE_TYPE xHigherPriorityTaskWoken = pdFalse;
+ 1063              		.loc 1 427 0
+ 1064 0006 0023     		movs	r3, #0
+ 1065 0008 7B60     		str	r3, [r7, #4]
  428:App/STM32F4-Discovery/spi.c **** 
- 429:App/STM32F4-Discovery/spi.c **** 
- 430:App/STM32F4-Discovery/spi.c **** }	
- 1052              		.loc 1 430 0
- 1053 00a0 1037     		adds	r7, r7, #16
- 1054 00a2 BD46     		mov	sp, r7
- 1055              		@ sp needed
- 1056 00a4 80BD     		pop	{r7, pc}
- 1057              	.L27:
- 1058 00a6 00BF     		.align	2
- 1059              	.L26:
- 1060 00a8 00300140 		.word	1073819648
- 1061 00ac 40640240 		.word	1073898560
- 1062 00b0 58640240 		.word	1073898584
- 1063 00b4 00000000 		.word	xSemaphoreDMASPIy
- 1064 00b8 00000000 		.word	xSemaphoreDMASPIx
- 1065              		.cfi_endproc
- 1066              	.LFE114:
- 1068              		.text
- 1069              	.Letext0:
- 1070              		.file 2 "/Users/maticknap/ARM/gcc-arm-none-eabi-4_8-2014q2/arm-none-eabi/include/machine/_default_
- 1071              		.file 3 "/Users/maticknap/ARM/gcc-arm-none-eabi-4_8-2014q2/arm-none-eabi/include/stdint.h"
- 1072              		.file 4 "App/STM32F4-Discovery/Libraries/CMSIS/ST/STM32F4xx/Include/stm32f4xx.h"
- 1073              		.file 5 "App/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma.h"
- 1074              		.file 6 "App/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h"
- 1075              		.file 7 "App/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_spi.h"
- 1076              		.file 8 "App/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc/misc.h"
- 1077              		.file 9 "Source/portable/GCC/ARM_CM4F/portmacro.h"
- 1078              		.file 10 "Source/include/queue.h"
- 1079              		.file 11 "Source/include/semphr.h"
- 1080              		.file 12 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
- 1081              		.file 13 "App/STM32F4-Discovery/spi.h"
+ 429:App/STM32F4-Discovery/spi.c ****   // Test if DMA Stream Transfer Complete interrupt
+ 430:App/STM32F4-Discovery/spi.c ****   if (DMA_GetITStatus (SPIy_TX_DMA_STREAM, SPIy_TX_DMA_FLAG_TCIF)) {
+ 1066              		.loc 1 430 0
+ 1067 000a 1B48     		ldr	r0, .L33
+ 1068 000c 1B49     		ldr	r1, .L33+4
+ 1069 000e FFF7FEFF 		bl	DMA_GetITStatus
+ 1070 0012 0346     		mov	r3, r0
+ 1071 0014 002B     		cmp	r3, #0
+ 1072 0016 24D0     		beq	.L30
+ 431:App/STM32F4-Discovery/spi.c ****     
+ 432:App/STM32F4-Discovery/spi.c **** 	DMA_ClearITPendingBit (SPIy_TX_DMA_STREAM, SPIx_TX_DMA_FLAG_TCIF);
+ 1073              		.loc 1 432 0
+ 1074 0018 1748     		ldr	r0, .L33
+ 1075 001a 1949     		ldr	r1, .L33+8
+ 1076 001c FFF7FEFF 		bl	DMA_ClearITPendingBit
+ 433:App/STM32F4-Discovery/spi.c **** 
+ 434:App/STM32F4-Discovery/spi.c **** 	while (SPI_I2S_GetFlagStatus (SPIy, SPI_I2S_FLAG_BSY) == SET);
+ 1077              		.loc 1 434 0
+ 1078 0020 00BF     		nop
+ 1079              	.L31:
+ 1080              		.loc 1 434 0 is_stmt 0 discriminator 1
+ 1081 0022 1848     		ldr	r0, .L33+12
+ 1082 0024 8021     		movs	r1, #128
+ 1083 0026 FFF7FEFF 		bl	SPI_I2S_GetFlagStatus
+ 1084 002a 0346     		mov	r3, r0
+ 1085 002c 012B     		cmp	r3, #1
+ 1086 002e F8D0     		beq	.L31
+ 435:App/STM32F4-Discovery/spi.c ****     /*
+ 436:App/STM32F4-Discovery/spi.c ****      * The DMA stream is disabled in hardware at the end of the transfer
+ 437:App/STM32F4-Discovery/spi.c ****      * Now we can deselect the display. If more than one peripheral was being run
+ 438:App/STM32F4-Discovery/spi.c ****      * on this SPI peripheral, we would have to do both/all of them, or work out
+ 439:App/STM32F4-Discovery/spi.c ****      * which one was active and deselect that one.i
+ 440:App/STM32F4-Discovery/spi.c **** 	
+ 441:App/STM32F4-Discovery/spi.c ****      */
+ 442:App/STM32F4-Discovery/spi.c **** 	CSOFFy();
+ 1087              		.loc 1 442 0 is_stmt 1
+ 1088 0030 154B     		ldr	r3, .L33+16
+ 1089 0032 154A     		ldr	r2, .L33+16
+ 1090 0034 128B     		ldrh	r2, [r2, #24]	@ movhi
+ 1091 0036 92B2     		uxth	r2, r2
+ 1092 0038 42F48052 		orr	r2, r2, #4096
+ 1093 003c 92B2     		uxth	r2, r2
+ 1094 003e 1A83     		strh	r2, [r3, #24]	@ movhi
+ 443:App/STM32F4-Discovery/spi.c **** 	DMA_Cmd(SPIy_RX_DMA_STREAM, DISABLE);		
+ 1095              		.loc 1 443 0
+ 1096 0040 1248     		ldr	r0, .L33+20
+ 1097 0042 0021     		movs	r1, #0
+ 1098 0044 FFF7FEFF 		bl	DMA_Cmd
+ 444:App/STM32F4-Discovery/spi.c ****        
+ 445:App/STM32F4-Discovery/spi.c **** 	taskENTER_CRITICAL(); 
+ 1099              		.loc 1 445 0
+ 1100 0048 FFF7FEFF 		bl	vPortEnterCritical
+ 446:App/STM32F4-Discovery/spi.c **** //	 xSemaphoreGive( xSemaphoreDMASPI );
+ 447:App/STM32F4-Discovery/spi.c **** 	xSemaphoreGiveFromISR( xSemaphoreDMASPIy, &xHigherPriorityTaskWoken );
+ 1101              		.loc 1 447 0
+ 1102 004c 104B     		ldr	r3, .L33+24
+ 1103 004e 1A68     		ldr	r2, [r3]
+ 1104 0050 3B1D     		adds	r3, r7, #4
+ 1105 0052 1046     		mov	r0, r2
+ 1106 0054 0021     		movs	r1, #0
+ 1107 0056 1A46     		mov	r2, r3
+ 1108 0058 0023     		movs	r3, #0
+ 1109 005a FFF7FEFF 		bl	xQueueGenericSendFromISR
+ 448:App/STM32F4-Discovery/spi.c ****  	taskEXIT_CRITICAL();  
+ 1110              		.loc 1 448 0
+ 1111 005e FFF7FEFF 		bl	vPortExitCritical
+ 1112              	.L30:
+ 449:App/STM32F4-Discovery/spi.c ****  }
+ 450:App/STM32F4-Discovery/spi.c ****    portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
+ 1113              		.loc 1 450 0
+ 1114 0062 7B68     		ldr	r3, [r7, #4]
+ 1115 0064 002B     		cmp	r3, #0
+ 1116 0066 03D0     		beq	.L29
+ 1117              		.loc 1 450 0 is_stmt 0 discriminator 1
+ 1118 0068 0A4B     		ldr	r3, .L33+28
+ 1119 006a 4FF08052 		mov	r2, #268435456
+ 1120 006e 1A60     		str	r2, [r3]
+ 1121              	.L29:
+ 451:App/STM32F4-Discovery/spi.c **** }
+ 1122              		.loc 1 451 0 is_stmt 1
+ 1123 0070 0837     		adds	r7, r7, #8
+ 1124 0072 BD46     		mov	sp, r7
+ 1125              		@ sp needed
+ 1126 0074 80BD     		pop	{r7, pc}
+ 1127              	.L34:
+ 1128 0076 00BF     		.align	2
+ 1129              	.L33:
+ 1130 0078 70600240 		.word	1073897584
+ 1131 007c 20800020 		.word	536903712
+ 1132 0080 00800018 		.word	402685952
+ 1133 0084 00380040 		.word	1073756160
+ 1134 0088 00040240 		.word	1073873920
+ 1135 008c 58600240 		.word	1073897560
+ 1136 0090 00000000 		.word	xSemaphoreDMASPIy
+ 1137 0094 04ED00E0 		.word	-536810236
+ 1138              		.cfi_endproc
+ 1139              	.LFE115:
+ 1141              		.section	.text.spi_dma_write_read,"ax",%progbits
+ 1142              		.align	2
+ 1143              		.global	spi_dma_write_read
+ 1144              		.thumb
+ 1145              		.thumb_func
+ 1147              	spi_dma_write_read:
+ 1148              	.LFB116:
+ 452:App/STM32F4-Discovery/spi.c **** 
+ 453:App/STM32F4-Discovery/spi.c **** /*---------------------------- Matic Knap 25 Jun 2014 ---------------------*/
+ 454:App/STM32F4-Discovery/spi.c **** 
+ 455:App/STM32F4-Discovery/spi.c **** void spi_dma_write_read(uint32_t spi, uint8_t *bufRX, uint8_t *bufTX, uint16_t lenRX,  uint16_t len
+ 456:App/STM32F4-Discovery/spi.c **** {
+ 1149              		.loc 1 456 0
+ 1150              		.cfi_startproc
+ 1151              		@ args = 4, pretend = 0, frame = 16
+ 1152              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1153 0000 80B5     		push	{r7, lr}
+ 1154              	.LCFI18:
+ 1155              		.cfi_def_cfa_offset 8
+ 1156              		.cfi_offset 7, -8
+ 1157              		.cfi_offset 14, -4
+ 1158 0002 84B0     		sub	sp, sp, #16
+ 1159              	.LCFI19:
+ 1160              		.cfi_def_cfa_offset 24
+ 1161 0004 00AF     		add	r7, sp, #0
+ 1162              	.LCFI20:
+ 1163              		.cfi_def_cfa_register 7
+ 1164 0006 F860     		str	r0, [r7, #12]
+ 1165 0008 B960     		str	r1, [r7, #8]
+ 1166 000a 7A60     		str	r2, [r7, #4]
+ 1167 000c 7B80     		strh	r3, [r7, #2]	@ movhi
+ 457:App/STM32F4-Discovery/spi.c **** 		
+ 458:App/STM32F4-Discovery/spi.c **** 		/*! spi_dma_read it has to be used with \n
+ 459:App/STM32F4-Discovery/spi.c **** 		 * memcpy from bufferRX right after it has recieve \n
+ 460:App/STM32F4-Discovery/spi.c **** 		 * data on SPI. */
+ 461:App/STM32F4-Discovery/spi.c **** 	if (spi == SPIy)
+ 1168              		.loc 1 461 0
+ 1169 000e FA68     		ldr	r2, [r7, #12]
+ 1170 0010 254B     		ldr	r3, .L38
+ 1171 0012 9A42     		cmp	r2, r3
+ 1172 0014 22D1     		bne	.L36
+ 1173              	.LBB2:
+ 462:App/STM32F4-Discovery/spi.c **** 	{
+ 463:App/STM32F4-Discovery/spi.c **** 		DMA_SetCurrDataCounter(SPIy_RX_DMA_STREAM, lenRX);
+ 1174              		.loc 1 463 0
+ 1175 0016 7B88     		ldrh	r3, [r7, #2]
+ 1176 0018 2448     		ldr	r0, .L38+4
+ 1177 001a 1946     		mov	r1, r3
+ 1178 001c FFF7FEFF 		bl	DMA_SetCurrDataCounter
+ 464:App/STM32F4-Discovery/spi.c **** 		DMA_SetCurrDataCounter(SPIy_TX_DMA_STREAM, lenTX);
+ 1179              		.loc 1 464 0
+ 1180 0020 3B8B     		ldrh	r3, [r7, #24]
+ 1181 0022 2348     		ldr	r0, .L38+8
+ 1182 0024 1946     		mov	r1, r3
+ 1183 0026 FFF7FEFF 		bl	DMA_SetCurrDataCounter
+ 465:App/STM32F4-Discovery/spi.c **** 		SPIy_TX_DMA_STREAM->M0AR =(uint32_t)bufTX;	
+ 1184              		.loc 1 465 0
+ 1185 002a 214B     		ldr	r3, .L38+8
+ 1186 002c 7A68     		ldr	r2, [r7, #4]
+ 1187 002e DA60     		str	r2, [r3, #12]
+ 466:App/STM32F4-Discovery/spi.c **** 		SPIy_RX_DMA_STREAM->M0AR =(uint32_t)bufRX;	
+ 1188              		.loc 1 466 0
+ 1189 0030 1E4B     		ldr	r3, .L38+4
+ 1190 0032 BA68     		ldr	r2, [r7, #8]
+ 1191 0034 DA60     		str	r2, [r3, #12]
+ 467:App/STM32F4-Discovery/spi.c **** 
+ 468:App/STM32F4-Discovery/spi.c **** 		CSON2(); // chip select 
+ 1192              		.loc 1 468 0
+ 1193 0036 FFF7FEFF 		bl	CSON2
+ 469:App/STM32F4-Discovery/spi.c **** 		DMA_Cmd(SPIy_TX_DMA_STREAM, ENABLE);		
+ 1194              		.loc 1 469 0
+ 1195 003a 1D48     		ldr	r0, .L38+8
+ 1196 003c 0121     		movs	r1, #1
+ 1197 003e FFF7FEFF 		bl	DMA_Cmd
+ 470:App/STM32F4-Discovery/spi.c **** 		DMA_Cmd(SPIy_RX_DMA_STREAM, ENABLE);
+ 1198              		.loc 1 470 0
+ 1199 0042 1A48     		ldr	r0, .L38+4
+ 1200 0044 0121     		movs	r1, #1
+ 1201 0046 FFF7FEFF 		bl	DMA_Cmd
+ 471:App/STM32F4-Discovery/spi.c **** 		/* Block until the semaphore is given */
+ 472:App/STM32F4-Discovery/spi.c ****         	xSemaphoreTake(xSemaphoreDMASPIy, 10/portTICK_RATE_MS);	
+ 1202              		.loc 1 472 0
+ 1203 004a 1A4B     		ldr	r3, .L38+12
+ 1204 004c 1B68     		ldr	r3, [r3]
+ 1205 004e 1846     		mov	r0, r3
+ 1206 0050 0021     		movs	r1, #0
+ 1207 0052 0A22     		movs	r2, #10
+ 1208 0054 0023     		movs	r3, #0
+ 1209 0056 FFF7FEFF 		bl	xQueueGenericReceive
+ 1210              	.LBE2:
+ 1211 005a 21E0     		b	.L35
+ 1212              	.L36:
+ 1213              	.LBB3:
+ 473:App/STM32F4-Discovery/spi.c **** 		//CSOFF(); // chip deselect		
+ 474:App/STM32F4-Discovery/spi.c **** 	}
+ 475:App/STM32F4-Discovery/spi.c **** 	else
+ 476:App/STM32F4-Discovery/spi.c **** 	{
+ 477:App/STM32F4-Discovery/spi.c **** 		DMA_SetCurrDataCounter(SPIx_RX_DMA_STREAM, lenRX);
+ 1214              		.loc 1 477 0
+ 1215 005c 7B88     		ldrh	r3, [r7, #2]
+ 1216 005e 1648     		ldr	r0, .L38+16
+ 1217 0060 1946     		mov	r1, r3
+ 1218 0062 FFF7FEFF 		bl	DMA_SetCurrDataCounter
+ 478:App/STM32F4-Discovery/spi.c **** 		DMA_SetCurrDataCounter(SPIx_TX_DMA_STREAM, lenTX);
+ 1219              		.loc 1 478 0
+ 1220 0066 3B8B     		ldrh	r3, [r7, #24]
+ 1221 0068 1448     		ldr	r0, .L38+20
+ 1222 006a 1946     		mov	r1, r3
+ 1223 006c FFF7FEFF 		bl	DMA_SetCurrDataCounter
+ 479:App/STM32F4-Discovery/spi.c **** 		SPIx_TX_DMA_STREAM->M0AR =(uint32_t)bufTX;	
+ 1224              		.loc 1 479 0
+ 1225 0070 124B     		ldr	r3, .L38+20
+ 1226 0072 7A68     		ldr	r2, [r7, #4]
+ 1227 0074 DA60     		str	r2, [r3, #12]
+ 480:App/STM32F4-Discovery/spi.c **** 		SPIx_RX_DMA_STREAM->M0AR =(uint32_t)bufRX;	
+ 1228              		.loc 1 480 0
+ 1229 0076 104B     		ldr	r3, .L38+16
+ 1230 0078 BA68     		ldr	r2, [r7, #8]
+ 1231 007a DA60     		str	r2, [r3, #12]
+ 481:App/STM32F4-Discovery/spi.c **** 
+ 482:App/STM32F4-Discovery/spi.c **** 		CSON1(); // chip select 
+ 1232              		.loc 1 482 0
+ 1233 007c FFF7FEFF 		bl	CSON1
+ 483:App/STM32F4-Discovery/spi.c **** 		DMA_Cmd(SPIx_TX_DMA_STREAM, ENABLE);		
+ 1234              		.loc 1 483 0
+ 1235 0080 0E48     		ldr	r0, .L38+20
+ 1236 0082 0121     		movs	r1, #1
+ 1237 0084 FFF7FEFF 		bl	DMA_Cmd
+ 484:App/STM32F4-Discovery/spi.c **** 		DMA_Cmd(SPIx_RX_DMA_STREAM, ENABLE);
+ 1238              		.loc 1 484 0
+ 1239 0088 0B48     		ldr	r0, .L38+16
+ 1240 008a 0121     		movs	r1, #1
+ 1241 008c FFF7FEFF 		bl	DMA_Cmd
+ 485:App/STM32F4-Discovery/spi.c **** 		/* Block until the semaphore is given */
+ 486:App/STM32F4-Discovery/spi.c ****         	xSemaphoreTake(xSemaphoreDMASPIx, 10/portTICK_RATE_MS);	
+ 1242              		.loc 1 486 0
+ 1243 0090 0B4B     		ldr	r3, .L38+24
+ 1244 0092 1B68     		ldr	r3, [r3]
+ 1245 0094 1846     		mov	r0, r3
+ 1246 0096 0021     		movs	r1, #0
+ 1247 0098 0A22     		movs	r2, #10
+ 1248 009a 0023     		movs	r3, #0
+ 1249 009c FFF7FEFF 		bl	xQueueGenericReceive
+ 1250              	.L35:
+ 1251              	.LBE3:
+ 487:App/STM32F4-Discovery/spi.c **** 		//CSOFF(); // chip deselect	
+ 488:App/STM32F4-Discovery/spi.c **** 	}
+ 489:App/STM32F4-Discovery/spi.c **** 
+ 490:App/STM32F4-Discovery/spi.c **** 
+ 491:App/STM32F4-Discovery/spi.c **** 
+ 492:App/STM32F4-Discovery/spi.c **** }	
+ 1252              		.loc 1 492 0
+ 1253 00a0 1037     		adds	r7, r7, #16
+ 1254 00a2 BD46     		mov	sp, r7
+ 1255              		@ sp needed
+ 1256 00a4 80BD     		pop	{r7, pc}
+ 1257              	.L39:
+ 1258 00a6 00BF     		.align	2
+ 1259              	.L38:
+ 1260 00a8 00380040 		.word	1073756160
+ 1261 00ac 58600240 		.word	1073897560
+ 1262 00b0 70600240 		.word	1073897584
+ 1263 00b4 00000000 		.word	xSemaphoreDMASPIy
+ 1264 00b8 40640240 		.word	1073898560
+ 1265 00bc 58640240 		.word	1073898584
+ 1266 00c0 00000000 		.word	xSemaphoreDMASPIx
+ 1267              		.cfi_endproc
+ 1268              	.LFE116:
+ 1270              		.text
+ 1271              	.Letext0:
+ 1272              		.file 2 "/Users/maticknap/ARM/gcc-arm-none-eabi-4_8-2014q2/arm-none-eabi/include/machine/_default_
+ 1273              		.file 3 "/Users/maticknap/ARM/gcc-arm-none-eabi-4_8-2014q2/arm-none-eabi/include/stdint.h"
+ 1274              		.file 4 "App/STM32F4-Discovery/Libraries/CMSIS/ST/STM32F4xx/Include/stm32f4xx.h"
+ 1275              		.file 5 "App/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma.h"
+ 1276              		.file 6 "App/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h"
+ 1277              		.file 7 "App/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_spi.h"
+ 1278              		.file 8 "App/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc/misc.h"
+ 1279              		.file 9 "Source/portable/GCC/ARM_CM4F/portmacro.h"
+ 1280              		.file 10 "Source/include/queue.h"
+ 1281              		.file 11 "Source/include/semphr.h"
+ 1282              		.file 12 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
+ 1283              		.file 13 "App/STM32F4-Discovery/spi.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 spi.c
                             *COM*:00000000000007d0 bufferTX
@@ -1503,25 +1763,31 @@ DEFINED SYMBOLS
                             *COM*:0000000000000004 bufferTXidx
                             *COM*:0000000000000004 dat_lengthRX
                             *COM*:0000000000000004 dat_lengthTX
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:26     .bss.xSemaphoreDMASPIx:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:29     .bss.xSemaphoreDMASPIx:0000000000000000 xSemaphoreDMASPIx
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:32     .bss.xSemaphoreDMASPIy:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:35     .bss.xSemaphoreDMASPIy:0000000000000000 xSemaphoreDMASPIy
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:38     .text.init_SPIx:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:43     .text.init_SPIx:0000000000000000 init_SPIx
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:379    .text.init_SPIx:000000000000025c $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:391    .text.init_SPIy:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:396    .text.init_SPIy:0000000000000000 init_SPIy
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:731    .text.init_SPIy:000000000000025c $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:743    .text.DMA2_Stream2_IRQHandler:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:748    .text.DMA2_Stream2_IRQHandler:0000000000000000 DMA2_Stream2_IRQHandler
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:832    .text.DMA2_Stream2_IRQHandler:0000000000000078 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:842    .text.DMA2_Stream3_IRQHandler:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:847    .text.DMA2_Stream3_IRQHandler:0000000000000000 DMA2_Stream3_IRQHandler
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:931    .text.DMA2_Stream3_IRQHandler:0000000000000078 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:942    .text.spi_dma_write_read:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:947    .text.spi_dma_write_read:0000000000000000 spi_dma_write_read
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cchPglUn.s:1060   .text.spi_dma_write_read:00000000000000a8 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:26     .bss.xSemaphoreDMASPIx:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:29     .bss.xSemaphoreDMASPIx:0000000000000000 xSemaphoreDMASPIx
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:32     .bss.xSemaphoreDMASPIy:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:35     .bss.xSemaphoreDMASPIy:0000000000000000 xSemaphoreDMASPIy
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:38     .text.init_SPIx:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:43     .text.init_SPIx:0000000000000000 init_SPIx
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:379    .text.init_SPIx:000000000000025c $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:391    .text.init_SPIy:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:396    .text.init_SPIy:0000000000000000 init_SPIy
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:731    .text.init_SPIy:0000000000000260 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:743    .text.DMA2_Stream2_IRQHandler:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:748    .text.DMA2_Stream2_IRQHandler:0000000000000000 DMA2_Stream2_IRQHandler
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:832    .text.DMA2_Stream2_IRQHandler:0000000000000078 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:842    .text.DMA2_Stream3_IRQHandler:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:847    .text.DMA2_Stream3_IRQHandler:0000000000000000 DMA2_Stream3_IRQHandler
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:931    .text.DMA2_Stream3_IRQHandler:0000000000000078 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:942    .text.DMA1_Stream3_IRQHandler:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:947    .text.DMA1_Stream3_IRQHandler:0000000000000000 DMA1_Stream3_IRQHandler
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:1031   .text.DMA1_Stream3_IRQHandler:0000000000000078 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:1041   .text.DMA1_Stream4_IRQHandler:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:1046   .text.DMA1_Stream4_IRQHandler:0000000000000000 DMA1_Stream4_IRQHandler
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:1130   .text.DMA1_Stream4_IRQHandler:0000000000000078 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:1142   .text.spi_dma_write_read:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:1147   .text.spi_dma_write_read:0000000000000000 spi_dma_write_read
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc0F3mVZ.s:1260   .text.spi_dma_write_read:00000000000000a8 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

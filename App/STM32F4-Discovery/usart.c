@@ -62,7 +62,7 @@ void init_USARTx(void)
 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(USARTx_CS_GPIO_PORT, &GPIO_InitStruct);
 
-	DD() // set PG8 high
+	//DD() // set PG8 high
 	
 	
 	/* The RX and TX pins are now connected to their AF
@@ -166,7 +166,7 @@ void init_USARTx(void)
 	xSemaphoreDMAUSART = xSemaphoreCreateBinary();
 }
 
-void DMA2_Stream1_IRQHandler()
+void DMA2_Stream7_IRQHandler()
 {
 	/*!	\var static unsigned portBASE_TYPE xHigherPriorityTaskWoken
 	 * 	\brief Indicates if higher priority has been woken
@@ -179,7 +179,7 @@ void DMA2_Stream1_IRQHandler()
     
 	DMA_ClearITPendingBit (USARTx_RX_DMA_STREAM,  USARTx_RX_DMA_FLAG_TCIF);
 	
-	DE();
+	//DE();
 	DMA_Cmd(USARTx_TX_DMA_STREAM, DISABLE);		
 	DMA_Cmd(USARTx_RX_DMA_STREAM, DISABLE);		
  
@@ -189,7 +189,7 @@ void DMA2_Stream1_IRQHandler()
   }	
  portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
 }
-void DMA2_Stream6_IRQHandler()
+void DMA2_Stream5_IRQHandler()
 {
 	/*!	\var static unsigned portBASE_TYPE xHigherPriorityTaskWoken
 	 * 	\brief Indicates if higher priority has been woken
@@ -202,7 +202,7 @@ void DMA2_Stream6_IRQHandler()
     
 	DMA_ClearITPendingBit (USARTx_TX_DMA_STREAM, USARTx_TX_DMA_FLAG_TCIF);
 	
-	DE();
+	//DE();
 	DMA_Cmd(USARTx_TX_DMA_STREAM, DISABLE);		
 	DMA_Cmd(USARTx_RX_DMA_STREAM, DISABLE);		
        
@@ -226,7 +226,7 @@ void usart_dma_write_read(uint8_t *bufRX, uint8_t *bufTX, uint16_t lenRX,  uint1
 		USARTx_TX_DMA_STREAM->M0AR =(uint32_t)bufTX;	
 		USARTx_RX_DMA_STREAM->M0AR =(uint32_t)bufRX;	
 
-		DD(); // chip select 
+		//DD(); // chip select 
 		DMA_Cmd(USARTx_TX_DMA_STREAM, ENABLE);		
 		DMA_Cmd(USARTx_RX_DMA_STREAM, ENABLE);
 		/* Block until the semaphore is given */

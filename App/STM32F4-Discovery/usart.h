@@ -23,16 +23,16 @@
 
 
 
-#define 	USARTx		 	 USART6
-#define 	USARTx_CLK	 	 RCC_APB2Periph_USART6
+#define 	USARTx		 	 USART1
+#define 	USARTx_CLK	 	 RCC_APB2Periph_USART1
 
-#define 	USARTx_RX_GPIO_PIN	 GPIO_Pin_6
-#define 	USARTx_RX_GPIO_PORT	 GPIOC
-#define 	USARTx_RX_GPIO_CLK       RCC_AHB1Periph_GPIOC
+#define 	USARTx_RX_GPIO_PIN	 GPIO_Pin_10
+#define 	USARTx_RX_GPIO_PORT	 GPIOA
+#define 	USARTx_RX_GPIO_CLK       RCC_AHB1Periph_GPIOA
 
-#define 	USARTx_TX_GPIO_PIN	 GPIO_Pin_7
-#define 	USARTx_TX_GPIO_PORT	 GPIOC
-#define 	USARTx_TX_GPIO_CLK       RCC_AHB1Periph_GPIOC
+#define 	USARTx_TX_GPIO_PIN	 GPIO_Pin_9
+#define 	USARTx_TX_GPIO_PORT	 GPIOA
+#define 	USARTx_TX_GPIO_CLK       RCC_AHB1Periph_GPIOA
 
 
 #define		USARTx_CS_GPIO_PIN	 GPIO_Pin_8
@@ -43,14 +43,14 @@
 
 #define USARTx_DMA                       DMA2
 #define USARTx_DMA_CLK                   RCC_AHB1Periph_DMA2
-#define USARTx_TX_DMA_CHANNEL            DMA_Channel_5
-#define USARTx_TX_DMA_STREAM             DMA2_Stream6
-#define USARTx_TX_DMA_FLAG_TCIF          DMA_IT_TCIF6
-#define USARTx_RX_DMA_CHANNEL            DMA_Channel_5
-#define USARTx_RX_DMA_STREAM             DMA2_Stream1
-#define USARTx_RX_DMA_FLAG_TCIF          DMA_IT_TCIF1
-#define USARTx_TX_DMA_IRQn	       DMA2_Stream6_IRQn
-#define USARTx_RX_DMA_IRQn	       DMA2_Stream1_IRQn
+#define USARTx_TX_DMA_CHANNEL            DMA_Channel_4
+#define USARTx_TX_DMA_STREAM             DMA2_Stream7
+#define USARTx_TX_DMA_FLAG_TCIF          DMA_IT_TCIF7
+#define USARTx_RX_DMA_CHANNEL            DMA_Channel_4
+#define USARTx_RX_DMA_STREAM             DMA2_Stream5
+#define USARTx_RX_DMA_FLAG_TCIF          DMA_IT_TCIF5
+#define USARTx_TX_DMA_IRQn	       DMA2_Stream7_IRQn
+#define USARTx_RX_DMA_IRQn	       DMA2_Stream5_IRQn
 
 
 

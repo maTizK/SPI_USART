@@ -387,6 +387,68 @@ void DMA2_Stream3_IRQHandler()
    portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
 }
 
+void DMA1_Stream3_IRQHandler()
+{
+	/*!	\var static unsigned portBASE_TYPE xHigherPriorityTaskWoken
+	 * 	\brief Indicates if higher priority has been woken
+	 */
+
+	unsigned portBASE_TYPE xHigherPriorityTaskWoken = pdFalse;
+
+  // Test if DMA Stream Transfer Complete interrupt
+  if (DMA_GetITStatus (SPIy_RX_DMA_STREAM, SPIy_RX_DMA_FLAG_TCIF)) {
+    
+	DMA_ClearITPendingBit (SPIy_RX_DMA_STREAM, SPIy_RX_DMA_FLAG_TCIF);
+	
+	while (SPI_I2S_GetFlagStatus (SPIy, SPI_I2S_FLAG_BSY) == SET);
+    /*
+     * The DMA stream is disabled in hardware at the end of the transfer
+     * Now we can deselect the display. If more than one peripheral was being run
+     * on this SPI peripheral, we would have to do both/all of them, or work out
+     * which one was active and deselect that one.i
+	
+     */
+	CSOFFy();
+	DMA_Cmd(SPIy_RX_DMA_STREAM, DISABLE);		
+ 
+	taskENTER_CRITICAL(); 
+//       xSemaphoreGive( xSemaphoreDMASPI);
+	xSemaphoreGiveFromISR( xSemaphoreDMASPIy, &xHigherPriorityTaskWoken );
+	taskEXIT_CRITICAL(); //
+  }	
+ portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
+}
+void DMA1_Stream4_IRQHandler()
+{
+	/*!	\var static unsigned portBASE_TYPE xHigherPriorityTaskWoken
+	 * 	\brief Indicates if higher priority has been woken
+	 */
+
+	unsigned portBASE_TYPE xHigherPriorityTaskWoken = pdFalse;
+
+  // Test if DMA Stream Transfer Complete interrupt
+  if (DMA_GetITStatus (SPIy_TX_DMA_STREAM, SPIy_TX_DMA_FLAG_TCIF)) {
+    
+	DMA_ClearITPendingBit (SPIy_TX_DMA_STREAM, SPIx_TX_DMA_FLAG_TCIF);
+
+	while (SPI_I2S_GetFlagStatus (SPIy, SPI_I2S_FLAG_BSY) == SET);
+    /*
+     * The DMA stream is disabled in hardware at the end of the transfer
+     * Now we can deselect the display. If more than one peripheral was being run
+     * on this SPI peripheral, we would have to do both/all of them, or work out
+     * which one was active and deselect that one.i
+	
+     */
+	CSOFFy();
+	DMA_Cmd(SPIy_RX_DMA_STREAM, DISABLE);		
+       
+	taskENTER_CRITICAL(); 
+//	 xSemaphoreGive( xSemaphoreDMASPI );
+	xSemaphoreGiveFromISR( xSemaphoreDMASPIy, &xHigherPriorityTaskWoken );
+ 	taskEXIT_CRITICAL();  
+ }
+   portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
+}
 
 /*---------------------------- Matic Knap 25 Jun 2014 ---------------------*/
 

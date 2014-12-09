@@ -1402,37 +1402,37 @@
  899              		.file 7 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 blocktim.c
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:20     .bss.xTestQueue:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:23     .bss.xTestQueue:0000000000000000 xTestQueue
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:26     .bss.xSecondary:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:29     .bss.xSecondary:0000000000000000 xSecondary
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:32     .bss.xPrimaryCycles:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:35     .bss.xPrimaryCycles:0000000000000000 xPrimaryCycles
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:38     .bss.xSecondaryCycles:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:41     .bss.xSecondaryCycles:0000000000000000 xSecondaryCycles
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:44     .bss.xErrorOccurred:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:47     .bss.xErrorOccurred:0000000000000000 xErrorOccurred
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:50     .bss.xRunIndicator:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:53     .bss.xRunIndicator:0000000000000000 xRunIndicator
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:56     .rodata:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:66     .text.vCreateBlockTimeTasks:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:71     .text.vCreateBlockTimeTasks:0000000000000000 vCreateBlockTimeTasks
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:138    .text.vCreateBlockTimeTasks:0000000000000064 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:153    .text.vPrimaryBlockTimeTestTask:0000000000000000 vPrimaryBlockTimeTestTask
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:643    .text.vSecondaryBlockTimeTestTask:0000000000000000 vSecondaryBlockTimeTestTask
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:149    .text.vPrimaryBlockTimeTestTask:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:524    .text.vPrimaryBlockTimeTestTask:0000000000000244 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:530    .text.vPrimaryBlockTimeTestTask:0000000000000254 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:630    .text.vPrimaryBlockTimeTestTask:00000000000002f8 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:639    .text.vSecondaryBlockTimeTestTask:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:786    .text.vSecondaryBlockTimeTestTask:00000000000000d0 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:794    .text.xAreBlockTimeTestTasksStillRunning:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:799    .text.xAreBlockTimeTestTasksStillRunning:0000000000000000 xAreBlockTimeTestTasksStillRunning
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:872    .text.xAreBlockTimeTestTasksStillRunning:0000000000000054 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:884    .bss.xLastPrimaryCycleCount.7705:0000000000000000 xLastPrimaryCycleCount.7705
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:890    .bss.xLastSecondaryCycleCount.7706:0000000000000000 xLastSecondaryCycleCount.7706
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:881    .bss.xLastPrimaryCycleCount.7705:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccFhQSFb.s:887    .bss.xLastSecondaryCycleCount.7706:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:20     .bss.xTestQueue:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:23     .bss.xTestQueue:0000000000000000 xTestQueue
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:26     .bss.xSecondary:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:29     .bss.xSecondary:0000000000000000 xSecondary
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:32     .bss.xPrimaryCycles:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:35     .bss.xPrimaryCycles:0000000000000000 xPrimaryCycles
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:38     .bss.xSecondaryCycles:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:41     .bss.xSecondaryCycles:0000000000000000 xSecondaryCycles
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:44     .bss.xErrorOccurred:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:47     .bss.xErrorOccurred:0000000000000000 xErrorOccurred
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:50     .bss.xRunIndicator:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:53     .bss.xRunIndicator:0000000000000000 xRunIndicator
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:56     .rodata:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:66     .text.vCreateBlockTimeTasks:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:71     .text.vCreateBlockTimeTasks:0000000000000000 vCreateBlockTimeTasks
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:138    .text.vCreateBlockTimeTasks:0000000000000064 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:153    .text.vPrimaryBlockTimeTestTask:0000000000000000 vPrimaryBlockTimeTestTask
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:643    .text.vSecondaryBlockTimeTestTask:0000000000000000 vSecondaryBlockTimeTestTask
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:149    .text.vPrimaryBlockTimeTestTask:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:524    .text.vPrimaryBlockTimeTestTask:0000000000000244 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:530    .text.vPrimaryBlockTimeTestTask:0000000000000254 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:630    .text.vPrimaryBlockTimeTestTask:00000000000002f8 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:639    .text.vSecondaryBlockTimeTestTask:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:786    .text.vSecondaryBlockTimeTestTask:00000000000000d0 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:794    .text.xAreBlockTimeTestTasksStillRunning:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:799    .text.xAreBlockTimeTestTasksStillRunning:0000000000000000 xAreBlockTimeTestTasksStillRunning
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:872    .text.xAreBlockTimeTestTasksStillRunning:0000000000000054 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:884    .bss.xLastPrimaryCycleCount.7705:0000000000000000 xLastPrimaryCycleCount.7705
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:890    .bss.xLastSecondaryCycleCount.7706:0000000000000000 xLastSecondaryCycleCount.7706
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:881    .bss.xLastPrimaryCycleCount.7705:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckKAh11.s:887    .bss.xLastSecondaryCycleCount.7706:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
