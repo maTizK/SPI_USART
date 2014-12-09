@@ -392,24 +392,24 @@
  289              		.file 5 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32f4xx_crc.c
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:20     .text.CRC_ResetDR:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:25     .text.CRC_ResetDR:0000000000000000 CRC_ResetDR
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:52     .text.CRC_ResetDR:0000000000000014 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:57     .text.CRC_CalcCRC:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:62     .text.CRC_CalcCRC:0000000000000000 CRC_CalcCRC
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:97     .text.CRC_CalcCRC:0000000000000020 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:102    .text.CRC_CalcBlockCRC:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:107    .text.CRC_CalcBlockCRC:0000000000000000 CRC_CalcBlockCRC
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:165    .text.CRC_CalcBlockCRC:0000000000000040 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:170    .text.CRC_GetCRC:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:175    .text.CRC_GetCRC:0000000000000000 CRC_GetCRC
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:201    .text.CRC_GetCRC:0000000000000014 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:206    .text.CRC_SetIDRegister:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:211    .text.CRC_SetIDRegister:0000000000000000 CRC_SetIDRegister
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:243    .text.CRC_SetIDRegister:000000000000001c $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:248    .text.CRC_GetIDRegister:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:253    .text.CRC_GetIDRegister:0000000000000000 CRC_GetIDRegister
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cctI2gMP.s:280    .text.CRC_GetIDRegister:0000000000000014 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:20     .text.CRC_ResetDR:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:25     .text.CRC_ResetDR:0000000000000000 CRC_ResetDR
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:52     .text.CRC_ResetDR:0000000000000014 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:57     .text.CRC_CalcCRC:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:62     .text.CRC_CalcCRC:0000000000000000 CRC_CalcCRC
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:97     .text.CRC_CalcCRC:0000000000000020 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:102    .text.CRC_CalcBlockCRC:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:107    .text.CRC_CalcBlockCRC:0000000000000000 CRC_CalcBlockCRC
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:165    .text.CRC_CalcBlockCRC:0000000000000040 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:170    .text.CRC_GetCRC:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:175    .text.CRC_GetCRC:0000000000000000 CRC_GetCRC
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:201    .text.CRC_GetCRC:0000000000000014 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:206    .text.CRC_SetIDRegister:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:211    .text.CRC_SetIDRegister:0000000000000000 CRC_SetIDRegister
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:243    .text.CRC_SetIDRegister:000000000000001c $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:248    .text.CRC_GetIDRegister:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:253    .text.CRC_GetIDRegister:0000000000000000 CRC_GetIDRegister
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccCvi16w.s:280    .text.CRC_GetIDRegister:0000000000000014 $d
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

@@ -1,7 +1,6 @@
 obj/App/STM32F4-Discovery/usart.o: App/STM32F4-Discovery/usart.c \
- App/STM32F4-Discovery/usart.h App/STM32F4-Discovery/main.h \
- Source/include/FreeRTOS.h Source/include/projdefs.h \
- App/STM32F4-Discovery/FreeRTOSConfig.h \
+ App/STM32F4-Discovery/usart.h Source/include/FreeRTOS.h \
+ Source/include/projdefs.h App/STM32F4-Discovery/FreeRTOSConfig.h \
  App/STM32F4-Discovery/Libraries/CMSIS/ST/STM32F4xx/Include/stm32f4xx.h \
  App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h \
  App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cmInstr.h \
@@ -42,8 +41,6 @@ obj/App/STM32F4-Discovery/usart.o: App/STM32F4-Discovery/usart.c \
  App/STM32F4-Discovery/stm32f4xx_conf.h bojan/printf.h
 
 App/STM32F4-Discovery/usart.h:
-
-App/STM32F4-Discovery/main.h:
 
 Source/include/FreeRTOS.h:
 

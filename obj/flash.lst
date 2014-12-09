@@ -331,15 +331,15 @@
  178              		.file 6 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 flash.c
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrRVrhC.s:20     .bss.uxFlashTaskNumber:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrRVrhC.s:23     .bss.uxFlashTaskNumber:0000000000000000 uxFlashTaskNumber
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrRVrhC.s:26     .rodata:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrRVrhC.s:30     .text.vStartLEDFlashTasks:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrRVrhC.s:35     .text.vStartLEDFlashTasks:0000000000000000 vStartLEDFlashTasks
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrRVrhC.s:90     .text.vStartLEDFlashTasks:0000000000000040 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrRVrhC.s:100    .text.vLEDFlashTask:0000000000000000 vLEDFlashTask
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrRVrhC.s:96     .text.vLEDFlashTask:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrRVrhC.s:168    .text.vLEDFlashTask:0000000000000064 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cciWrUFJ.s:20     .bss.uxFlashTaskNumber:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cciWrUFJ.s:23     .bss.uxFlashTaskNumber:0000000000000000 uxFlashTaskNumber
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cciWrUFJ.s:26     .rodata:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cciWrUFJ.s:30     .text.vStartLEDFlashTasks:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cciWrUFJ.s:35     .text.vStartLEDFlashTasks:0000000000000000 vStartLEDFlashTasks
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cciWrUFJ.s:90     .text.vStartLEDFlashTasks:0000000000000040 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cciWrUFJ.s:100    .text.vLEDFlashTask:0000000000000000 vLEDFlashTask
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cciWrUFJ.s:96     .text.vLEDFlashTask:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cciWrUFJ.s:168    .text.vLEDFlashTask:0000000000000064 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

@@ -18,7 +18,7 @@
 #define pdFalse 0
 #define pdTrue 	1
 
-
+static xSemaphoreHandle xSemaphoreDMAUSART;
 void init_USARTx(void)
 {
 	
@@ -163,7 +163,7 @@ void init_USARTx(void)
 	USART_DMACmd (USARTx, USART_DMAReq_Tx, ENABLE);	
 	USART_DMACmd (USARTx, USART_DMAReq_Rx, ENABLE);	
 	
-
+	xSemaphoreDMAUSART = xSemaphoreCreateBinary();
 }
 
 void DMA2_Stream1_IRQHandler()
@@ -180,11 +180,11 @@ void DMA2_Stream1_IRQHandler()
 	DMA_ClearITPendingBit (USARTx_RX_DMA_STREAM,  USARTx_RX_DMA_FLAG_TCIF);
 	
 	DE();
-//	DMA_Cmd(USARTx_TX_DMA_STREAM, DISABLE);		
+	DMA_Cmd(USARTx_TX_DMA_STREAM, DISABLE);		
 	DMA_Cmd(USARTx_RX_DMA_STREAM, DISABLE);		
  
 	taskENTER_CRITICAL(); 
-	xSemaphoreGiveFromISR( xSemaphoreDMASPI, &xHigherPriorityTaskWoken );
+	xSemaphoreGiveFromISR( xSemaphoreDMAUSART, &xHigherPriorityTaskWoken );
 	taskEXIT_CRITICAL(); //
   }	
  portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
@@ -204,93 +204,33 @@ void DMA2_Stream6_IRQHandler()
 	
 	DE();
 	DMA_Cmd(USARTx_TX_DMA_STREAM, DISABLE);		
-//	DMA_Cmd(USARTx_RX_DMA_STREAM, DISABLE);		
+	DMA_Cmd(USARTx_RX_DMA_STREAM, DISABLE);		
        
 	taskENTER_CRITICAL(); 
-	xSemaphoreGiveFromISR( xSemaphoreDMASPI, &xHigherPriorityTaskWoken );
+	xSemaphoreGiveFromISR( xSemaphoreDMAUSART, &xHigherPriorityTaskWoken );
  	taskEXIT_CRITICAL();  
  }
    portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
 }
 
 
-void usart_dma_send(uint16_t data_len, uint8_t *data_buf)
+void usart_dma_write_read(uint8_t *bufRX, uint8_t *bufTX, uint16_t lenRX,  uint16_t lenTX)
 {
-	
-		DMA_SetCurrDataCounter(USARTx_TX_DMA_STREAM, data_len);
-		USARTx_TX_DMA_STREAM->M0AR =(uint32_t)data_buf;	
+		
+		/*! usart_dma_read it has to be used with \n
+		 * memcpy from bufferRX right after it has recieve \n
+		 * data on SPI. */
+		
+		DMA_SetCurrDataCounter(USARTx_RX_DMA_STREAM, lenRX);
+		DMA_SetCurrDataCounter(USARTx_TX_DMA_STREAM, lenTX);
+		USARTx_TX_DMA_STREAM->M0AR =(uint32_t)bufTX;	
+		USARTx_RX_DMA_STREAM->M0AR =(uint32_t)bufRX;	
+
 		DD(); // chip select 
 		DMA_Cmd(USARTx_TX_DMA_STREAM, ENABLE);		
-		DMA_Cmd(USARTx_RX_DMA_STREAM, ENABLE);	
+		DMA_Cmd(USARTx_RX_DMA_STREAM, ENABLE);
 		/* Block until the semaphore is given */
-        	xSemaphoreTake(xSemaphoreDMASPI, 100/portTICK_RATE_MS);
+        	xSemaphoreTake(xSemaphoreDMAUSART, 10/portTICK_RATE_MS);	
+		//CSOFF(); // chip deselect		
 
-	//	CSOFF(); // chip deselect 
-			
-	
 }
-
-int usart_send( uint8_t *buffer,  uint16_t len)
-{
-	/* notify that you'll send some data */
-	uint8_t buf[10 + 4 + len];
-	int i;
-	uint16_t nmsg = (len + 4)/10;
-	nmsg += ((len + 4) % 10) ? 1 : 0; 
-	buf[0] = 0x2;//len ? 0x2 : 0x0; 	// command 
-	buf[1] = (len & 0xff) >> 8;
-	buf[2] = (len & 0x00ff); 		
-	buf[3] = 0xff;		 // offset 
-	buf[4] = 0xff;		 // offset 
-	buf[5] = nmsg;
-	/* crc calation*/ 
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_CRC, ENABLE);
-	CRC_ResetDR();
-	uint32_t crc = CRC_CalcBlockCRC((uint32_t)buf, 6);
-	buf[6] = crc >> 24;
-	buf[7] = crc >> 16;
-	buf[8] = crc >> 8;
-	buf[9] = crc ;
-	if (!len) 
-	{	
-		usart_dma_send(10, buf);
-		return 0; 
-	}
-	CRC_ResetDR();
-	crc = CRC_CalcBlockCRC((uint32_t)buffer, len);
-	for (i = 0; i < len; i++  ) buf[i+10] = buffer[i];
-	
-	buf[nmsg*10  + 10 - 4 ] = crc >> 24;
-	buf[nmsg*10  + 10 - 3] = crc >> 16;
-	buf[nmsg*10  + 10 - 2] = crc >> 8;
-	buf[nmsg*10  + 10 - 1] = crc;
-
-	usart_dma_send(nmsg*10 + 10, buf);	
-
-	return 0; 
-
-	
-}
-
-
-/* modbus_confirmation */ 
-
-int modbus_confirmation ( uint8_t * req, uint8_t * rsp, uint16_t write_len, uint16_t read_len)
-{
-	uint16_t crc = crc16(rsp, read_len - 2 );
-
-	if (	rsp[read_len -1 ] == ( crc & 0x00ff ) && 
-		rsp[read_len - 2 ] == ( crc >> 8 ) ) 
-	{
-#ifdef DEBUG
-		t_printf("modbus OK.\n");
-#endif
-		return 1;
-	}
-#ifdef DEBUF
-		t_printf("modbus FAIL.\n");
-#endif
-	return 0; 
-	
-}
-

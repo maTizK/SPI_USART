@@ -36,14 +36,6 @@
  * 	\brief Semaphore handle for DMA SPI pheriphal
  */
 
-xSemaphoreHandle xSemaphoreDMASPI;
-
-/*!	\var xSemaphoreHandle xSmphrUSART; 
-	\brief Sempahore handle for USART port 
-*/
-
-xSemaphoreHandle xSmphrUSART; 
-
 
 
 /*!	\var xTaskHandle setSpeedHandle

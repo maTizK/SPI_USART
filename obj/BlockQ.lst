@@ -902,25 +902,25 @@
  593              		.file 6 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 BlockQ.c
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:20     .bss.sBlockingConsumerCount:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:23     .bss.sBlockingConsumerCount:0000000000000000 sBlockingConsumerCount
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:26     .bss.sBlockingProducerCount:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:29     .bss.sBlockingProducerCount:0000000000000000 sBlockingProducerCount
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:32     .rodata:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:51     .text.vStartBlockingQueueTasks:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:56     .text.vStartBlockingQueueTasks:0000000000000000 vStartBlockingQueueTasks
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:289    .text.vStartBlockingQueueTasks:0000000000000194 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:388    .text.vBlockingQueueConsumer:0000000000000000 vBlockingQueueConsumer
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:311    .text.vBlockingQueueProducer:0000000000000000 vBlockingQueueProducer
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:307    .text.vBlockingQueueProducer:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:384    .text.vBlockingQueueConsumer:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:469    .text.xAreBlockingQueuesStillRunning:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:474    .text.xAreBlockingQueuesStillRunning:0000000000000000 xAreBlockingQueuesStillRunning
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:568    .text.xAreBlockingQueuesStillRunning:000000000000008c $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:579    .bss.sLastBlockingConsumerCount.8243:0000000000000000 sLastBlockingConsumerCount.8243
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:585    .bss.sLastBlockingProducerCount.8244:0000000000000000 sLastBlockingProducerCount.8244
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:576    .bss.sLastBlockingConsumerCount.8243:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwI3v3E.s:582    .bss.sLastBlockingProducerCount.8244:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:20     .bss.sBlockingConsumerCount:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:23     .bss.sBlockingConsumerCount:0000000000000000 sBlockingConsumerCount
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:26     .bss.sBlockingProducerCount:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:29     .bss.sBlockingProducerCount:0000000000000000 sBlockingProducerCount
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:32     .rodata:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:51     .text.vStartBlockingQueueTasks:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:56     .text.vStartBlockingQueueTasks:0000000000000000 vStartBlockingQueueTasks
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:289    .text.vStartBlockingQueueTasks:0000000000000194 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:388    .text.vBlockingQueueConsumer:0000000000000000 vBlockingQueueConsumer
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:311    .text.vBlockingQueueProducer:0000000000000000 vBlockingQueueProducer
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:307    .text.vBlockingQueueProducer:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:384    .text.vBlockingQueueConsumer:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:469    .text.xAreBlockingQueuesStillRunning:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:474    .text.xAreBlockingQueuesStillRunning:0000000000000000 xAreBlockingQueuesStillRunning
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:568    .text.xAreBlockingQueuesStillRunning:000000000000008c $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:579    .bss.sLastBlockingConsumerCount.8243:0000000000000000 sLastBlockingConsumerCount.8243
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:585    .bss.sLastBlockingProducerCount.8244:0000000000000000 sLastBlockingProducerCount.8244
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:576    .bss.sLastBlockingConsumerCount.8243:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc40ZUBB.s:582    .bss.sLastBlockingProducerCount.8244:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

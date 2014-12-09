@@ -1,7 +1,6 @@
 obj/App/STM32F4-Discovery/spi.o: App/STM32F4-Discovery/spi.c \
- App/STM32F4-Discovery/spi.h App/STM32F4-Discovery/main.h \
- Source/include/FreeRTOS.h Source/include/projdefs.h \
- App/STM32F4-Discovery/FreeRTOSConfig.h \
+ App/STM32F4-Discovery/spi.h Source/include/FreeRTOS.h \
+ Source/include/projdefs.h App/STM32F4-Discovery/FreeRTOSConfig.h \
  App/STM32F4-Discovery/Libraries/CMSIS/ST/STM32F4xx/Include/stm32f4xx.h \
  App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h \
  App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cmInstr.h \
@@ -42,8 +41,6 @@ obj/App/STM32F4-Discovery/spi.o: App/STM32F4-Discovery/spi.c \
  App/STM32F4-Discovery/stm32f4xx_conf.h
 
 App/STM32F4-Discovery/spi.h:
-
-App/STM32F4-Discovery/main.h:
 
 Source/include/FreeRTOS.h:
 

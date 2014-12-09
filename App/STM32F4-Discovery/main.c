@@ -166,7 +166,6 @@ int main(void)
 #endif
 	prvSetupHardware();
 
-	xSemaphoreDMASPI = xSemaphoreCreateBinary();
 	
 	// ============now register CLI commands ===================
 	
@@ -234,7 +233,7 @@ void usart_task(void * pvParameters)
 	int len = 13;
 	for(;;)
 	{
-		usart_send(NULL, 0x0);
+		usart_dma_write_read(NULL, str,0, len);
 		vTaskDelay(1000/portTICK_RATE_MS);
 	}
 }

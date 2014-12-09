@@ -1,7 +1,23 @@
 #ifndef SPI_H
 #define SPI_H
 
-#include  "main.h"
+/* FreeRTOS includes */ 
+#include "FreeRTOS.h"
+#include "task.h"
+#include "timers.h"
+#include "semphr.h"
+/* Pheripals includes */ 
+
+#include "stm32f4xx.h" 
+#include "stm32f4xx_conf.h"
+#include <stm32f4xx.h>
+#include <stm32f4xx_usart.h>
+#include <stm32f4xx_spi.h>
+#include <stm32f4xx_dma.h>
+#include <stm32f4xx_rcc.h>
+#include <stm32f4xx_gpio.h>
+
+
 
 /*! \file spi.h */
 
@@ -15,6 +31,7 @@ int dat_lengthTX;
 //xSemaphoreHandle xSemaphoreDMASPI;
 //static unsigned portBASE_TYPE xHigherPriorityTaskWoken;
 
+// ====================  SPIx interface ======================
 // spi interface 
 #define SPIx                           SPI1
 #define SPIx_CLK                       RCC_APB2Periph_SPI1
@@ -45,21 +62,6 @@ int dat_lengthTX;
 #define SPIx_CS_GPIO_CLK               RCC_AHB1Periph_GPIOA
 #define SPIx_CS_SOURCE                 GPIO_PinSource4
 #define SPIx_CS_AF                     GPIO_AF_SPI1
-// hard reset pin
-#define WIZ_HR_PIN		       GPIO_Pin_5
-#define WIZ_HR_GPIO_PORT	       GPIOC
-#define WIZ_HR_GPIO_CLK                RCC_AHB1Periph_GPIOC
-#define WIZ_HR_SOURCE                  GPIO_PinSource5
-
-// winet interrupt pin
-#define WIZ_IT_PIN		       GPIO_Pin_4
-#define WIZ_IT_GPIO_PORT	       GPIOC
-#define WIZ_IT_GPIO_CLK		       RCC_AHB1Periph_GPIOC
-#define WIZ_IT_EXTI_PORT_SOURCE	       EXTI_PortSourceGPIOC
-#define WIZ_IT_EXTI_PIN_SOURCE	       EXTI_PinSource4
-#define WIZ_IT_EXTI_LINE	       EXTI_Line4
-#define WIZ_IT_EXTI_IRQn	       EXTI4_IRQn
-
 
 // SPI - DMA configuration 
 #define SPIx_DMA                       DMA2
@@ -74,57 +76,68 @@ int dat_lengthTX;
 #define SPIx_RX_DMA_IRQn	       DMA2_Stream2_IRQn
 
 
+// defines for hardreset and chip select functions 
+#define CSONx()		SPIx_CS_GPIO_PORT->BSRRH |= SPIx_CS_PIN; // chip select  
+#define CSOFFx()		SPIx_CS_GPIO_PORT->BSRRL |= SPIx_CS_PIN; // chip select  
 
+// ====================  SPIy interface ======================
+
+// spi interface 
+#define SPIy                           SPI1
+#define SPIy_CLK                       RCC_APB2Periph_SPI1
+#define SPIy_CLK_INIT                  RCC_APB1PeriphClockCmd
+#define SPIy_IRQn                      SPI1_IRQn
+#define SPIy_IRQHANDLER                SPI1_IRQHandler
+// clock pin 
+#define SPIy_SCK_PIN                   GPIO_Pin_5
+#define SPIy_SCK_GPIO_PORT             GPIOA
+#define SPIy_SCK_GPIO_CLK              RCC_AHB1Periph_GPIOA
+#define SPIy_SCK_SOURCE                GPIO_PinSource5
+#define SPIy_SCK_AF                    GPIO_AF_SPI1
+// miso pin 
+#define SPIy_MISO_PIN                  GPIO_Pin_6
+#define SPIy_MISO_GPIO_PORT            GPIOA
+#define SPIy_MISO_GPIO_CLK             RCC_AHB1Periph_GPIOA
+#define SPIy_MISO_SOURCE               GPIO_PinSource6
+#define SPIy_MISO_AF                   GPIO_AF_SPI1
+// mosi pin 
+#define SPIy_MOSI_PIN                  GPIO_Pin_7
+#define SPIy_MOSI_GPIO_PORT            GPIOA
+#define SPIy_MOSI_GPIO_CLK             RCC_AHB1Periph_GPIOA
+#define SPIy_MOSI_SOURCE               GPIO_PinSource7
+#define SPIy_MOSI_AF                   GPIO_AF_SPI1
+// chip select pin 
+#define SPIy_CS_PIN		       GPIO_Pin_4
+#define SPIy_CS_GPIO_PORT	       GPIOA
+#define SPIy_CS_GPIO_CLK               RCC_AHB1Periph_GPIOA
+#define SPIy_CS_SOURCE                 GPIO_PinSource4
+#define SPIy_CS_AF                     GPIO_AF_SPI1
+
+// SPI - DMA configuration 
+#define SPIy_DMA                       DMA2
+#define SPIy_DMA_CLK                   RCC_AHB1Periph_DMA2
+#define SPIy_TX_DMA_CHANNEL            DMA_Channel_3
+#define SPIy_TX_DMA_STREAM             DMA2_Stream3
+#define SPIy_TX_DMA_FLAG_TCIF          DMA_IT_TCIF3
+#define SPIy_RX_DMA_CHANNEL            DMA_Channel_3
+#define SPIy_RX_DMA_STREAM             DMA2_Stream2
+#define SPIy_RX_DMA_FLAG_TCIF          DMA_IT_TCIF2
+#define SPIy_TX_DMA_IRQn	       DMA2_Stream3_IRQn
+#define SPIy_RX_DMA_IRQn	       DMA2_Stream2_IRQn
 
 
 // defines for hardreset and chip select functions 
-#define RESET_LOW()	WIZ_HR_GPIO_PORT->BSRRL |= WIZ_HR_PIN;
-#define RESET_HIGH()    WIZ_HR_GPIO_PORT->BSRRH |= WIZ_HR_PIN;
-#define CSON()		SPIx_CS_GPIO_PORT->BSRRH |= SPIx_CS_PIN; // chip select  
-#define CSOFF()		SPIx_CS_GPIO_PORT->BSRRL |= SPIx_CS_PIN; // chip select  
+#define CSONy()		SPIy_CS_GPIO_PORT->BSRRH |= SPIy_CS_PIN; // chip select  
+#define CSOFFy()	SPIy_CS_GPIO_PORT->BSRRL |= SPIy_CS_PIN; // chip select  
 
 
-/*! \fn void init_SPIx(void)
+/*! \fn void init_SPI1(void)
  *  \brief initialize SPI pheriphal for work with wiznet
  */
 void init_SPIx(void);
+void init_SPIy(void);
 
-/*! \fn uint16_t spi_dma_read2B(uint16_t address)
- *  \brief sends request to receieve 2 bytes
- *  \param address - memory location address on wiznet
- */
-uint16_t spi_dma_read2B(uint16_t address);
+void spi_dma_write_read(uint32_t, uint8_t *, uint8_t *, uint16_t ,  uint16_t );
 
-/*! \fn void spi_dma_send(uint16_t address, uint16_t data_len, uint8_t *data_buf)
- *  \brief send data via spi to wiznet
- *  \param address - memory location address on wiznet 
- *  \param data_len - length of data to send
- *  \param *data_buf - pointer to data to send 
- */
-void spi_dma_send(uint16_t address, uint16_t data_len, uint8_t *data_buf);
-
-
-/*! \fn void spi_dma_read(uint16_t address, uint16_t data_len)
- *  \brief receive data -> READ NOTE !!! 
- *  \param address - memory location address on wiznet 
- *  \param data_len - length ofg data to receieve 
- */
-void spi_dma_read(uint16_t address, uint16_t data_len);
-
-
-/*! \fn void spi_dma_sendByte(uint16_t address, uint8_t data_buf)
- *  \brief send byte to spi
- *  \param address - memory location address on wiznet 
- *  \param data_buf - value where data to send is stored
- */
-void spi_dma_sendByte(uint16_t address, uint8_t data_buf);
-
-
-/*! \fn void spi_dma_send2B(uint16_t address, uint16_t data_buf)
- *  \brief send two bytes of data 
- *  \param address - memory location address on wiznet 
- *  \param data_buf - value where 2 bytes are stored
- */
-void spi_dma_send2B(uint16_t address, uint16_t data_buf);
 
 #endif
