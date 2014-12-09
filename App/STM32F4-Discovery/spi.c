@@ -465,7 +465,7 @@ void spi_dma_write_read(uint32_t spi, uint8_t *bufRX, uint8_t *bufTX, uint16_t l
 		SPIy_TX_DMA_STREAM->M0AR =(uint32_t)bufTX;	
 		SPIy_RX_DMA_STREAM->M0AR =(uint32_t)bufRX;	
 
-		CSON2(); // chip select 
+		CSONy(); // chip select 
 		DMA_Cmd(SPIy_TX_DMA_STREAM, ENABLE);		
 		DMA_Cmd(SPIy_RX_DMA_STREAM, ENABLE);
 		/* Block until the semaphore is given */
@@ -479,7 +479,7 @@ void spi_dma_write_read(uint32_t spi, uint8_t *bufRX, uint8_t *bufTX, uint16_t l
 		SPIx_TX_DMA_STREAM->M0AR =(uint32_t)bufTX;	
 		SPIx_RX_DMA_STREAM->M0AR =(uint32_t)bufRX;	
 
-		CSON1(); // chip select 
+		CSONx(); // chip select 
 		DMA_Cmd(SPIx_TX_DMA_STREAM, ENABLE);		
 		DMA_Cmd(SPIx_RX_DMA_STREAM, ENABLE);
 		/* Block until the semaphore is given */
