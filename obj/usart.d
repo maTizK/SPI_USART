@@ -38,7 +38,8 @@ obj/App/STM32F4-Discovery/usart.o: App/STM32F4-Discovery/usart.c \
  Source/include/mpu_wrappers.h Source/include/task.h \
  Source/include/list.h Source/include/timers.h Source/include/task.h \
  Source/include/semphr.h Source/include/queue.h \
- App/STM32F4-Discovery/stm32f4xx_conf.h bojan/printf.h
+ App/STM32F4-Discovery/stm32f4xx_conf.h ic_comm/ic_comm_struct.h \
+ bojan/printf.h
 
 App/STM32F4-Discovery/usart.h:
 
@@ -133,5 +134,7 @@ Source/include/semphr.h:
 Source/include/queue.h:
 
 App/STM32F4-Discovery/stm32f4xx_conf.h:
+
+ic_comm/ic_comm_struct.h:
 
 bojan/printf.h:

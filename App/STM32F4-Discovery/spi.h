@@ -21,9 +21,9 @@
 
 /*! \file spi.h */
 
-#define MAX_BUFFER_LENGTH 2000
-uint8_t bufferTX[MAX_BUFFER_LENGTH];
-uint8_t bufferRX[MAX_BUFFER_LENGTH];
+#define MAX_BUFFER_LENGTH 200
+uint8_t bufferTXspi[MAX_BUFFER_LENGTH];
+uint8_t bufferRXspi[MAX_BUFFER_LENGTH];
 int bufferRXidx;
 int bufferTXidx; 
 int dat_lengthRX;

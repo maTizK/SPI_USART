@@ -1191,24 +1191,24 @@
  900              		.file 3 "<built-in>"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 printf-stdarg.c
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:20     .text.printchar:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:24     .text.printchar:0000000000000000 printchar
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:71     .text.prints:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:75     .text.prints:0000000000000000 prints
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:220    .text.printi:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:224    .text.printi:0000000000000000 printi
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:377    .rodata:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:381    .text.print:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:385    .text.print:0000000000000000 print
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:703    .text.print:00000000000001d0 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:708    .text.printf:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:713    .text.printf:0000000000000000 printf
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:758    .text.sprintf:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:763    .text.sprintf:0000000000000000 sprintf
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:809    .text.snprintf:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:814    .text.snprintf:0000000000000000 snprintf
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:860    .text.write:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccJLm5Nf.s:865    .text.write:0000000000000000 write
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:20     .text.printchar:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:24     .text.printchar:0000000000000000 printchar
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:71     .text.prints:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:75     .text.prints:0000000000000000 prints
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:220    .text.printi:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:224    .text.printi:0000000000000000 printi
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:377    .rodata:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:381    .text.print:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:385    .text.print:0000000000000000 print
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:703    .text.print:00000000000001d0 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:708    .text.printf:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:713    .text.printf:0000000000000000 printf
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:758    .text.sprintf:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:763    .text.sprintf:0000000000000000 sprintf
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:809    .text.snprintf:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:814    .text.snprintf:0000000000000000 snprintf
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:860    .text.write:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccX4Vzje.s:865    .text.write:0000000000000000 write
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

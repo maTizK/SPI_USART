@@ -1079,35 +1079,35 @@
  723              		.file 6 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 FreeRTOS_CLI.c
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:20     .rodata:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:28     .rodata.xHelpCommand:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:31     .rodata.xHelpCommand:0000000000000000 xHelpCommand
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:537    .text.prvHelpCommand:0000000000000000 prvHelpCommand
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:38     .data.xRegisteredCommands:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:41     .data.xRegisteredCommands:0000000000000000 xRegisteredCommands
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:45     .bss.cOutputBuffer:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:48     .bss.cOutputBuffer:0000000000000000 cOutputBuffer
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:51     .text.FreeRTOS_CLIRegisterCommand:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:56     .text.FreeRTOS_CLIRegisterCommand:0000000000000000 FreeRTOS_CLIRegisterCommand
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:140    .text.FreeRTOS_CLIRegisterCommand:0000000000000064 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:703    .data.pxLastCommandInList.7899:0000000000000000 pxLastCommandInList.7899
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:154    .text.FreeRTOS_CLIProcessCommand:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:159    .text.FreeRTOS_CLIProcessCommand:0000000000000000 FreeRTOS_CLIProcessCommand
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:617    .text.prvGetNumberOfParameters:0000000000000000 prvGetNumberOfParameters
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:333    .text.FreeRTOS_CLIProcessCommand:00000000000000fc $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:709    .bss.pxCommand.7909:0000000000000000 pxCommand.7909
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:341    .text.FreeRTOS_CLIGetOutputBuffer:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:346    .text.FreeRTOS_CLIGetOutputBuffer:0000000000000000 FreeRTOS_CLIGetOutputBuffer
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:371    .text.FreeRTOS_CLIGetOutputBuffer:0000000000000010 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:376    .text.FreeRTOS_CLIGetParameter:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:381    .text.FreeRTOS_CLIGetParameter:0000000000000000 FreeRTOS_CLIGetParameter
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:532    .text.prvHelpCommand:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:607    .text.prvHelpCommand:0000000000000054 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:715    .bss.pxCommand.7943:0000000000000000 pxCommand.7943
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:613    .text.prvGetNumberOfParameters:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:700    .data.pxLastCommandInList.7899:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:706    .bss.pxCommand.7909:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEAL9wA.s:712    .bss.pxCommand.7943:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:20     .rodata:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:28     .rodata.xHelpCommand:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:31     .rodata.xHelpCommand:0000000000000000 xHelpCommand
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:537    .text.prvHelpCommand:0000000000000000 prvHelpCommand
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:38     .data.xRegisteredCommands:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:41     .data.xRegisteredCommands:0000000000000000 xRegisteredCommands
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:45     .bss.cOutputBuffer:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:48     .bss.cOutputBuffer:0000000000000000 cOutputBuffer
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:51     .text.FreeRTOS_CLIRegisterCommand:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:56     .text.FreeRTOS_CLIRegisterCommand:0000000000000000 FreeRTOS_CLIRegisterCommand
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:140    .text.FreeRTOS_CLIRegisterCommand:0000000000000064 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:703    .data.pxLastCommandInList.7899:0000000000000000 pxLastCommandInList.7899
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:154    .text.FreeRTOS_CLIProcessCommand:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:159    .text.FreeRTOS_CLIProcessCommand:0000000000000000 FreeRTOS_CLIProcessCommand
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:617    .text.prvGetNumberOfParameters:0000000000000000 prvGetNumberOfParameters
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:333    .text.FreeRTOS_CLIProcessCommand:00000000000000fc $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:709    .bss.pxCommand.7909:0000000000000000 pxCommand.7909
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:341    .text.FreeRTOS_CLIGetOutputBuffer:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:346    .text.FreeRTOS_CLIGetOutputBuffer:0000000000000000 FreeRTOS_CLIGetOutputBuffer
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:371    .text.FreeRTOS_CLIGetOutputBuffer:0000000000000010 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:376    .text.FreeRTOS_CLIGetParameter:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:381    .text.FreeRTOS_CLIGetParameter:0000000000000000 FreeRTOS_CLIGetParameter
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:532    .text.prvHelpCommand:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:607    .text.prvHelpCommand:0000000000000054 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:715    .bss.pxCommand.7943:0000000000000000 pxCommand.7943
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:613    .text.prvGetNumberOfParameters:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:700    .data.pxLastCommandInList.7899:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:706    .bss.pxCommand.7909:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccl2oYpN.s:712    .bss.pxCommand.7943:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

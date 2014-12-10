@@ -1223,47 +1223,47 @@
  752              		.file 7 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 dynamic.c
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:20     .bss.xContinuousIncrementHandle:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:23     .bss.xContinuousIncrementHandle:0000000000000000 xContinuousIncrementHandle
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:26     .bss.xLimitedIncrementHandle:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:29     .bss.xLimitedIncrementHandle:0000000000000000 xLimitedIncrementHandle
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:32     .bss.ulCounter:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:35     .bss.ulCounter:0000000000000000 ulCounter
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:38     .bss.usCheckVariable:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:41     .bss.usCheckVariable:0000000000000000 usCheckVariable
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:44     .bss.xSuspendedQueueSendError:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:47     .bss.xSuspendedQueueSendError:0000000000000000 xSuspendedQueueSendError
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:50     .bss.xSuspendedQueueReceiveError:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:53     .bss.xSuspendedQueueReceiveError:0000000000000000 xSuspendedQueueReceiveError
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:20     .bss.xContinuousIncrementHandle:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:23     .bss.xContinuousIncrementHandle:0000000000000000 xContinuousIncrementHandle
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:26     .bss.xLimitedIncrementHandle:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:29     .bss.xLimitedIncrementHandle:0000000000000000 xLimitedIncrementHandle
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:32     .bss.ulCounter:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:35     .bss.ulCounter:0000000000000000 ulCounter
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:38     .bss.usCheckVariable:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:41     .bss.usCheckVariable:0000000000000000 usCheckVariable
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:44     .bss.xSuspendedQueueSendError:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:47     .bss.xSuspendedQueueSendError:0000000000000000 xSuspendedQueueSendError
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:50     .bss.xSuspendedQueueReceiveError:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:53     .bss.xSuspendedQueueReceiveError:0000000000000000 xSuspendedQueueReceiveError
                             *COM*:0000000000000004 xSuspendedTestQueue
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:57     .bss.ulExpectedValue:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:60     .bss.ulExpectedValue:0000000000000000 ulExpectedValue
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:63     .rodata:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:82     .text.vStartDynamicPriorityTasks:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:87     .text.vStartDynamicPriorityTasks:0000000000000000 vStartDynamicPriorityTasks
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:196    .text.vStartDynamicPriorityTasks:00000000000000bc $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:270    .text.vContinuousIncrementTask:0000000000000000 vContinuousIncrementTask
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:219    .text.vLimitedIncrementTask:0000000000000000 vLimitedIncrementTask
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:347    .text.vCounterControlTask:0000000000000000 vCounterControlTask
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:480    .text.vQueueSendWhenSuspendedTask:0000000000000000 vQueueSendWhenSuspendedTask
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:544    .text.vQueueReceiveWhenSuspendedTask:0000000000000000 vQueueReceiveWhenSuspendedTask
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:215    .text.vLimitedIncrementTask:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:266    .text.vContinuousIncrementTask:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:343    .text.vCounterControlTask:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:468    .text.vCounterControlTask:00000000000000ac $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:476    .text.vQueueSendWhenSuspendedTask:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:533    .text.vQueueSendWhenSuspendedTask:0000000000000040 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:731    .bss.ulValueToSend.8249:0000000000000000 ulValueToSend.8249
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:540    .text.vQueueReceiveWhenSuspendedTask:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:622    .text.vQueueReceiveWhenSuspendedTask:0000000000000068 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:629    .text.xAreDynamicPriorityTasksStillRunning:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:634    .text.xAreDynamicPriorityTasksStillRunning:0000000000000000 xAreDynamicPriorityTasksStillRunning
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:718    .text.xAreDynamicPriorityTasksStillRunning:0000000000000064 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:737    .bss.usLastTaskCheck.8262:0000000000000000 usLastTaskCheck.8262
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:743    .bss.ulLastExpectedValue.8263:0000000000000000 ulLastExpectedValue.8263
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:728    .bss.ulValueToSend.8249:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:734    .bss.usLastTaskCheck.8262:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccTcL70g.s:740    .bss.ulLastExpectedValue.8263:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:57     .bss.ulExpectedValue:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:60     .bss.ulExpectedValue:0000000000000000 ulExpectedValue
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:63     .rodata:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:82     .text.vStartDynamicPriorityTasks:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:87     .text.vStartDynamicPriorityTasks:0000000000000000 vStartDynamicPriorityTasks
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:196    .text.vStartDynamicPriorityTasks:00000000000000bc $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:270    .text.vContinuousIncrementTask:0000000000000000 vContinuousIncrementTask
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:219    .text.vLimitedIncrementTask:0000000000000000 vLimitedIncrementTask
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:347    .text.vCounterControlTask:0000000000000000 vCounterControlTask
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:480    .text.vQueueSendWhenSuspendedTask:0000000000000000 vQueueSendWhenSuspendedTask
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:544    .text.vQueueReceiveWhenSuspendedTask:0000000000000000 vQueueReceiveWhenSuspendedTask
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:215    .text.vLimitedIncrementTask:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:266    .text.vContinuousIncrementTask:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:343    .text.vCounterControlTask:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:468    .text.vCounterControlTask:00000000000000ac $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:476    .text.vQueueSendWhenSuspendedTask:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:533    .text.vQueueSendWhenSuspendedTask:0000000000000040 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:731    .bss.ulValueToSend.8249:0000000000000000 ulValueToSend.8249
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:540    .text.vQueueReceiveWhenSuspendedTask:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:622    .text.vQueueReceiveWhenSuspendedTask:0000000000000068 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:629    .text.xAreDynamicPriorityTasksStillRunning:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:634    .text.xAreDynamicPriorityTasksStillRunning:0000000000000000 xAreDynamicPriorityTasksStillRunning
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:718    .text.xAreDynamicPriorityTasksStillRunning:0000000000000064 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:737    .bss.usLastTaskCheck.8262:0000000000000000 usLastTaskCheck.8262
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:743    .bss.ulLastExpectedValue.8263:0000000000000000 ulLastExpectedValue.8263
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:728    .bss.ulValueToSend.8249:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:734    .bss.usLastTaskCheck.8262:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqDaWyh.s:740    .bss.ulLastExpectedValue.8263:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

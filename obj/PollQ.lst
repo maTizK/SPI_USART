@@ -654,25 +654,25 @@
  400              		.file 7 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 PollQ.c
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:20     .bss.xPollingConsumerCount:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:23     .bss.xPollingConsumerCount:0000000000000000 xPollingConsumerCount
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:26     .bss.xPollingProducerCount:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:29     .bss.xPollingProducerCount:0000000000000000 xPollingProducerCount
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:32     .rodata:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:42     .text.vStartPolledQueueTasks:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:47     .text.vStartPolledQueueTasks:0000000000000000 vStartPolledQueueTasks
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:116    .text.vStartPolledQueueTasks:0000000000000068 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:391    .bss.xPolledQueue.8210:0000000000000000 xPolledQueue.8210
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:224    .text.vPolledQueueConsumer:0000000000000000 vPolledQueueConsumer
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:130    .text.vPolledQueueProducer:0000000000000000 vPolledQueueProducer
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:126    .text.vPolledQueueProducer:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:215    .text.vPolledQueueProducer:000000000000006c $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:220    .text.vPolledQueueConsumer:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:314    .text.vPolledQueueConsumer:0000000000000078 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:319    .text.xArePollingQueuesStillRunning:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:324    .text.xArePollingQueuesStillRunning:0000000000000000 xArePollingQueuesStillRunning
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:382    .text.xArePollingQueuesStillRunning:000000000000003c $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cc3LoW5S.s:388    .bss.xPolledQueue.8210:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:20     .bss.xPollingConsumerCount:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:23     .bss.xPollingConsumerCount:0000000000000000 xPollingConsumerCount
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:26     .bss.xPollingProducerCount:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:29     .bss.xPollingProducerCount:0000000000000000 xPollingProducerCount
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:32     .rodata:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:42     .text.vStartPolledQueueTasks:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:47     .text.vStartPolledQueueTasks:0000000000000000 vStartPolledQueueTasks
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:116    .text.vStartPolledQueueTasks:0000000000000068 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:391    .bss.xPolledQueue.8210:0000000000000000 xPolledQueue.8210
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:224    .text.vPolledQueueConsumer:0000000000000000 vPolledQueueConsumer
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:130    .text.vPolledQueueProducer:0000000000000000 vPolledQueueProducer
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:126    .text.vPolledQueueProducer:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:215    .text.vPolledQueueProducer:000000000000006c $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:220    .text.vPolledQueueConsumer:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:314    .text.vPolledQueueConsumer:0000000000000078 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:319    .text.xArePollingQueuesStillRunning:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:324    .text.xArePollingQueuesStillRunning:0000000000000000 xArePollingQueuesStillRunning
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:382    .text.xArePollingQueuesStillRunning:000000000000003c $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccNNgxuk.s:388    .bss.xPolledQueue.8210:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

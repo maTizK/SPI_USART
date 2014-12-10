@@ -1063,37 +1063,37 @@
  692              		.file 5 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 heap_4.c
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:20     .bss.ucHeap:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:23     .bss.ucHeap:0000000000000000 ucHeap
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:26     .rodata.heapSTRUCT_SIZE:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:29     .rodata.heapSTRUCT_SIZE:0000000000000000 heapSTRUCT_SIZE
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:32     .rodata.xTotalHeapSize:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:35     .rodata.xTotalHeapSize:0000000000000000 xTotalHeapSize
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:38     .bss.xStart:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:41     .bss.xStart:0000000000000000 xStart
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:44     .bss.pxEnd:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:47     .bss.pxEnd:0000000000000000 pxEnd
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:50     .data.xFreeBytesRemaining:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:53     .data.xFreeBytesRemaining:0000000000000000 xFreeBytesRemaining
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:56     .bss.xBlockAllocatedBit:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:59     .bss.xBlockAllocatedBit:0000000000000000 xBlockAllocatedBit
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:62     .text.pvPortMalloc:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:67     .text.pvPortMalloc:0000000000000000 pvPortMalloc
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:445    .text.prvHeapInit:0000000000000000 prvHeapInit
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:557    .text.prvInsertBlockIntoFreeList:0000000000000000 prvInsertBlockIntoFreeList
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:255    .text.pvPortMalloc:0000000000000108 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:263    .text.vPortFree:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:268    .text.vPortFree:0000000000000000 vPortFree
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:371    .text.vPortFree:000000000000008c $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:377    .text.xPortGetFreeHeapSize:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:382    .text.xPortGetFreeHeapSize:0000000000000000 xPortGetFreeHeapSize
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:408    .text.xPortGetFreeHeapSize:0000000000000014 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:413    .text.vPortInitialiseBlocks:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:418    .text.vPortInitialiseBlocks:0000000000000000 vPortInitialiseBlocks
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:441    .text.prvHeapInit:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:543    .text.prvHeapInit:0000000000000084 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:553    .text.prvInsertBlockIntoFreeList:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccrjC8NN.s:682    .text.prvInsertBlockIntoFreeList:00000000000000a8 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:20     .bss.ucHeap:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:23     .bss.ucHeap:0000000000000000 ucHeap
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:26     .rodata.heapSTRUCT_SIZE:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:29     .rodata.heapSTRUCT_SIZE:0000000000000000 heapSTRUCT_SIZE
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:32     .rodata.xTotalHeapSize:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:35     .rodata.xTotalHeapSize:0000000000000000 xTotalHeapSize
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:38     .bss.xStart:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:41     .bss.xStart:0000000000000000 xStart
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:44     .bss.pxEnd:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:47     .bss.pxEnd:0000000000000000 pxEnd
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:50     .data.xFreeBytesRemaining:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:53     .data.xFreeBytesRemaining:0000000000000000 xFreeBytesRemaining
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:56     .bss.xBlockAllocatedBit:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:59     .bss.xBlockAllocatedBit:0000000000000000 xBlockAllocatedBit
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:62     .text.pvPortMalloc:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:67     .text.pvPortMalloc:0000000000000000 pvPortMalloc
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:445    .text.prvHeapInit:0000000000000000 prvHeapInit
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:557    .text.prvInsertBlockIntoFreeList:0000000000000000 prvInsertBlockIntoFreeList
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:255    .text.pvPortMalloc:0000000000000108 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:263    .text.vPortFree:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:268    .text.vPortFree:0000000000000000 vPortFree
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:371    .text.vPortFree:000000000000008c $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:377    .text.xPortGetFreeHeapSize:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:382    .text.xPortGetFreeHeapSize:0000000000000000 xPortGetFreeHeapSize
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:408    .text.xPortGetFreeHeapSize:0000000000000014 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:413    .text.vPortInitialiseBlocks:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:418    .text.vPortInitialiseBlocks:0000000000000000 vPortInitialiseBlocks
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:441    .text.prvHeapInit:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:543    .text.prvHeapInit:0000000000000084 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:553    .text.prvInsertBlockIntoFreeList:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccUf14gA.s:682    .text.prvInsertBlockIntoFreeList:00000000000000a8 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

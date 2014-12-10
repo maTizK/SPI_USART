@@ -653,29 +653,29 @@
  403              		.file 6 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 death.c
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:20     .bss.usCreationCount:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:23     .bss.usCreationCount:0000000000000000 usCreationCount
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:26     .bss.uxTasksRunningAtStart:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:29     .bss.uxTasksRunningAtStart:0000000000000000 uxTasksRunningAtStart
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:32     .rodata.uxMaxNumberOfExtraTasksRunning:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:35     .rodata.uxMaxNumberOfExtraTasksRunning:0000000000000000 uxMaxNumberOfExtraTasksRunning
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:20     .bss.usCreationCount:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:23     .bss.usCreationCount:0000000000000000 usCreationCount
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:26     .bss.uxTasksRunningAtStart:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:29     .bss.uxTasksRunningAtStart:0000000000000000 uxTasksRunningAtStart
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:32     .rodata.uxMaxNumberOfExtraTasksRunning:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:35     .rodata.uxMaxNumberOfExtraTasksRunning:0000000000000000 uxMaxNumberOfExtraTasksRunning
                             *COM*:0000000000000004 xCreatedTask
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:39     .rodata:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:43     .text.vCreateSuicidalTasks:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:48     .text.vCreateSuicidalTasks:0000000000000000 vCreateSuicidalTasks
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:114    .text.vCreateSuicidalTasks:0000000000000058 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:206    .text.vCreateTasks:0000000000000000 vCreateTasks
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:121    .text.vSuicidalTask:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:125    .text.vSuicidalTask:0000000000000000 vSuicidalTask
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:202    .text.vCreateTasks:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:283    .text.vCreateTasks:0000000000000074 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:292    .text.xIsCreateTaskStillRunning:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:297    .text.xIsCreateTaskStillRunning:0000000000000000 xIsCreateTaskStillRunning
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:378    .text.xIsCreateTaskStillRunning:0000000000000064 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:389    .data.usLastCreationCount.8120:0000000000000000 usLastCreationCount.8120
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:395    .bss.uxTasksRunningNow.8122:0000000000000000 uxTasksRunningNow.8122
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:386    .data.usLastCreationCount.8120:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccqoRVyV.s:392    .bss.uxTasksRunningNow.8122:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:39     .rodata:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:43     .text.vCreateSuicidalTasks:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:48     .text.vCreateSuicidalTasks:0000000000000000 vCreateSuicidalTasks
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:114    .text.vCreateSuicidalTasks:0000000000000058 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:206    .text.vCreateTasks:0000000000000000 vCreateTasks
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:121    .text.vSuicidalTask:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:125    .text.vSuicidalTask:0000000000000000 vSuicidalTask
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:202    .text.vCreateTasks:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:283    .text.vCreateTasks:0000000000000074 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:292    .text.xIsCreateTaskStillRunning:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:297    .text.xIsCreateTaskStillRunning:0000000000000000 xIsCreateTaskStillRunning
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:378    .text.xIsCreateTaskStillRunning:0000000000000064 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:389    .data.usLastCreationCount.8120:0000000000000000 usLastCreationCount.8120
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:395    .bss.uxTasksRunningNow.8122:0000000000000000 uxTasksRunningNow.8122
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:386    .data.usLastCreationCount.8120:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccMqrHnj.s:392    .bss.uxTasksRunningNow.8122:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

@@ -11,11 +11,3 @@ $make
 - run and have fun
 
 
-TODO
----------
-
-- command task currently kills and starts only motor heart bieat task (motorHB)
-- USART via DMA 
-- command motor need upgrade for seting and getting data (ramp time, temp, max RPM,..) now supports only 
-speed and upramp time. Some data can be obtained via command 'motor get'
-- 

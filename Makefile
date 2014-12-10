@@ -136,6 +136,7 @@ CPPFLAGS += -IApp/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc
 CPPFLAGS += -IApp/STM32F4-Discovery
 CPPFLAGS += -ISource/portable/GCC/ARM_CM4F
 CPPFLAGS += -IApp/Common/include
+CPPFLAGS += -Iic_comm
 CPPFLAGS += -IApp/STM32F4-Discovery/board
 #---------------- Compiler Options C ----------------
 #  -g*:          generate debugging information

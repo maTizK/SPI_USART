@@ -227,14 +227,17 @@ void usart_task(void * pvParameters)
 {
 
 
-	char  str[30];
+	uint8_t str[30];
 	int i = 0;
 	for (i = 0; i < 29; i++) str[i] =  i; 
-	int len = 13;
+	int len = 16;
 	for(;;)
 	{
 		usart_dma_write_read(NULL, str,0, len);
-		vTaskDelay(1000/portTICK_RATE_MS);
+		spi_dma_write_read(SPIx, NULL, str, 0, len);
+		spi_dma_write_read(SPIy, NULL, str, 0, len);
+		
+		vTaskDelay(50/portTICK_RATE_MS);
 	}
 }
 
@@ -252,7 +255,7 @@ void prvSetupHardware( void )
 	
 	//init_SPIx();
 	init_SPIx();	
-	
+	init_SPIy();
 	// init USARTx 
 	init_USARTx();
 

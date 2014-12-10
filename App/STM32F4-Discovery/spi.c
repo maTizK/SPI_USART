@@ -4,9 +4,12 @@
 #define pdFalse 0
 #define pdTrue 	1
 
-static xSemaphoreHandle xSemaphoreDMASPIx;
-static xSemaphoreHandle xSemaphoreDMASPIy;
-
+//static xSemaphoreHandle xSemaphoreDMASPIxTX;
+//static xSemaphoreHandle xSemaphoreDMASPIxRX;
+//static xSemaphoreHandle xSemaphoreDMASPIyTX;
+//static xSemaphoreHandle xSemaphoreDMASPIyRX;
+  static xSemaphoreHandle xSemaphoreDMASPIy;
+  static xSemaphoreHandle xSemaphoreDMASPIx;
 /*============================================================================
  * 	func void init_SPIx(void)
  *===========================================================================*/ 
@@ -130,13 +133,13 @@ void init_SPIx(void){
   	// Configure TX DMA 
   	DMA_InitStruct.DMA_Channel = SPIx_TX_DMA_CHANNEL ;
   	DMA_InitStruct.DMA_DIR = DMA_DIR_MemoryToPeripheral ;
-  	DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t) &bufferTX ;
+  	DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t) &bufferTXspi ;
 	DMA_InitStruct.DMA_BufferSize = MAX_BUFFER_LENGTH;
   	DMA_Init(SPIx_TX_DMA_STREAM, &DMA_InitStruct);
 	// Configure RX DMA 
   	DMA_InitStruct.DMA_Channel = SPIx_RX_DMA_CHANNEL ;
 	DMA_InitStruct.DMA_DIR = DMA_DIR_PeripheralToMemory ;
-	DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t)&bufferRX; 
+	DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t)&bufferRXspi; 
 	DMA_InitStruct.DMA_BufferSize = MAX_BUFFER_LENGTH;
 	DMA_Init(SPIx_RX_DMA_STREAM, &DMA_InitStruct);	
 	
@@ -162,8 +165,9 @@ void init_SPIx(void){
 	SPI_I2S_DMACmd (SPIx, SPI_I2S_DMAReq_Tx, ENABLE);	
 	SPI_I2S_DMACmd (SPIx, SPI_I2S_DMAReq_Rx, ENABLE);	
 
-	xSemaphoreDMASPIx = xSemaphoreCreateBinary();
-	
+//	xSemaphoreDMASPIxTX = xSemaphoreCreateBinary();
+//	xSemaphoreDMASPIxRX = xSemaphoreCreateBinary();
+       	xSemaphoreDMASPIx   = xSemaphoreCreateBinary();	
 }
 
 void init_SPIy(void){
@@ -288,13 +292,13 @@ void init_SPIy(void){
   	// Configure TX DMA 
   	DMA_InitStruct.DMA_Channel = SPIy_TX_DMA_CHANNEL ;
   	DMA_InitStruct.DMA_DIR = DMA_DIR_MemoryToPeripheral ;
-  	DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t) &bufferTX ;
+  	DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t) &bufferTXspi ;
 	DMA_InitStruct.DMA_BufferSize = MAX_BUFFER_LENGTH;
   	DMA_Init(SPIy_TX_DMA_STREAM, &DMA_InitStruct);
 	// Configure RX DMA 
   	DMA_InitStruct.DMA_Channel = SPIy_RX_DMA_CHANNEL ;
 	DMA_InitStruct.DMA_DIR = DMA_DIR_PeripheralToMemory ;
-	DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t)&bufferRX; 
+	DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t)&bufferRXspi; 
 	DMA_InitStruct.DMA_BufferSize = MAX_BUFFER_LENGTH;
 	DMA_Init(SPIy_RX_DMA_STREAM, &DMA_InitStruct);	
 	
@@ -320,8 +324,9 @@ void init_SPIy(void){
 	SPI_I2S_DMACmd (SPIy, SPI_I2S_DMAReq_Tx, ENABLE);	
 	SPI_I2S_DMACmd (SPIy, SPI_I2S_DMAReq_Rx, ENABLE);	
 
-	xSemaphoreDMASPIy = xSemaphoreCreateBinary();
-	
+//	xSemaphoreDMASPIyTX = xSemaphoreCreateBinary();
+//	xSemaphoreDMASPIyRX = xSemaphoreCreateBinary();
+        xSemaphoreDMASPIy   = xSemaphoreCreateBinary();	
 }
 
 void DMA2_Stream2_IRQHandler()
@@ -469,7 +474,19 @@ void spi_dma_write_read(uint32_t spi, uint8_t *bufRX, uint8_t *bufTX, uint16_t l
 		DMA_Cmd(SPIy_TX_DMA_STREAM, ENABLE);		
 		DMA_Cmd(SPIy_RX_DMA_STREAM, ENABLE);
 		/* Block until the semaphore is given */
-        	xSemaphoreTake(xSemaphoreDMASPIy, 10/portTICK_RATE_MS);	
+        	if ( xSemaphoreTake(xSemaphoreDMASPIy, 10/portTICK_RATE_MS) == pdTRUE) 
+		{
+			// we were able to take semaphore now wait for transfer
+			// to finish. We will give back semaphore in IRQ
+			// handeler 
+			
+		}
+		else
+		{
+			// error taking semaphore 
+		}
+
+
 		//CSOFF(); // chip deselect		
 	}
 	else
@@ -483,7 +500,15 @@ void spi_dma_write_read(uint32_t spi, uint8_t *bufRX, uint8_t *bufTX, uint16_t l
 		DMA_Cmd(SPIx_TX_DMA_STREAM, ENABLE);		
 		DMA_Cmd(SPIx_RX_DMA_STREAM, ENABLE);
 		/* Block until the semaphore is given */
-        	xSemaphoreTake(xSemaphoreDMASPIx, 10/portTICK_RATE_MS);	
+        	if (xSemaphoreTake(xSemaphoreDMASPIx, 10/portTICK_RATE_MS) == pdTRUE )
+		{
+			// we were able to take semaphore now wait for transfer
+			// to finish. We will give back semaphore in IRQ handler
+		}
+		else
+		{
+			// error taking semaphore 
+		}
 		//CSOFF(); // chip deselect	
 	}
 
