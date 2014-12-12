@@ -50,13 +50,13 @@
 #define USARTx_DMA                       DMA2
 #define USARTx_DMA_CLK                   RCC_AHB1Periph_DMA2
 #define USARTx_TX_DMA_CHANNEL            DMA_Channel_4
-#define USARTx_TX_DMA_STREAM             DMA1_Stream7
+#define USARTx_TX_DMA_STREAM             DMA2_Stream7
 #define USARTx_TX_DMA_FLAG_TCIF          DMA_IT_TCIF7
 #define USARTx_RX_DMA_CHANNEL            DMA_Channel_4
-#define USARTx_RX_DMA_STREAM             DMA1_Stream5
+#define USARTx_RX_DMA_STREAM             DMA2_Stream5
 #define USARTx_RX_DMA_FLAG_TCIF          DMA_IT_TCIF5
-#define USARTx_TX_DMA_IRQn	       DMA1_Stream7_IRQn
-#define USARTx_RX_DMA_IRQn	       DMA1_Stream5_IRQn
+#define USARTx_TX_DMA_IRQn	       DMA2_Stream7_IRQn
+#define USARTx_RX_DMA_IRQn	       DMA2_Stream5_IRQn
 
 
 
@@ -75,5 +75,16 @@ int dat_lengthTX;
 #define MAX_STRLEN 512
 #define REQ_MAX_LEN 512
 
-void usart_dma_write_read(uint8_t *, uint8_t *, uint16_t, uint16_t);
+int usart_dma_write(uint8_t *,  uint16_t);
+int usart_dma_read(uint8_t *,  uint16_t);
+int usart_send  ( uint8_t * , uint16_t ); 
+int usart_receive ( uint8_t * ,uint16_t ); 
+
+void init_CRC(void);
+void init_USARTx(void);
+
+
+
+
+
 #endif

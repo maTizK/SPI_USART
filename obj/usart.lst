@@ -22,22 +22,16 @@
   22              		.comm	bufferTXidx,4,4
   23              		.comm	dat_lengthRX,4,4
   24              		.comm	dat_lengthTX,4,4
-  25              		.section	.bss.xSemaphoreDMAUSARTrx,"aw",%nobits
-  26              		.align	2
-  29              	xSemaphoreDMAUSARTrx:
-  30 0000 00000000 		.space	4
-  31              		.section	.bss.xSemaphoreDMAUSARTtx,"aw",%nobits
-  32              		.align	2
-  35              	xSemaphoreDMAUSARTtx:
-  36 0000 00000000 		.space	4
-  37              		.section	.text.init_USARTx,"ax",%progbits
-  38              		.align	2
-  39              		.global	init_USARTx
-  40              		.thumb
-  41              		.thumb_func
-  43              	init_USARTx:
-  44              	.LFB110:
-  45              		.file 1 "App/STM32F4-Discovery/usart.c"
+  25              		.comm	xSemaphoreDMAUSARTrx,4,4
+  26              		.comm	xSemaphoreDMAUSARTtx,4,4
+  27              		.section	.text.init_CRC,"ax",%progbits
+  28              		.align	2
+  29              		.global	init_CRC
+  30              		.thumb
+  31              		.thumb_func
+  33              	init_CRC:
+  34              	.LFB110:
+  35              		.file 1 "App/STM32F4-Discovery/usart.c"
    1:App/STM32F4-Discovery/usart.c **** /*! \file modbus_mk.c
    2:App/STM32F4-Discovery/usart.c ****  *  \brief modbus protocol functions and motor control
    3:App/STM32F4-Discovery/usart.c ****  */
@@ -59,1108 +53,1216 @@
   19:App/STM32F4-Discovery/usart.c ****  * 						   supposed to operate
   20:App/STM32F4-Discovery/usart.c ****  */
   21:App/STM32F4-Discovery/usart.c **** 
-  22:App/STM32F4-Discovery/usart.c **** 
-  23:App/STM32F4-Discovery/usart.c **** static xSemaphoreHandle xSemaphoreDMAUSARTrx;
-  24:App/STM32F4-Discovery/usart.c **** static xSemaphoreHandle xSemaphoreDMAUSARTtx;
-  25:App/STM32F4-Discovery/usart.c **** 
-  26:App/STM32F4-Discovery/usart.c **** 
-  27:App/STM32F4-Discovery/usart.c **** 
-  28:App/STM32F4-Discovery/usart.c **** void init_USARTx(void)
-  29:App/STM32F4-Discovery/usart.c **** {
-  46              		.loc 1 29 0
-  47              		.cfi_startproc
-  48              		@ args = 0, pretend = 0, frame = 88
-  49              		@ frame_needed = 1, uses_anonymous_args = 0
-  50 0000 80B5     		push	{r7, lr}
-  51              	.LCFI0:
-  52              		.cfi_def_cfa_offset 8
-  53              		.cfi_offset 7, -8
-  54              		.cfi_offset 14, -4
-  55 0002 96B0     		sub	sp, sp, #88
-  56              	.LCFI1:
-  57              		.cfi_def_cfa_offset 96
-  58 0004 00AF     		add	r7, sp, #0
-  59              	.LCFI2:
-  60              		.cfi_def_cfa_register 7
-  30:App/STM32F4-Discovery/usart.c **** 	
-  31:App/STM32F4-Discovery/usart.c **** 	
-  32:App/STM32F4-Discovery/usart.c **** 	GPIO_InitTypeDef GPIO_InitStruct; // this is for the GPIO pins used as TX and RX
-  33:App/STM32F4-Discovery/usart.c **** 	USART_InitTypeDef USART_InitStruct; // this is for the USART1 initilization
-  34:App/STM32F4-Discovery/usart.c **** 	NVIC_InitTypeDef NVIC_InitStruct; // this is used to configure the NVIC (nested vector interrupt c
-  35:App/STM32F4-Discovery/usart.c **** 	DMA_InitTypeDef DMA_InitStruct;
-  36:App/STM32F4-Discovery/usart.c **** 	
-  37:App/STM32F4-Discovery/usart.c **** 	/* enable APB2 peripheral clock for USART1 
-  38:App/STM32F4-Discovery/usart.c **** 	 * note that only USART1 and USART6 are connected to APB2
-  39:App/STM32F4-Discovery/usart.c **** 	 * the other USARTs are connected to APB1
-  40:App/STM32F4-Discovery/usart.c **** 	 */
-  41:App/STM32F4-Discovery/usart.c **** 	RCC_APB2PeriphClockCmd(USARTx_CLK, ENABLE);
-  61              		.loc 1 41 0
-  62 0006 1020     		movs	r0, #16
-  63 0008 0121     		movs	r1, #1
-  64 000a FFF7FEFF 		bl	RCC_APB2PeriphClockCmd
-  42:App/STM32F4-Discovery/usart.c **** 	
-  43:App/STM32F4-Discovery/usart.c **** 	/* enable the peripheral clock for the pins used by 
-  44:App/STM32F4-Discovery/usart.c **** 	 * USART1, PB6 for TX and PB7 for RX 
-  45:App/STM32F4-Discovery/usart.c **** 	 */
-  46:App/STM32F4-Discovery/usart.c **** 	RCC_AHB1PeriphClockCmd(USARTx_TX_GPIO_CLK, ENABLE);
-  65              		.loc 1 46 0
-  66 000e 0120     		movs	r0, #1
-  67 0010 0121     		movs	r1, #1
-  68 0012 FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
-  47:App/STM32F4-Discovery/usart.c **** 	RCC_AHB1PeriphClockCmd(USARTx_RX_GPIO_CLK, ENABLE);
-  69              		.loc 1 47 0
-  70 0016 0120     		movs	r0, #1
-  71 0018 0121     		movs	r1, #1
-  72 001a FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
-  48:App/STM32F4-Discovery/usart.c **** 	RCC_AHB1PeriphClockCmd(USARTx_CS_GPIO_CLK, ENABLE);
-  73              		.loc 1 48 0
-  74 001e 4020     		movs	r0, #64
-  75 0020 0121     		movs	r1, #1
-  76 0022 FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
-  49:App/STM32F4-Discovery/usart.c **** 
-  50:App/STM32F4-Discovery/usart.c **** 	
-  51:App/STM32F4-Discovery/usart.c **** 	/* This sequence sets up the TX and RX pins 
-  52:App/STM32F4-Discovery/usart.c **** 	 * so they work correctly with the USART1 peripheral
-  53:App/STM32F4-Discovery/usart.c **** 	 */
-  54:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_Pin = USARTx_RX_GPIO_PIN | USARTx_TX_GPIO_PIN; // Pins 6 (TX) and 7 (RX) are 
-  77              		.loc 1 54 0
-  78 0026 4FF4C063 		mov	r3, #1536
-  79 002a 3B65     		str	r3, [r7, #80]
-  55:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;		// this defines the IO speed and has nothing to d
-  80              		.loc 1 55 0
-  81 002c 0323     		movs	r3, #3
-  82 002e 87F85530 		strb	r3, [r7, #85]
-  56:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;			// this defines the output type as push pull mode (a
-  83              		.loc 1 56 0
-  84 0032 0023     		movs	r3, #0
-  85 0034 87F85630 		strb	r3, [r7, #86]
-  57:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;			// this activates the pullup resistors on the IO pins
-  86              		.loc 1 57 0
-  87 0038 0123     		movs	r3, #1
-  88 003a 87F85730 		strb	r3, [r7, #87]
-  58:App/STM32F4-Discovery/usart.c **** 	GPIO_Init(USARTx_TX_GPIO_PORT, &GPIO_InitStruct);					// now all the values are passed to the GPIO
-  89              		.loc 1 58 0
-  90 003e 07F15003 		add	r3, r7, #80
-  91 0042 7948     		ldr	r0, .L4
-  92 0044 1946     		mov	r1, r3
-  93 0046 FFF7FEFF 		bl	GPIO_Init
-  59:App/STM32F4-Discovery/usart.c **** 	
-  60:App/STM32F4-Discovery/usart.c **** 	
-  61:App/STM32F4-Discovery/usart.c **** 	
-  62:App/STM32F4-Discovery/usart.c **** 	/* Configure the chip select pin in this case we will use PG8 */
-  63:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_Pin = USARTx_CS_GPIO_PIN;
-  94              		.loc 1 63 0
-  95 004a 4FF48073 		mov	r3, #256
-  96 004e 3B65     		str	r3, [r7, #80]
-  64:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
-  97              		.loc 1 64 0
-  98 0050 0123     		movs	r3, #1
-  99 0052 87F85430 		strb	r3, [r7, #84]
-  65:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
- 100              		.loc 1 65 0
- 101 0056 0023     		movs	r3, #0
- 102 0058 87F85630 		strb	r3, [r7, #86]
-  66:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
- 103              		.loc 1 66 0
- 104 005c 0323     		movs	r3, #3
- 105 005e 87F85530 		strb	r3, [r7, #85]
-  67:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
- 106              		.loc 1 67 0
- 107 0062 0123     		movs	r3, #1
- 108 0064 87F85730 		strb	r3, [r7, #87]
-  68:App/STM32F4-Discovery/usart.c **** 	GPIO_Init(USARTx_CS_GPIO_PORT, &GPIO_InitStruct);
- 109              		.loc 1 68 0
- 110 0068 07F15003 		add	r3, r7, #80
- 111 006c 6F48     		ldr	r0, .L4+4
- 112 006e 1946     		mov	r1, r3
- 113 0070 FFF7FEFF 		bl	GPIO_Init
-  69:App/STM32F4-Discovery/usart.c **** 
-  70:App/STM32F4-Discovery/usart.c **** 	//DD() // set PG8 high
-  71:App/STM32F4-Discovery/usart.c **** 	
-  72:App/STM32F4-Discovery/usart.c **** 	
-  73:App/STM32F4-Discovery/usart.c **** 	/* The RX and TX pins are now connected to their AF
-  74:App/STM32F4-Discovery/usart.c **** 	 * so that the USART1 can take over control of the 
-  75:App/STM32F4-Discovery/usart.c **** 	 * pins
-  76:App/STM32F4-Discovery/usart.c **** 	 */
-  77:App/STM32F4-Discovery/usart.c **** 	GPIO_PinAFConfig(USARTx_RX_GPIO_PORT, USARTx_RX_SOURCE, USARTx_RX_AF); //
- 114              		.loc 1 77 0
- 115 0074 6C48     		ldr	r0, .L4
- 116 0076 0A21     		movs	r1, #10
- 117 0078 0722     		movs	r2, #7
- 118 007a FFF7FEFF 		bl	GPIO_PinAFConfig
-  78:App/STM32F4-Discovery/usart.c **** 	GPIO_PinAFConfig(USARTx_TX_GPIO_PORT, USARTx_TX_SOURCE, USARTx_TX_AF);
- 119              		.loc 1 78 0
- 120 007e 6A48     		ldr	r0, .L4
- 121 0080 0921     		movs	r1, #9
- 122 0082 0722     		movs	r2, #7
- 123 0084 FFF7FEFF 		bl	GPIO_PinAFConfig
-  79:App/STM32F4-Discovery/usart.c **** 	
-  80:App/STM32F4-Discovery/usart.c **** 	/* Now the USART_InitStruct is used to define the 
-  81:App/STM32F4-Discovery/usart.c **** 	 * properties of USART1 
-  82:App/STM32F4-Discovery/usart.c **** 	 */
-  83:App/STM32F4-Discovery/usart.c **** 	USART_InitStruct.USART_BaudRate = 38400;				// the baudrate is set to the value we passed into thi
- 124              		.loc 1 83 0
- 125 0088 4FF41643 		mov	r3, #38400
- 126 008c 3B64     		str	r3, [r7, #64]
-  84:App/STM32F4-Discovery/usart.c **** 	USART_InitStruct.USART_WordLength = USART_WordLength_8b;// we want the data frame size to be 8 bit
- 127              		.loc 1 84 0
- 128 008e 0023     		movs	r3, #0
- 129 0090 A7F84430 		strh	r3, [r7, #68]	@ movhi
-  85:App/STM32F4-Discovery/usart.c **** 	USART_InitStruct.USART_StopBits = USART_StopBits_1;		// we want 1 stop bit (standard)
- 130              		.loc 1 85 0
- 131 0094 0023     		movs	r3, #0
- 132 0096 A7F84630 		strh	r3, [r7, #70]	@ movhi
-  86:App/STM32F4-Discovery/usart.c **** 	USART_InitStruct.USART_Parity = USART_Parity_No;		// we don't want a parity bit (standard)
- 133              		.loc 1 86 0
- 134 009a 0023     		movs	r3, #0
- 135 009c A7F84830 		strh	r3, [r7, #72]	@ movhi
-  87:App/STM32F4-Discovery/usart.c **** 	USART_InitStruct.USART_HardwareFlowControl = USART_HardwareFlowControl_None; // we don't want flow
- 136              		.loc 1 87 0
- 137 00a0 0023     		movs	r3, #0
- 138 00a2 A7F84C30 		strh	r3, [r7, #76]	@ movhi
-  88:App/STM32F4-Discovery/usart.c **** 	USART_InitStruct.USART_Mode = USART_Mode_Tx | USART_Mode_Rx; // we want to enable the transmitter 
- 139              		.loc 1 88 0
- 140 00a6 0C23     		movs	r3, #12
- 141 00a8 A7F84A30 		strh	r3, [r7, #74]	@ movhi
-  89:App/STM32F4-Discovery/usart.c **** 	USART_Init(USARTx, &USART_InitStruct);					// again all the properties are passed to the USART_Ini
- 142              		.loc 1 89 0
- 143 00ac 07F14003 		add	r3, r7, #64
- 144 00b0 5F48     		ldr	r0, .L4+8
- 145 00b2 1946     		mov	r1, r3
- 146 00b4 FFF7FEFF 		bl	USART_Init
-  90:App/STM32F4-Discovery/usart.c **** 	
-  91:App/STM32F4-Discovery/usart.c **** 	
-  92:App/STM32F4-Discovery/usart.c **** 	/* Here the USART1 receive interrupt is enabled
-  93:App/STM32F4-Discovery/usart.c **** 	 * and the interrupt controller is configured 
-  94:App/STM32F4-Discovery/usart.c **** 	 * to jump to the USART1_IRQHandler() function
-  95:App/STM32F4-Discovery/usart.c **** 	 * if the USART1 receive interrupt occurs
-  96:App/STM32F4-Discovery/usart.c **** 	 */
-  97:App/STM32F4-Discovery/usart.c **** 	USART_ITConfig(USARTx, USART_IT_RXNE, ENABLE); // enable the USART1 receive interrupt 
- 147              		.loc 1 97 0
- 148 00b8 5D48     		ldr	r0, .L4+8
- 149 00ba 40F22551 		movw	r1, #1317
- 150 00be 0122     		movs	r2, #1
- 151 00c0 FFF7FEFF 		bl	USART_ITConfig
-  98:App/STM32F4-Discovery/usart.c **** 	
-  99:App/STM32F4-Discovery/usart.c **** 	NVIC_InitStruct.NVIC_IRQChannel = USARTx_IRQn;		 // we want to configure the USART interrupts
- 152              		.loc 1 99 0
- 153 00c4 2523     		movs	r3, #37
- 154 00c6 87F83C30 		strb	r3, [r7, #60]
- 100:App/STM32F4-Discovery/usart.c **** 	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY +
- 155              		.loc 1 100 0
- 156 00ca 0623     		movs	r3, #6
- 157 00cc 87F83D30 		strb	r3, [r7, #61]
- 101:App/STM32F4-Discovery/usart.c **** 	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0x1;		 // this sets the subpriority inside the group
- 158              		.loc 1 101 0
- 159 00d0 0123     		movs	r3, #1
- 160 00d2 87F83E30 		strb	r3, [r7, #62]
- 102:App/STM32F4-Discovery/usart.c **** 	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;			 // the USART1 interrupts are globally enabled
- 161              		.loc 1 102 0
- 162 00d6 0123     		movs	r3, #1
- 163 00d8 87F83F30 		strb	r3, [r7, #63]
- 103:App/STM32F4-Discovery/usart.c **** 	NVIC_Init(&NVIC_InitStruct);	 // the properties are passed to the NVIC_Init function which takes c
- 164              		.loc 1 103 0
- 165 00dc 07F13C03 		add	r3, r7, #60
- 166 00e0 1846     		mov	r0, r3
- 167 00e2 FFF7FEFF 		bl	NVIC_Init
- 104:App/STM32F4-Discovery/usart.c **** 
- 105:App/STM32F4-Discovery/usart.c **** 	// finally this enables the complete USART1 peripheral
- 106:App/STM32F4-Discovery/usart.c **** 	USART_Cmd(USARTx, ENABLE);
- 168              		.loc 1 106 0
- 169 00e6 5248     		ldr	r0, .L4+8
- 170 00e8 0121     		movs	r1, #1
- 171 00ea FFF7FEFF 		bl	USART_Cmd
- 107:App/STM32F4-Discovery/usart.c **** 
- 108:App/STM32F4-Discovery/usart.c **** 		/* setup DMA */
- 109:App/STM32F4-Discovery/usart.c **** 
- 110:App/STM32F4-Discovery/usart.c **** 	// enable clock 
- 111:App/STM32F4-Discovery/usart.c **** 	RCC_AHB1PeriphClockCmd (USARTx_DMA_CLK, ENABLE); 
- 172              		.loc 1 111 0
- 173 00ee 4FF48000 		mov	r0, #4194304
- 174 00f2 0121     		movs	r1, #1
- 175 00f4 FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
- 112:App/STM32F4-Discovery/usart.c **** 	
- 113:App/STM32F4-Discovery/usart.c **** 	// start with blank DMA configuration
- 114:App/STM32F4-Discovery/usart.c **** 	DMA_DeInit (USARTx_TX_DMA_STREAM);
- 176              		.loc 1 114 0
- 177 00f8 4E48     		ldr	r0, .L4+12
- 178 00fa FFF7FEFF 		bl	DMA_DeInit
- 115:App/STM32F4-Discovery/usart.c **** 	DMA_DeInit (USARTx_RX_DMA_STREAM);
- 179              		.loc 1 115 0
- 180 00fe 4E48     		ldr	r0, .L4+16
- 181 0100 FFF7FEFF 		bl	DMA_DeInit
- 116:App/STM32F4-Discovery/usart.c **** 
- 117:App/STM32F4-Discovery/usart.c **** 	// check if DMA stream is disabled before enabling 
- 118:App/STM32F4-Discovery/usart.c **** 	// this is useful when stream is enabled and disabled multiple times. 
- 119:App/STM32F4-Discovery/usart.c **** 	while (DMA_GetCmdStatus (USARTx_TX_DMA_STREAM) != DISABLE);
- 182              		.loc 1 119 0
- 183 0104 00BF     		nop
- 184              	.L2:
- 185              		.loc 1 119 0 is_stmt 0 discriminator 1
- 186 0106 4B48     		ldr	r0, .L4+12
- 187 0108 FFF7FEFF 		bl	DMA_GetCmdStatus
- 188 010c 0346     		mov	r3, r0
- 189 010e 002B     		cmp	r3, #0
- 190 0110 F9D1     		bne	.L2
- 120:App/STM32F4-Discovery/usart.c **** 	while (DMA_GetCmdStatus (USARTx_RX_DMA_STREAM) != DISABLE);
- 191              		.loc 1 120 0 is_stmt 1
- 192 0112 00BF     		nop
- 193              	.L3:
- 194              		.loc 1 120 0 is_stmt 0 discriminator 1
- 195 0114 4848     		ldr	r0, .L4+16
- 196 0116 FFF7FEFF 		bl	DMA_GetCmdStatus
- 197 011a 0346     		mov	r3, r0
- 198 011c 002B     		cmp	r3, #0
- 199 011e F9D1     		bne	.L3
- 121:App/STM32F4-Discovery/usart.c **** 	
- 122:App/STM32F4-Discovery/usart.c **** 	
- 123:App/STM32F4-Discovery/usart.c **** 	DMA_StructInit(&DMA_InitStruct);
- 200              		.loc 1 123 0 is_stmt 1
- 201 0120 3B46     		mov	r3, r7
- 202 0122 1846     		mov	r0, r3
- 203 0124 FFF7FEFF 		bl	DMA_StructInit
- 124:App/STM32F4-Discovery/usart.c ****   	//Configure DMA Initialization Structure
- 125:App/STM32F4-Discovery/usart.c **** 	//DMA_InitStruct.DMA_FIFOMode = DMA_FIFOMode_Disable ;
- 126:App/STM32F4-Discovery/usart.c ****  	//DMA_InitStruct.DMA_FIFOThreshold = DMA_FIFOThreshold_HalfFull ;
- 127:App/STM32F4-Discovery/usart.c ****   	//DMA_InitStruct.DMA_MemoryBurst = DMA_MemoryBurst_Single ;
- 128:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
- 204              		.loc 1 128 0
- 205 0128 0023     		movs	r3, #0
- 206 012a 3B62     		str	r3, [r7, #32]
- 129:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_MemoryInc = DMA_MemoryInc_Enable;
- 207              		.loc 1 129 0
- 208 012c 4FF48063 		mov	r3, #1024
- 209 0130 BB61     		str	r3, [r7, #24]
- 130:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_Mode = DMA_Mode_Normal;
- 210              		.loc 1 130 0
- 211 0132 0023     		movs	r3, #0
- 212 0134 7B62     		str	r3, [r7, #36]
- 131:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_PeripheralBaseAddr =(uint32_t) (&(USARTx->DR)) ;
- 213              		.loc 1 131 0
- 214 0136 414B     		ldr	r3, .L4+20
- 215 0138 7B60     		str	r3, [r7, #4]
- 132:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
- 216              		.loc 1 132 0
- 217 013a 0023     		movs	r3, #0
- 218 013c BB63     		str	r3, [r7, #56]
- 133:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
- 219              		.loc 1 133 0
- 220 013e 0023     		movs	r3, #0
- 221 0140 FB61     		str	r3, [r7, #28]
- 134:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
- 222              		.loc 1 134 0
- 223 0142 0023     		movs	r3, #0
- 224 0144 7B61     		str	r3, [r7, #20]
- 135:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_Priority = DMA_Priority_High;
- 225              		.loc 1 135 0
- 226 0146 4FF40033 		mov	r3, #131072
- 227 014a BB62     		str	r3, [r7, #40]
- 136:App/STM32F4-Discovery/usart.c ****   	// Configure TX DMA 
- 137:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_Channel = USARTx_TX_DMA_CHANNEL ;
- 228              		.loc 1 137 0
- 229 014c 4FF00063 		mov	r3, #134217728
- 230 0150 3B60     		str	r3, [r7]
- 138:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_DIR = DMA_DIR_MemoryToPeripheral ;
- 231              		.loc 1 138 0
- 232 0152 4023     		movs	r3, #64
- 233 0154 FB60     		str	r3, [r7, #12]
- 139:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t) &bufferTXusart ;
- 234              		.loc 1 139 0
- 235 0156 3A4B     		ldr	r3, .L4+24
- 236 0158 BB60     		str	r3, [r7, #8]
- 140:App/STM32F4-Discovery/usart.c **** 	DMA_InitStruct.DMA_BufferSize = MAX_BUFFER_LENGTH;
- 237              		.loc 1 140 0
- 238 015a C823     		movs	r3, #200
- 239 015c 3B61     		str	r3, [r7, #16]
- 141:App/STM32F4-Discovery/usart.c ****   	DMA_Init(USARTx_TX_DMA_STREAM, &DMA_InitStruct);
- 240              		.loc 1 141 0
- 241 015e 3B46     		mov	r3, r7
- 242 0160 3448     		ldr	r0, .L4+12
- 243 0162 1946     		mov	r1, r3
- 244 0164 FFF7FEFF 		bl	DMA_Init
- 142:App/STM32F4-Discovery/usart.c **** 	// Configure RX DMA 
- 143:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_Channel = USARTx_RX_DMA_CHANNEL ;
- 245              		.loc 1 143 0
- 246 0168 4FF00063 		mov	r3, #134217728
- 247 016c 3B60     		str	r3, [r7]
- 144:App/STM32F4-Discovery/usart.c **** 	DMA_InitStruct.DMA_DIR = DMA_DIR_PeripheralToMemory ;
- 248              		.loc 1 144 0
- 249 016e 0023     		movs	r3, #0
- 250 0170 FB60     		str	r3, [r7, #12]
- 145:App/STM32F4-Discovery/usart.c **** 	DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t)&bufferRXusart; 
- 251              		.loc 1 145 0
- 252 0172 344B     		ldr	r3, .L4+28
- 253 0174 BB60     		str	r3, [r7, #8]
- 146:App/STM32F4-Discovery/usart.c **** 	DMA_InitStruct.DMA_BufferSize = MAX_BUFFER_LENGTH;
- 254              		.loc 1 146 0
- 255 0176 C823     		movs	r3, #200
- 256 0178 3B61     		str	r3, [r7, #16]
- 147:App/STM32F4-Discovery/usart.c **** 	DMA_Init(USARTx_RX_DMA_STREAM, &DMA_InitStruct);	
- 257              		.loc 1 147 0
- 258 017a 3B46     		mov	r3, r7
- 259 017c 2E48     		ldr	r0, .L4+16
- 260 017e 1946     		mov	r1, r3
- 261 0180 FFF7FEFF 		bl	DMA_Init
- 148:App/STM32F4-Discovery/usart.c **** 	
- 149:App/STM32F4-Discovery/usart.c **** 	DMA_ITConfig(USARTx_TX_DMA_STREAM, DMA_IT_TC, ENABLE); 
- 262              		.loc 1 149 0
- 263 0184 2B48     		ldr	r0, .L4+12
- 264 0186 1021     		movs	r1, #16
- 265 0188 0122     		movs	r2, #1
- 266 018a FFF7FEFF 		bl	DMA_ITConfig
- 150:App/STM32F4-Discovery/usart.c **** 	DMA_ITConfig(USARTx_RX_DMA_STREAM, DMA_IT_TC, ENABLE); 
- 267              		.loc 1 150 0
- 268 018e 2A48     		ldr	r0, .L4+16
- 269 0190 1021     		movs	r1, #16
- 270 0192 0122     		movs	r2, #1
- 271 0194 FFF7FEFF 		bl	DMA_ITConfig
- 151:App/STM32F4-Discovery/usart.c ****   
- 152:App/STM32F4-Discovery/usart.c **** 	USART_ClearFlag(USARTx, USART_FLAG_TXE);
- 272              		.loc 1 152 0
- 273 0198 2548     		ldr	r0, .L4+8
- 274 019a 8021     		movs	r1, #128
- 275 019c FFF7FEFF 		bl	USART_ClearFlag
- 153:App/STM32F4-Discovery/usart.c **** 	USART_ClearFlag(USARTx, USART_FLAG_RXNE);
- 276              		.loc 1 153 0
- 277 01a0 2348     		ldr	r0, .L4+8
- 278 01a2 2021     		movs	r1, #32
- 279 01a4 FFF7FEFF 		bl	USART_ClearFlag
- 154:App/STM32F4-Discovery/usart.c ****   	
- 155:App/STM32F4-Discovery/usart.c **** 	// enable the interrupt in the NVIC
- 156:App/STM32F4-Discovery/usart.c ****  	NVIC_InitStruct.NVIC_IRQChannel = USARTx_TX_DMA_IRQn;
- 280              		.loc 1 156 0
- 281 01a8 2F23     		movs	r3, #47
- 282 01aa 87F83C30 		strb	r3, [r7, #60]
- 157:App/STM32F4-Discovery/usart.c ****   	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY
- 283              		.loc 1 157 0
- 284 01ae 0723     		movs	r3, #7
- 285 01b0 87F83D30 		strb	r3, [r7, #61]
- 158:App/STM32F4-Discovery/usart.c ****  	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0x1;
- 286              		.loc 1 158 0
- 287 01b4 0123     		movs	r3, #1
- 288 01b6 87F83E30 		strb	r3, [r7, #62]
- 159:App/STM32F4-Discovery/usart.c ****   	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
- 289              		.loc 1 159 0
- 290 01ba 0123     		movs	r3, #1
- 291 01bc 87F83F30 		strb	r3, [r7, #63]
- 160:App/STM32F4-Discovery/usart.c ****   	NVIC_Init (&NVIC_InitStruct);
- 292              		.loc 1 160 0
- 293 01c0 07F13C03 		add	r3, r7, #60
- 294 01c4 1846     		mov	r0, r3
- 295 01c6 FFF7FEFF 		bl	NVIC_Init
- 161:App/STM32F4-Discovery/usart.c **** 	// enable the interrupt in the NVIC
- 162:App/STM32F4-Discovery/usart.c ****  	NVIC_InitStruct.NVIC_IRQChannel = USARTx_RX_DMA_IRQn;
- 296              		.loc 1 162 0
- 297 01ca 1023     		movs	r3, #16
- 298 01cc 87F83C30 		strb	r3, [r7, #60]
- 163:App/STM32F4-Discovery/usart.c ****    	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORIT
- 299              		.loc 1 163 0
- 300 01d0 0723     		movs	r3, #7
- 301 01d2 87F83D30 		strb	r3, [r7, #61]
- 164:App/STM32F4-Discovery/usart.c ****  	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0x1;
- 302              		.loc 1 164 0
- 303 01d6 0123     		movs	r3, #1
- 304 01d8 87F83E30 		strb	r3, [r7, #62]
- 165:App/STM32F4-Discovery/usart.c ****   	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
- 305              		.loc 1 165 0
- 306 01dc 0123     		movs	r3, #1
- 307 01de 87F83F30 		strb	r3, [r7, #63]
- 166:App/STM32F4-Discovery/usart.c ****   	NVIC_Init (&NVIC_InitStruct);
- 308              		.loc 1 166 0
- 309 01e2 07F13C03 		add	r3, r7, #60
- 310 01e6 1846     		mov	r0, r3
- 311 01e8 FFF7FEFF 		bl	NVIC_Init
- 167:App/STM32F4-Discovery/usart.c ****   	// Enable dma tx and rx request
- 168:App/STM32F4-Discovery/usart.c **** 	USART_DMACmd (USARTx, USART_DMAReq_Tx, ENABLE);	
- 312              		.loc 1 168 0
- 313 01ec 1048     		ldr	r0, .L4+8
- 314 01ee 8021     		movs	r1, #128
- 315 01f0 0122     		movs	r2, #1
- 316 01f2 FFF7FEFF 		bl	USART_DMACmd
- 169:App/STM32F4-Discovery/usart.c **** 	USART_DMACmd (USARTx, USART_DMAReq_Rx, ENABLE);	
- 317              		.loc 1 169 0
- 318 01f6 0E48     		ldr	r0, .L4+8
- 319 01f8 4021     		movs	r1, #64
- 320 01fa 0122     		movs	r2, #1
- 321 01fc FFF7FEFF 		bl	USART_DMACmd
- 170:App/STM32F4-Discovery/usart.c **** 	
- 171:App/STM32F4-Discovery/usart.c **** 	xSemaphoreDMAUSARTrx = xSemaphoreCreateBinary();
- 322              		.loc 1 171 0
- 323 0200 0120     		movs	r0, #1
- 324 0202 0021     		movs	r1, #0
- 325 0204 0322     		movs	r2, #3
- 326 0206 FFF7FEFF 		bl	xQueueGenericCreate
- 327 020a 0246     		mov	r2, r0
- 328 020c 0E4B     		ldr	r3, .L4+32
- 329 020e 1A60     		str	r2, [r3]
- 172:App/STM32F4-Discovery/usart.c **** 	xSemaphoreDMAUSARTtx = xSemaphoreCreateBinary();
- 330              		.loc 1 172 0
- 331 0210 0120     		movs	r0, #1
- 332 0212 0021     		movs	r1, #0
- 333 0214 0322     		movs	r2, #3
- 334 0216 FFF7FEFF 		bl	xQueueGenericCreate
- 335 021a 0246     		mov	r2, r0
- 336 021c 0B4B     		ldr	r3, .L4+36
- 337 021e 1A60     		str	r2, [r3]
- 173:App/STM32F4-Discovery/usart.c **** }
- 338              		.loc 1 173 0
- 339 0220 5837     		adds	r7, r7, #88
- 340 0222 BD46     		mov	sp, r7
- 341              		@ sp needed
- 342 0224 80BD     		pop	{r7, pc}
- 343              	.L5:
- 344 0226 00BF     		.align	2
- 345              	.L4:
- 346 0228 00000240 		.word	1073872896
- 347 022c 00180240 		.word	1073879040
- 348 0230 00100140 		.word	1073811456
- 349 0234 B8600240 		.word	1073897656
- 350 0238 88600240 		.word	1073897608
- 351 023c 04100140 		.word	1073811460
- 352 0240 00000000 		.word	bufferTXusart
- 353 0244 00000000 		.word	bufferRXusart
- 354 0248 00000000 		.word	xSemaphoreDMAUSARTrx
- 355 024c 00000000 		.word	xSemaphoreDMAUSARTtx
- 356              		.cfi_endproc
- 357              	.LFE110:
- 359              		.section	.text.DMA2_Stream5_IRQHandler,"ax",%progbits
- 360              		.align	2
- 361              		.global	DMA2_Stream5_IRQHandler
- 362              		.thumb
- 363              		.thumb_func
- 365              	DMA2_Stream5_IRQHandler:
- 366              	.LFB111:
- 174:App/STM32F4-Discovery/usart.c **** 
- 175:App/STM32F4-Discovery/usart.c **** void DMA2_Stream5_IRQHandler()
- 176:App/STM32F4-Discovery/usart.c **** {
- 367              		.loc 1 176 0
- 368              		.cfi_startproc
- 369              		@ args = 0, pretend = 0, frame = 8
- 370              		@ frame_needed = 1, uses_anonymous_args = 0
- 371 0000 80B5     		push	{r7, lr}
- 372              	.LCFI3:
- 373              		.cfi_def_cfa_offset 8
- 374              		.cfi_offset 7, -8
- 375              		.cfi_offset 14, -4
- 376 0002 82B0     		sub	sp, sp, #8
- 377              	.LCFI4:
- 378              		.cfi_def_cfa_offset 16
- 379 0004 00AF     		add	r7, sp, #0
- 380              	.LCFI5:
- 381              		.cfi_def_cfa_register 7
- 177:App/STM32F4-Discovery/usart.c **** 	/*!	\var static unsigned portBASE_TYPE xHigherPriorityTaskWoken
- 178:App/STM32F4-Discovery/usart.c **** 	 * 	\brief Indicates if higher priority has been woken
- 179:App/STM32F4-Discovery/usart.c **** 	 */
- 180:App/STM32F4-Discovery/usart.c **** 
- 181:App/STM32F4-Discovery/usart.c **** 	unsigned portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
- 382              		.loc 1 181 0
- 383 0006 0023     		movs	r3, #0
- 384 0008 7B60     		str	r3, [r7, #4]
- 182:App/STM32F4-Discovery/usart.c **** 
- 183:App/STM32F4-Discovery/usart.c ****  // Test if DMA Stream Transfer Complete interrupt
- 184:App/STM32F4-Discovery/usart.c ****   if (DMA_GetITStatus (USARTx_RX_DMA_STREAM, USARTx_RX_DMA_FLAG_TCIF)) {
- 385              		.loc 1 184 0
- 386 000a 1348     		ldr	r0, .L9
- 387 000c 1349     		ldr	r1, .L9+4
- 388 000e FFF7FEFF 		bl	DMA_GetITStatus
- 389 0012 0346     		mov	r3, r0
- 390 0014 002B     		cmp	r3, #0
- 391 0016 14D0     		beq	.L7
+  22:App/STM32F4-Discovery/usart.c **** xSemaphoreHandle xSemaphoreDMAUSARTrx;
+  23:App/STM32F4-Discovery/usart.c **** xSemaphoreHandle xSemaphoreDMAUSARTtx;
+  24:App/STM32F4-Discovery/usart.c **** 
+  25:App/STM32F4-Discovery/usart.c **** void init_CRC(void)
+  26:App/STM32F4-Discovery/usart.c **** {
+  36              		.loc 1 26 0
+  37              		.cfi_startproc
+  38              		@ args = 0, pretend = 0, frame = 0
+  39              		@ frame_needed = 1, uses_anonymous_args = 0
+  40 0000 80B5     		push	{r7, lr}
+  41              	.LCFI0:
+  42              		.cfi_def_cfa_offset 8
+  43              		.cfi_offset 7, -8
+  44              		.cfi_offset 14, -4
+  45 0002 00AF     		add	r7, sp, #0
+  46              	.LCFI1:
+  47              		.cfi_def_cfa_register 7
+  27:App/STM32F4-Discovery/usart.c **** 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_CRC, ENABLE);
+  48              		.loc 1 27 0
+  49 0004 4FF48050 		mov	r0, #4096
+  50 0008 0121     		movs	r1, #1
+  51 000a FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
+  28:App/STM32F4-Discovery/usart.c **** }
+  52              		.loc 1 28 0
+  53 000e 80BD     		pop	{r7, pc}
+  54              		.cfi_endproc
+  55              	.LFE110:
+  57              		.section	.text.init_USARTx,"ax",%progbits
+  58              		.align	2
+  59              		.global	init_USARTx
+  60              		.thumb
+  61              		.thumb_func
+  63              	init_USARTx:
+  64              	.LFB111:
+  29:App/STM32F4-Discovery/usart.c **** 
+  30:App/STM32F4-Discovery/usart.c **** void init_USARTx(void)
+  31:App/STM32F4-Discovery/usart.c **** {
+  65              		.loc 1 31 0
+  66              		.cfi_startproc
+  67              		@ args = 0, pretend = 0, frame = 88
+  68              		@ frame_needed = 1, uses_anonymous_args = 0
+  69 0000 80B5     		push	{r7, lr}
+  70              	.LCFI2:
+  71              		.cfi_def_cfa_offset 8
+  72              		.cfi_offset 7, -8
+  73              		.cfi_offset 14, -4
+  74 0002 96B0     		sub	sp, sp, #88
+  75              	.LCFI3:
+  76              		.cfi_def_cfa_offset 96
+  77 0004 00AF     		add	r7, sp, #0
+  78              	.LCFI4:
+  79              		.cfi_def_cfa_register 7
+  32:App/STM32F4-Discovery/usart.c **** 	
+  33:App/STM32F4-Discovery/usart.c **** 		
+  34:App/STM32F4-Discovery/usart.c **** 	GPIO_InitTypeDef GPIO_InitStruct; // this is for the GPIO pins used as TX and RX
+  35:App/STM32F4-Discovery/usart.c **** 	USART_InitTypeDef USART_InitStruct; // this is for the USART1 initilization
+  36:App/STM32F4-Discovery/usart.c **** 	NVIC_InitTypeDef NVIC_InitStruct; // this is used to configure the NVIC (nested vector interrupt c
+  37:App/STM32F4-Discovery/usart.c **** 	DMA_InitTypeDef DMA_InitStruct;
+  38:App/STM32F4-Discovery/usart.c **** 	
+  39:App/STM32F4-Discovery/usart.c **** 	/* enable APB2 peripheral clock for USART1 
+  40:App/STM32F4-Discovery/usart.c **** 	 * note that only USART1 and USART6 are connected to APB2
+  41:App/STM32F4-Discovery/usart.c **** 	 * the other USARTs are connected to APB1
+  42:App/STM32F4-Discovery/usart.c **** 	 */
+  43:App/STM32F4-Discovery/usart.c **** 	RCC_APB2PeriphClockCmd(USARTx_CLK, ENABLE);
+  80              		.loc 1 43 0
+  81 0006 1020     		movs	r0, #16
+  82 0008 0121     		movs	r1, #1
+  83 000a FFF7FEFF 		bl	RCC_APB2PeriphClockCmd
+  44:App/STM32F4-Discovery/usart.c **** 	
+  45:App/STM32F4-Discovery/usart.c **** 	/* enable the peripheral clock for the pins used by 
+  46:App/STM32F4-Discovery/usart.c **** 	 * USART1, PB6 for TX and PB7 for RX 
+  47:App/STM32F4-Discovery/usart.c **** 	 */
+  48:App/STM32F4-Discovery/usart.c **** 	RCC_AHB1PeriphClockCmd(USARTx_TX_GPIO_CLK, ENABLE);
+  84              		.loc 1 48 0
+  85 000e 0120     		movs	r0, #1
+  86 0010 0121     		movs	r1, #1
+  87 0012 FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
+  49:App/STM32F4-Discovery/usart.c **** 	RCC_AHB1PeriphClockCmd(USARTx_RX_GPIO_CLK, ENABLE);
+  88              		.loc 1 49 0
+  89 0016 0120     		movs	r0, #1
+  90 0018 0121     		movs	r1, #1
+  91 001a FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
+  50:App/STM32F4-Discovery/usart.c **** 	RCC_AHB1PeriphClockCmd(USARTx_CS_GPIO_CLK, ENABLE);
+  92              		.loc 1 50 0
+  93 001e 4020     		movs	r0, #64
+  94 0020 0121     		movs	r1, #1
+  95 0022 FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
+  51:App/STM32F4-Discovery/usart.c **** 
+  52:App/STM32F4-Discovery/usart.c **** 	
+  53:App/STM32F4-Discovery/usart.c **** 	/* This sequence sets up the TX and RX pins 
+  54:App/STM32F4-Discovery/usart.c **** 	 * so they work correctly with the USART1 peripheral
+  55:App/STM32F4-Discovery/usart.c **** 	 */
+  56:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_Pin = USARTx_RX_GPIO_PIN | USARTx_TX_GPIO_PIN; // Pins 6 (TX) and 7 (RX) are 
+  96              		.loc 1 56 0
+  97 0026 4FF4C063 		mov	r3, #1536
+  98 002a 3B65     		str	r3, [r7, #80]
+  57:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
+  99              		.loc 1 57 0
+ 100 002c 0223     		movs	r3, #2
+ 101 002e 87F85430 		strb	r3, [r7, #84]
+  58:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;		// this defines the IO speed and has nothing to d
+ 102              		.loc 1 58 0
+ 103 0032 0323     		movs	r3, #3
+ 104 0034 87F85530 		strb	r3, [r7, #85]
+  59:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;			// this defines the output type as push pull mode (a
+ 105              		.loc 1 59 0
+ 106 0038 0023     		movs	r3, #0
+ 107 003a 87F85630 		strb	r3, [r7, #86]
+  60:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;			// this activates the pullup resistors on the IO pins
+ 108              		.loc 1 60 0
+ 109 003e 0123     		movs	r3, #1
+ 110 0040 87F85730 		strb	r3, [r7, #87]
+  61:App/STM32F4-Discovery/usart.c **** 
+  62:App/STM32F4-Discovery/usart.c **** 	GPIO_Init(USARTx_TX_GPIO_PORT, &GPIO_InitStruct);					// now all the values are passed to the GPIO
+ 111              		.loc 1 62 0
+ 112 0044 07F15003 		add	r3, r7, #80
+ 113 0048 7148     		ldr	r0, .L5
+ 114 004a 1946     		mov	r1, r3
+ 115 004c FFF7FEFF 		bl	GPIO_Init
+  63:App/STM32F4-Discovery/usart.c **** 	
+  64:App/STM32F4-Discovery/usart.c **** 	
+  65:App/STM32F4-Discovery/usart.c **** 	
+  66:App/STM32F4-Discovery/usart.c **** 	/* Configure the chip select pin in this case we will use PG8 */
+  67:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_Pin = USARTx_CS_GPIO_PIN;
+ 116              		.loc 1 67 0
+ 117 0050 4FF48073 		mov	r3, #256
+ 118 0054 3B65     		str	r3, [r7, #80]
+  68:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
+ 119              		.loc 1 68 0
+ 120 0056 0123     		movs	r3, #1
+ 121 0058 87F85430 		strb	r3, [r7, #84]
+  69:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+ 122              		.loc 1 69 0
+ 123 005c 0023     		movs	r3, #0
+ 124 005e 87F85630 		strb	r3, [r7, #86]
+  70:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
+ 125              		.loc 1 70 0
+ 126 0062 0323     		movs	r3, #3
+ 127 0064 87F85530 		strb	r3, [r7, #85]
+  71:App/STM32F4-Discovery/usart.c **** 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
+ 128              		.loc 1 71 0
+ 129 0068 0123     		movs	r3, #1
+ 130 006a 87F85730 		strb	r3, [r7, #87]
+  72:App/STM32F4-Discovery/usart.c **** 	GPIO_Init(USARTx_CS_GPIO_PORT, &GPIO_InitStruct);
+ 131              		.loc 1 72 0
+ 132 006e 07F15003 		add	r3, r7, #80
+ 133 0072 6848     		ldr	r0, .L5+4
+ 134 0074 1946     		mov	r1, r3
+ 135 0076 FFF7FEFF 		bl	GPIO_Init
+  73:App/STM32F4-Discovery/usart.c **** 
+  74:App/STM32F4-Discovery/usart.c **** 	//DD() // set PG8 high
+  75:App/STM32F4-Discovery/usart.c **** 	
+  76:App/STM32F4-Discovery/usart.c **** 	
+  77:App/STM32F4-Discovery/usart.c **** 	/* The RX and TX pins are now connected to their AF
+  78:App/STM32F4-Discovery/usart.c **** 	 * so that the USART1 can take over control of the 
+  79:App/STM32F4-Discovery/usart.c **** 	 * pins
+  80:App/STM32F4-Discovery/usart.c **** 	 */
+  81:App/STM32F4-Discovery/usart.c **** 	GPIO_PinAFConfig(USARTx_RX_GPIO_PORT, USARTx_RX_SOURCE, USARTx_RX_AF); //
+ 136              		.loc 1 81 0
+ 137 007a 6548     		ldr	r0, .L5
+ 138 007c 0A21     		movs	r1, #10
+ 139 007e 0722     		movs	r2, #7
+ 140 0080 FFF7FEFF 		bl	GPIO_PinAFConfig
+  82:App/STM32F4-Discovery/usart.c **** 	GPIO_PinAFConfig(USARTx_TX_GPIO_PORT, USARTx_TX_SOURCE, USARTx_TX_AF);
+ 141              		.loc 1 82 0
+ 142 0084 6248     		ldr	r0, .L5
+ 143 0086 0921     		movs	r1, #9
+ 144 0088 0722     		movs	r2, #7
+ 145 008a FFF7FEFF 		bl	GPIO_PinAFConfig
+  83:App/STM32F4-Discovery/usart.c **** 	
+  84:App/STM32F4-Discovery/usart.c **** 	/* Now the USART_InitStruct is used to define the 
+  85:App/STM32F4-Discovery/usart.c **** 	 * properties of USART1 
+  86:App/STM32F4-Discovery/usart.c **** 	 */
+  87:App/STM32F4-Discovery/usart.c **** 	USART_InitStruct.USART_BaudRate = 38400;				// the baudrate is set to the value we passed into thi
+ 146              		.loc 1 87 0
+ 147 008e 4FF41643 		mov	r3, #38400
+ 148 0092 3B64     		str	r3, [r7, #64]
+  88:App/STM32F4-Discovery/usart.c **** 	USART_InitStruct.USART_WordLength = USART_WordLength_8b;// we want the data frame size to be 8 bit
+ 149              		.loc 1 88 0
+ 150 0094 0023     		movs	r3, #0
+ 151 0096 A7F84430 		strh	r3, [r7, #68]	@ movhi
+  89:App/STM32F4-Discovery/usart.c **** 	USART_InitStruct.USART_StopBits = USART_StopBits_1;		// we want 1 stop bit (standard)
+ 152              		.loc 1 89 0
+ 153 009a 0023     		movs	r3, #0
+ 154 009c A7F84630 		strh	r3, [r7, #70]	@ movhi
+  90:App/STM32F4-Discovery/usart.c **** 	USART_InitStruct.USART_Parity = USART_Parity_No;		// we don't want a parity bit (standard)
+ 155              		.loc 1 90 0
+ 156 00a0 0023     		movs	r3, #0
+ 157 00a2 A7F84830 		strh	r3, [r7, #72]	@ movhi
+  91:App/STM32F4-Discovery/usart.c **** 	USART_InitStruct.USART_HardwareFlowControl = USART_HardwareFlowControl_None; // we don't want flow
+ 158              		.loc 1 91 0
+ 159 00a6 0023     		movs	r3, #0
+ 160 00a8 A7F84C30 		strh	r3, [r7, #76]	@ movhi
+  92:App/STM32F4-Discovery/usart.c **** 	USART_InitStruct.USART_Mode = USART_Mode_Tx | USART_Mode_Rx; // we want to enable the transmitter 
+ 161              		.loc 1 92 0
+ 162 00ac 0C23     		movs	r3, #12
+ 163 00ae A7F84A30 		strh	r3, [r7, #74]	@ movhi
+  93:App/STM32F4-Discovery/usart.c **** 	USART_Init(USARTx, &USART_InitStruct);					// again all the properties are passed to the USART_Ini
+ 164              		.loc 1 93 0
+ 165 00b2 07F14003 		add	r3, r7, #64
+ 166 00b6 5848     		ldr	r0, .L5+8
+ 167 00b8 1946     		mov	r1, r3
+ 168 00ba FFF7FEFF 		bl	USART_Init
+  94:App/STM32F4-Discovery/usart.c **** 	
+  95:App/STM32F4-Discovery/usart.c **** 	
+  96:App/STM32F4-Discovery/usart.c **** 	/* Here the USART1 receive interrupt is enabled
+  97:App/STM32F4-Discovery/usart.c **** 	 * and the interrupt controller is configured 
+  98:App/STM32F4-Discovery/usart.c **** 	 * to jump to the USART1_IRQHandler() function
+  99:App/STM32F4-Discovery/usart.c **** 	 * if the USART1 receive interrupt occurs
+ 100:App/STM32F4-Discovery/usart.c **** 	 */
+ 101:App/STM32F4-Discovery/usart.c **** 	// finally this enables the complete USART1 peripheral
+ 102:App/STM32F4-Discovery/usart.c **** 	USART_Cmd(USARTx, ENABLE);
+ 169              		.loc 1 102 0
+ 170 00be 5648     		ldr	r0, .L5+8
+ 171 00c0 0121     		movs	r1, #1
+ 172 00c2 FFF7FEFF 		bl	USART_Cmd
+ 103:App/STM32F4-Discovery/usart.c **** 
+ 104:App/STM32F4-Discovery/usart.c **** 		/* setup DMA */
+ 105:App/STM32F4-Discovery/usart.c **** 
+ 106:App/STM32F4-Discovery/usart.c **** 	// enable clock 
+ 107:App/STM32F4-Discovery/usart.c **** 	RCC_AHB1PeriphClockCmd (USARTx_DMA_CLK, ENABLE); 
+ 173              		.loc 1 107 0
+ 174 00c6 4FF48000 		mov	r0, #4194304
+ 175 00ca 0121     		movs	r1, #1
+ 176 00cc FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
+ 108:App/STM32F4-Discovery/usart.c **** 	
+ 109:App/STM32F4-Discovery/usart.c **** 	// start with blank DMA configuration
+ 110:App/STM32F4-Discovery/usart.c **** 	DMA_DeInit (USARTx_TX_DMA_STREAM);
+ 177              		.loc 1 110 0
+ 178 00d0 5248     		ldr	r0, .L5+12
+ 179 00d2 FFF7FEFF 		bl	DMA_DeInit
+ 111:App/STM32F4-Discovery/usart.c **** 	DMA_DeInit (USARTx_RX_DMA_STREAM);
+ 180              		.loc 1 111 0
+ 181 00d6 5248     		ldr	r0, .L5+16
+ 182 00d8 FFF7FEFF 		bl	DMA_DeInit
+ 112:App/STM32F4-Discovery/usart.c **** 
+ 113:App/STM32F4-Discovery/usart.c **** 	// check if DMA stream is disabled before enabling 
+ 114:App/STM32F4-Discovery/usart.c **** 	// this is useful when stream is enabled and disabled multiple times. 
+ 115:App/STM32F4-Discovery/usart.c **** 	while (DMA_GetCmdStatus (USARTx_TX_DMA_STREAM) != DISABLE);
+ 183              		.loc 1 115 0
+ 184 00dc 00BF     		nop
+ 185              	.L3:
+ 186              		.loc 1 115 0 is_stmt 0 discriminator 1
+ 187 00de 4F48     		ldr	r0, .L5+12
+ 188 00e0 FFF7FEFF 		bl	DMA_GetCmdStatus
+ 189 00e4 0346     		mov	r3, r0
+ 190 00e6 002B     		cmp	r3, #0
+ 191 00e8 F9D1     		bne	.L3
+ 116:App/STM32F4-Discovery/usart.c **** 	while (DMA_GetCmdStatus (USARTx_RX_DMA_STREAM) != DISABLE);
+ 192              		.loc 1 116 0 is_stmt 1
+ 193 00ea 00BF     		nop
+ 194              	.L4:
+ 195              		.loc 1 116 0 is_stmt 0 discriminator 1
+ 196 00ec 4C48     		ldr	r0, .L5+16
+ 197 00ee FFF7FEFF 		bl	DMA_GetCmdStatus
+ 198 00f2 0346     		mov	r3, r0
+ 199 00f4 002B     		cmp	r3, #0
+ 200 00f6 F9D1     		bne	.L4
+ 117:App/STM32F4-Discovery/usart.c **** 	
+ 118:App/STM32F4-Discovery/usart.c **** 	
+ 119:App/STM32F4-Discovery/usart.c **** 	DMA_StructInit(&DMA_InitStruct);
+ 201              		.loc 1 119 0 is_stmt 1
+ 202 00f8 3B46     		mov	r3, r7
+ 203 00fa 1846     		mov	r0, r3
+ 204 00fc FFF7FEFF 		bl	DMA_StructInit
+ 120:App/STM32F4-Discovery/usart.c ****   	//Configure DMA Initialization Structure
+ 121:App/STM32F4-Discovery/usart.c **** 	//DMA_InitStruct.DMA_FIFOMode = DMA_FIFOMode_Disable ;
+ 122:App/STM32F4-Discovery/usart.c ****  	//DMA_InitStruct.DMA_FIFOThreshold = DMA_FIFOThreshold_HalfFull ;
+ 123:App/STM32F4-Discovery/usart.c ****   	//DMA_InitStruct.DMA_MemoryBurst = DMA_MemoryBurst_Single ;
+ 124:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+ 205              		.loc 1 124 0
+ 206 0100 0023     		movs	r3, #0
+ 207 0102 3B62     		str	r3, [r7, #32]
+ 125:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_MemoryInc = DMA_MemoryInc_Enable;
+ 208              		.loc 1 125 0
+ 209 0104 4FF48063 		mov	r3, #1024
+ 210 0108 BB61     		str	r3, [r7, #24]
+ 126:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_Mode = DMA_Mode_Normal;
+ 211              		.loc 1 126 0
+ 212 010a 0023     		movs	r3, #0
+ 213 010c 7B62     		str	r3, [r7, #36]
+ 127:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_PeripheralBaseAddr =(uint32_t) (&(USARTx->DR)) ;
+ 214              		.loc 1 127 0
+ 215 010e 454B     		ldr	r3, .L5+20
+ 216 0110 7B60     		str	r3, [r7, #4]
+ 128:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
+ 217              		.loc 1 128 0
+ 218 0112 0023     		movs	r3, #0
+ 219 0114 BB63     		str	r3, [r7, #56]
+ 129:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+ 220              		.loc 1 129 0
+ 221 0116 0023     		movs	r3, #0
+ 222 0118 FB61     		str	r3, [r7, #28]
+ 130:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+ 223              		.loc 1 130 0
+ 224 011a 0023     		movs	r3, #0
+ 225 011c 7B61     		str	r3, [r7, #20]
+ 131:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_Priority = DMA_Priority_High;
+ 226              		.loc 1 131 0
+ 227 011e 4FF40033 		mov	r3, #131072
+ 228 0122 BB62     		str	r3, [r7, #40]
+ 132:App/STM32F4-Discovery/usart.c ****   	// Configure TX DMA 
+ 133:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_Channel = USARTx_TX_DMA_CHANNEL ;
+ 229              		.loc 1 133 0
+ 230 0124 4FF00063 		mov	r3, #134217728
+ 231 0128 3B60     		str	r3, [r7]
+ 134:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_DIR = DMA_DIR_MemoryToPeripheral ;
+ 232              		.loc 1 134 0
+ 233 012a 4023     		movs	r3, #64
+ 234 012c FB60     		str	r3, [r7, #12]
+ 135:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t) &bufferTXusart ;
+ 235              		.loc 1 135 0
+ 236 012e 3E4B     		ldr	r3, .L5+24
+ 237 0130 BB60     		str	r3, [r7, #8]
+ 136:App/STM32F4-Discovery/usart.c **** 	DMA_InitStruct.DMA_BufferSize = MAX_BUFFER_LENGTH;
+ 238              		.loc 1 136 0
+ 239 0132 C823     		movs	r3, #200
+ 240 0134 3B61     		str	r3, [r7, #16]
+ 137:App/STM32F4-Discovery/usart.c ****   	DMA_Init(USARTx_TX_DMA_STREAM, &DMA_InitStruct);
+ 241              		.loc 1 137 0
+ 242 0136 3B46     		mov	r3, r7
+ 243 0138 3848     		ldr	r0, .L5+12
+ 244 013a 1946     		mov	r1, r3
+ 245 013c FFF7FEFF 		bl	DMA_Init
+ 138:App/STM32F4-Discovery/usart.c **** 	// Configure RX DMA 
+ 139:App/STM32F4-Discovery/usart.c ****   	DMA_InitStruct.DMA_Channel = USARTx_RX_DMA_CHANNEL ;
+ 246              		.loc 1 139 0
+ 247 0140 4FF00063 		mov	r3, #134217728
+ 248 0144 3B60     		str	r3, [r7]
+ 140:App/STM32F4-Discovery/usart.c **** 	DMA_InitStruct.DMA_DIR = DMA_DIR_PeripheralToMemory ;
+ 249              		.loc 1 140 0
+ 250 0146 0023     		movs	r3, #0
+ 251 0148 FB60     		str	r3, [r7, #12]
+ 141:App/STM32F4-Discovery/usart.c **** 	DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t)&bufferRXusart; 
+ 252              		.loc 1 141 0
+ 253 014a 384B     		ldr	r3, .L5+28
+ 254 014c BB60     		str	r3, [r7, #8]
+ 142:App/STM32F4-Discovery/usart.c **** 	DMA_InitStruct.DMA_BufferSize = MAX_BUFFER_LENGTH;
+ 255              		.loc 1 142 0
+ 256 014e C823     		movs	r3, #200
+ 257 0150 3B61     		str	r3, [r7, #16]
+ 143:App/STM32F4-Discovery/usart.c **** 	DMA_Init(USARTx_RX_DMA_STREAM, &DMA_InitStruct);	
+ 258              		.loc 1 143 0
+ 259 0152 3B46     		mov	r3, r7
+ 260 0154 3248     		ldr	r0, .L5+16
+ 261 0156 1946     		mov	r1, r3
+ 262 0158 FFF7FEFF 		bl	DMA_Init
+ 144:App/STM32F4-Discovery/usart.c **** 	
+ 145:App/STM32F4-Discovery/usart.c **** 	DMA_ITConfig(USARTx_TX_DMA_STREAM, DMA_IT_TC, ENABLE); 
+ 263              		.loc 1 145 0
+ 264 015c 2F48     		ldr	r0, .L5+12
+ 265 015e 1021     		movs	r1, #16
+ 266 0160 0122     		movs	r2, #1
+ 267 0162 FFF7FEFF 		bl	DMA_ITConfig
+ 146:App/STM32F4-Discovery/usart.c **** 	DMA_ITConfig(USARTx_RX_DMA_STREAM, DMA_IT_TC, ENABLE); 
+ 268              		.loc 1 146 0
+ 269 0166 2E48     		ldr	r0, .L5+16
+ 270 0168 1021     		movs	r1, #16
+ 271 016a 0122     		movs	r2, #1
+ 272 016c FFF7FEFF 		bl	DMA_ITConfig
+ 147:App/STM32F4-Discovery/usart.c ****   
+ 148:App/STM32F4-Discovery/usart.c **** 	USART_ClearFlag(USARTx, USART_FLAG_TXE);
+ 273              		.loc 1 148 0
+ 274 0170 2948     		ldr	r0, .L5+8
+ 275 0172 8021     		movs	r1, #128
+ 276 0174 FFF7FEFF 		bl	USART_ClearFlag
+ 149:App/STM32F4-Discovery/usart.c **** 	USART_ClearFlag(USARTx, USART_FLAG_RXNE);
+ 277              		.loc 1 149 0
+ 278 0178 2748     		ldr	r0, .L5+8
+ 279 017a 2021     		movs	r1, #32
+ 280 017c FFF7FEFF 		bl	USART_ClearFlag
+ 150:App/STM32F4-Discovery/usart.c ****   	
+ 151:App/STM32F4-Discovery/usart.c **** 	// enable the interrupt in the NVIC
+ 152:App/STM32F4-Discovery/usart.c ****  	NVIC_InitStruct.NVIC_IRQChannel = USARTx_TX_DMA_IRQn;
+ 281              		.loc 1 152 0
+ 282 0180 4623     		movs	r3, #70
+ 283 0182 87F83C30 		strb	r3, [r7, #60]
+ 153:App/STM32F4-Discovery/usart.c ****   	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY
+ 284              		.loc 1 153 0
+ 285 0186 0723     		movs	r3, #7
+ 286 0188 87F83D30 		strb	r3, [r7, #61]
+ 154:App/STM32F4-Discovery/usart.c ****  	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0x1;
+ 287              		.loc 1 154 0
+ 288 018c 0123     		movs	r3, #1
+ 289 018e 87F83E30 		strb	r3, [r7, #62]
+ 155:App/STM32F4-Discovery/usart.c ****   	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
+ 290              		.loc 1 155 0
+ 291 0192 0123     		movs	r3, #1
+ 292 0194 87F83F30 		strb	r3, [r7, #63]
+ 156:App/STM32F4-Discovery/usart.c ****   	NVIC_Init (&NVIC_InitStruct);
+ 293              		.loc 1 156 0
+ 294 0198 07F13C03 		add	r3, r7, #60
+ 295 019c 1846     		mov	r0, r3
+ 296 019e FFF7FEFF 		bl	NVIC_Init
+ 157:App/STM32F4-Discovery/usart.c **** 	// enable the interrupt in the NVIC
+ 158:App/STM32F4-Discovery/usart.c ****  	NVIC_InitStruct.NVIC_IRQChannel = USARTx_RX_DMA_IRQn;
+ 297              		.loc 1 158 0
+ 298 01a2 4423     		movs	r3, #68
+ 299 01a4 87F83C30 		strb	r3, [r7, #60]
+ 159:App/STM32F4-Discovery/usart.c ****    	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORIT
+ 300              		.loc 1 159 0
+ 301 01a8 0723     		movs	r3, #7
+ 302 01aa 87F83D30 		strb	r3, [r7, #61]
+ 160:App/STM32F4-Discovery/usart.c ****  	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0x1;
+ 303              		.loc 1 160 0
+ 304 01ae 0123     		movs	r3, #1
+ 305 01b0 87F83E30 		strb	r3, [r7, #62]
+ 161:App/STM32F4-Discovery/usart.c ****   	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
+ 306              		.loc 1 161 0
+ 307 01b4 0123     		movs	r3, #1
+ 308 01b6 87F83F30 		strb	r3, [r7, #63]
+ 162:App/STM32F4-Discovery/usart.c ****   	NVIC_Init (&NVIC_InitStruct);
+ 309              		.loc 1 162 0
+ 310 01ba 07F13C03 		add	r3, r7, #60
+ 311 01be 1846     		mov	r0, r3
+ 312 01c0 FFF7FEFF 		bl	NVIC_Init
+ 163:App/STM32F4-Discovery/usart.c ****   	// Enable dma tx and rx request
+ 164:App/STM32F4-Discovery/usart.c **** 	USART_DMACmd (USARTx, USART_DMAReq_Tx, ENABLE);	
+ 313              		.loc 1 164 0
+ 314 01c4 1448     		ldr	r0, .L5+8
+ 315 01c6 8021     		movs	r1, #128
+ 316 01c8 0122     		movs	r2, #1
+ 317 01ca FFF7FEFF 		bl	USART_DMACmd
+ 165:App/STM32F4-Discovery/usart.c **** 	USART_DMACmd (USARTx, USART_DMAReq_Rx, ENABLE);	
+ 318              		.loc 1 165 0
+ 319 01ce 1248     		ldr	r0, .L5+8
+ 320 01d0 4021     		movs	r1, #64
+ 321 01d2 0122     		movs	r2, #1
+ 322 01d4 FFF7FEFF 		bl	USART_DMACmd
+ 166:App/STM32F4-Discovery/usart.c **** 	
+ 167:App/STM32F4-Discovery/usart.c **** 	DMA_Cmd(USARTx_TX_DMA_STREAM, DISABLE);	
+ 323              		.loc 1 167 0
+ 324 01d8 1048     		ldr	r0, .L5+12
+ 325 01da 0021     		movs	r1, #0
+ 326 01dc FFF7FEFF 		bl	DMA_Cmd
+ 168:App/STM32F4-Discovery/usart.c **** 	DMA_Cmd(USARTx_RX_DMA_STREAM, DISABLE);	
+ 327              		.loc 1 168 0
+ 328 01e0 0F48     		ldr	r0, .L5+16
+ 329 01e2 0021     		movs	r1, #0
+ 330 01e4 FFF7FEFF 		bl	DMA_Cmd
+ 169:App/STM32F4-Discovery/usart.c **** 	
+ 170:App/STM32F4-Discovery/usart.c **** 	xSemaphoreDMAUSARTrx = xSemaphoreCreateBinary();
+ 331              		.loc 1 170 0
+ 332 01e8 0120     		movs	r0, #1
+ 333 01ea 0021     		movs	r1, #0
+ 334 01ec 0322     		movs	r2, #3
+ 335 01ee FFF7FEFF 		bl	xQueueGenericCreate
+ 336 01f2 0246     		mov	r2, r0
+ 337 01f4 0E4B     		ldr	r3, .L5+32
+ 338 01f6 1A60     		str	r2, [r3]
+ 171:App/STM32F4-Discovery/usart.c **** 	xSemaphoreDMAUSARTtx = xSemaphoreCreateBinary();
+ 339              		.loc 1 171 0
+ 340 01f8 0120     		movs	r0, #1
+ 341 01fa 0021     		movs	r1, #0
+ 342 01fc 0322     		movs	r2, #3
+ 343 01fe FFF7FEFF 		bl	xQueueGenericCreate
+ 344 0202 0246     		mov	r2, r0
+ 345 0204 0B4B     		ldr	r3, .L5+36
+ 346 0206 1A60     		str	r2, [r3]
+ 172:App/STM32F4-Discovery/usart.c **** }
+ 347              		.loc 1 172 0
+ 348 0208 5837     		adds	r7, r7, #88
+ 349 020a BD46     		mov	sp, r7
+ 350              		@ sp needed
+ 351 020c 80BD     		pop	{r7, pc}
+ 352              	.L6:
+ 353 020e 00BF     		.align	2
+ 354              	.L5:
+ 355 0210 00000240 		.word	1073872896
+ 356 0214 00180240 		.word	1073879040
+ 357 0218 00100140 		.word	1073811456
+ 358 021c B8640240 		.word	1073898680
+ 359 0220 88640240 		.word	1073898632
+ 360 0224 04100140 		.word	1073811460
+ 361 0228 00000000 		.word	bufferTXusart
+ 362 022c 00000000 		.word	bufferRXusart
+ 363 0230 00000000 		.word	xSemaphoreDMAUSARTrx
+ 364 0234 00000000 		.word	xSemaphoreDMAUSARTtx
+ 365              		.cfi_endproc
+ 366              	.LFE111:
+ 368              		.section	.text.DMA2_Stream5_IRQHandler,"ax",%progbits
+ 369              		.align	2
+ 370              		.global	DMA2_Stream5_IRQHandler
+ 371              		.thumb
+ 372              		.thumb_func
+ 374              	DMA2_Stream5_IRQHandler:
+ 375              	.LFB112:
+ 173:App/STM32F4-Discovery/usart.c **** 
+ 174:App/STM32F4-Discovery/usart.c **** void DMA2_Stream5_IRQHandler()
+ 175:App/STM32F4-Discovery/usart.c **** {
+ 376              		.loc 1 175 0
+ 377              		.cfi_startproc
+ 378              		@ args = 0, pretend = 0, frame = 8
+ 379              		@ frame_needed = 1, uses_anonymous_args = 0
+ 380 0000 80B5     		push	{r7, lr}
+ 381              	.LCFI5:
+ 382              		.cfi_def_cfa_offset 8
+ 383              		.cfi_offset 7, -8
+ 384              		.cfi_offset 14, -4
+ 385 0002 82B0     		sub	sp, sp, #8
+ 386              	.LCFI6:
+ 387              		.cfi_def_cfa_offset 16
+ 388 0004 00AF     		add	r7, sp, #0
+ 389              	.LCFI7:
+ 390              		.cfi_def_cfa_register 7
+ 176:App/STM32F4-Discovery/usart.c **** 	/*!	\var static unsigned portBASE_TYPE xHigherPriorityTaskWoken
+ 177:App/STM32F4-Discovery/usart.c **** 	 * 	\brief Indicates if higher priority has been woken
+ 178:App/STM32F4-Discovery/usart.c **** 	 */
+ 179:App/STM32F4-Discovery/usart.c **** 
+ 180:App/STM32F4-Discovery/usart.c **** 	unsigned portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+ 391              		.loc 1 180 0
+ 392 0006 0023     		movs	r3, #0
+ 393 0008 7B60     		str	r3, [r7, #4]
+ 181:App/STM32F4-Discovery/usart.c **** 
+ 182:App/STM32F4-Discovery/usart.c ****  // Test if DMA Stream Transfer Complete interrupt
+ 183:App/STM32F4-Discovery/usart.c ****   if (DMA_GetITStatus (USARTx_RX_DMA_STREAM, USARTx_RX_DMA_FLAG_TCIF)) {
+ 394              		.loc 1 183 0
+ 395 000a 1348     		ldr	r0, .L10
+ 396 000c 1349     		ldr	r1, .L10+4
+ 397 000e FFF7FEFF 		bl	DMA_GetITStatus
+ 398 0012 0346     		mov	r3, r0
+ 399 0014 002B     		cmp	r3, #0
+ 400 0016 14D0     		beq	.L8
+ 184:App/STM32F4-Discovery/usart.c ****  	taskENTER_CRITICAL();
+ 401              		.loc 1 184 0
+ 402 0018 FFF7FEFF 		bl	vPortEnterCritical
  185:App/STM32F4-Discovery/usart.c **** 	DMA_ClearITPendingBit (USARTx_RX_DMA_STREAM,  USARTx_RX_DMA_FLAG_TCIF);
- 392              		.loc 1 185 0
- 393 0018 0F48     		ldr	r0, .L9
- 394 001a 1049     		ldr	r1, .L9+4
- 395 001c FFF7FEFF 		bl	DMA_ClearITPendingBit
+ 403              		.loc 1 185 0
+ 404 001c 0E48     		ldr	r0, .L10
+ 405 001e 0F49     		ldr	r1, .L10+4
+ 406 0020 FFF7FEFF 		bl	DMA_ClearITPendingBit
  186:App/STM32F4-Discovery/usart.c **** 	//DE();
  187:App/STM32F4-Discovery/usart.c **** 	DMA_Cmd(USARTx_RX_DMA_STREAM, DISABLE);		
- 396              		.loc 1 187 0
- 397 0020 0D48     		ldr	r0, .L9
- 398 0022 0021     		movs	r1, #0
- 399 0024 FFF7FEFF 		bl	DMA_Cmd
- 188:App/STM32F4-Discovery/usart.c ****  
- 189:App/STM32F4-Discovery/usart.c **** 	taskENTER_CRITICAL(); 
- 400              		.loc 1 189 0
- 401 0028 FFF7FEFF 		bl	vPortEnterCritical
- 190:App/STM32F4-Discovery/usart.c **** 	xSemaphoreGiveFromISR( xSemaphoreDMAUSARTrx, &xHigherPriorityTaskWoken );
- 402              		.loc 1 190 0
- 403 002c 0C4B     		ldr	r3, .L9+8
- 404 002e 1A68     		ldr	r2, [r3]
- 405 0030 3B1D     		adds	r3, r7, #4
- 406 0032 1046     		mov	r0, r2
- 407 0034 0021     		movs	r1, #0
- 408 0036 1A46     		mov	r2, r3
- 409 0038 0023     		movs	r3, #0
- 410 003a FFF7FEFF 		bl	xQueueGenericSendFromISR
- 191:App/STM32F4-Discovery/usart.c **** 	taskEXIT_CRITICAL(); //
- 411              		.loc 1 191 0
- 412 003e FFF7FEFF 		bl	vPortExitCritical
- 413              	.L7:
- 192:App/STM32F4-Discovery/usart.c **** }	
- 193:App/STM32F4-Discovery/usart.c ****  portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
- 414              		.loc 1 193 0
- 415 0042 7B68     		ldr	r3, [r7, #4]
- 416 0044 002B     		cmp	r3, #0
- 417 0046 03D0     		beq	.L6
- 418              		.loc 1 193 0 is_stmt 0 discriminator 1
- 419 0048 064B     		ldr	r3, .L9+12
- 420 004a 4FF08052 		mov	r2, #268435456
- 421 004e 1A60     		str	r2, [r3]
- 422              	.L6:
- 194:App/STM32F4-Discovery/usart.c **** }
- 423              		.loc 1 194 0 is_stmt 1
- 424 0050 0837     		adds	r7, r7, #8
- 425 0052 BD46     		mov	sp, r7
- 426              		@ sp needed
- 427 0054 80BD     		pop	{r7, pc}
- 428              	.L10:
- 429 0056 00BF     		.align	2
- 430              	.L9:
- 431 0058 88600240 		.word	1073897608
- 432 005c 00880020 		.word	536905728
- 433 0060 00000000 		.word	xSemaphoreDMAUSARTrx
- 434 0064 04ED00E0 		.word	-536810236
- 435              		.cfi_endproc
- 436              	.LFE111:
- 438              		.section	.text.DMA2_Stream7_IRQHandler,"ax",%progbits
- 439              		.align	2
- 440              		.global	DMA2_Stream7_IRQHandler
- 441              		.thumb
- 442              		.thumb_func
- 444              	DMA2_Stream7_IRQHandler:
- 445              	.LFB112:
- 195:App/STM32F4-Discovery/usart.c **** void DMA2_Stream7_IRQHandler()
- 196:App/STM32F4-Discovery/usart.c **** {
- 446              		.loc 1 196 0
- 447              		.cfi_startproc
- 448              		@ args = 0, pretend = 0, frame = 8
- 449              		@ frame_needed = 1, uses_anonymous_args = 0
- 450 0000 80B5     		push	{r7, lr}
- 451              	.LCFI6:
- 452              		.cfi_def_cfa_offset 8
- 453              		.cfi_offset 7, -8
- 454              		.cfi_offset 14, -4
- 455 0002 82B0     		sub	sp, sp, #8
- 456              	.LCFI7:
- 457              		.cfi_def_cfa_offset 16
- 458 0004 00AF     		add	r7, sp, #0
- 459              	.LCFI8:
- 460              		.cfi_def_cfa_register 7
- 197:App/STM32F4-Discovery/usart.c **** 	/*!	\var static unsigned portBASE_TYPE xHigherPriorityTaskWoken
- 198:App/STM32F4-Discovery/usart.c **** 	 * 	\brief Indicates if higher priority has been woken
- 199:App/STM32F4-Discovery/usart.c **** 	 */
- 200:App/STM32F4-Discovery/usart.c **** 
- 201:App/STM32F4-Discovery/usart.c **** 	unsigned portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
- 461              		.loc 1 201 0
- 462 0006 0023     		movs	r3, #0
- 463 0008 7B60     		str	r3, [r7, #4]
- 202:App/STM32F4-Discovery/usart.c **** 
- 203:App/STM32F4-Discovery/usart.c ****   // Test if DMA Stream Transfer Complete interrupt
- 204:App/STM32F4-Discovery/usart.c **** //  if (DMA_GetITStatus (USARTx_TX_DMA_STREAM,  USARTx_TX_DMA_FLAG_TCIF)) {
- 205:App/STM32F4-Discovery/usart.c ****     if (USART_GetITStatus ( USARTx, USART_IT_TC)){ 
- 464              		.loc 1 205 0
- 465 000a 1648     		ldr	r0, .L14
- 466 000c 40F22661 		movw	r1, #1574
- 467 0010 FFF7FEFF 		bl	USART_GetITStatus
- 468 0014 0346     		mov	r3, r0
- 469 0016 002B     		cmp	r3, #0
- 470 0018 19D0     		beq	.L12
- 206:App/STM32F4-Discovery/usart.c ****     
- 207:App/STM32F4-Discovery/usart.c **** 	DMA_ClearITPendingBit (USARTx_TX_DMA_STREAM, USARTx_TX_DMA_FLAG_TCIF);
- 471              		.loc 1 207 0
- 472 001a 1348     		ldr	r0, .L14+4
- 473 001c 1349     		ldr	r1, .L14+8
- 474 001e FFF7FEFF 		bl	DMA_ClearITPendingBit
- 208:App/STM32F4-Discovery/usart.c **** 	USART_ClearITPendingBit ( USARTx, USART_IT_TC);
- 475              		.loc 1 208 0
- 476 0022 1048     		ldr	r0, .L14
- 477 0024 40F22661 		movw	r1, #1574
- 478 0028 FFF7FEFF 		bl	USART_ClearITPendingBit
- 209:App/STM32F4-Discovery/usart.c **** 	
- 210:App/STM32F4-Discovery/usart.c **** 	//DE();
- 211:App/STM32F4-Discovery/usart.c **** 	DMA_Cmd(USARTx_TX_DMA_STREAM, DISABLE);		
- 479              		.loc 1 211 0
- 480 002c 0E48     		ldr	r0, .L14+4
- 481 002e 0021     		movs	r1, #0
- 482 0030 FFF7FEFF 		bl	DMA_Cmd
- 212:App/STM32F4-Discovery/usart.c **** 	taskENTER_CRITICAL(); 
- 483              		.loc 1 212 0
- 484 0034 FFF7FEFF 		bl	vPortEnterCritical
- 213:App/STM32F4-Discovery/usart.c **** 	xSemaphoreGiveFromISR( xSemaphoreDMAUSARTtx, &xHigherPriorityTaskWoken );
- 485              		.loc 1 213 0
- 486 0038 0D4B     		ldr	r3, .L14+12
- 487 003a 1A68     		ldr	r2, [r3]
- 488 003c 3B1D     		adds	r3, r7, #4
- 489 003e 1046     		mov	r0, r2
- 490 0040 0021     		movs	r1, #0
- 491 0042 1A46     		mov	r2, r3
- 492 0044 0023     		movs	r3, #0
- 493 0046 FFF7FEFF 		bl	xQueueGenericSendFromISR
- 214:App/STM32F4-Discovery/usart.c ****  	taskEXIT_CRITICAL();  
- 494              		.loc 1 214 0
- 495 004a FFF7FEFF 		bl	vPortExitCritical
- 496              	.L12:
- 215:App/STM32F4-Discovery/usart.c ****  }
- 216:App/STM32F4-Discovery/usart.c ****    portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
- 497              		.loc 1 216 0
- 498 004e 7B68     		ldr	r3, [r7, #4]
- 499 0050 002B     		cmp	r3, #0
- 500 0052 03D0     		beq	.L11
- 501              		.loc 1 216 0 is_stmt 0 discriminator 1
- 502 0054 074B     		ldr	r3, .L14+16
- 503 0056 4FF08052 		mov	r2, #268435456
- 504 005a 1A60     		str	r2, [r3]
- 505              	.L11:
- 217:App/STM32F4-Discovery/usart.c **** }
- 506              		.loc 1 217 0 is_stmt 1
- 507 005c 0837     		adds	r7, r7, #8
- 508 005e BD46     		mov	sp, r7
- 509              		@ sp needed
- 510 0060 80BD     		pop	{r7, pc}
- 511              	.L15:
- 512 0062 00BF     		.align	2
- 513              	.L14:
- 514 0064 00100140 		.word	1073811456
- 515 0068 B8600240 		.word	1073897656
- 516 006c 00800028 		.word	671121408
- 517 0070 00000000 		.word	xSemaphoreDMAUSARTtx
- 518 0074 04ED00E0 		.word	-536810236
- 519              		.cfi_endproc
- 520              	.LFE112:
- 522              		.section	.text.usart_dma_write_read,"ax",%progbits
- 523              		.align	2
- 524              		.global	usart_dma_write_read
- 525              		.thumb
- 526              		.thumb_func
- 528              	usart_dma_write_read:
- 529              	.LFB113:
+ 407              		.loc 1 187 0
+ 408 0024 0C48     		ldr	r0, .L10
+ 409 0026 0021     		movs	r1, #0
+ 410 0028 FFF7FEFF 		bl	DMA_Cmd
+ 188:App/STM32F4-Discovery/usart.c **** 
+ 189:App/STM32F4-Discovery/usart.c **** 	xSemaphoreGiveFromISR( xSemaphoreDMAUSARTrx, &xHigherPriorityTaskWoken );
+ 411              		.loc 1 189 0
+ 412 002c 0C4B     		ldr	r3, .L10+8
+ 413 002e 1A68     		ldr	r2, [r3]
+ 414 0030 3B1D     		adds	r3, r7, #4
+ 415 0032 1046     		mov	r0, r2
+ 416 0034 0021     		movs	r1, #0
+ 417 0036 1A46     		mov	r2, r3
+ 418 0038 0023     		movs	r3, #0
+ 419 003a FFF7FEFF 		bl	xQueueGenericSendFromISR
+ 190:App/STM32F4-Discovery/usart.c **** 	taskEXIT_CRITICAL(); //
+ 420              		.loc 1 190 0
+ 421 003e FFF7FEFF 		bl	vPortExitCritical
+ 422              	.L8:
+ 191:App/STM32F4-Discovery/usart.c **** }	
+ 192:App/STM32F4-Discovery/usart.c ****  portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
+ 423              		.loc 1 192 0
+ 424 0042 7B68     		ldr	r3, [r7, #4]
+ 425 0044 002B     		cmp	r3, #0
+ 426 0046 03D0     		beq	.L7
+ 427              		.loc 1 192 0 is_stmt 0 discriminator 1
+ 428 0048 064B     		ldr	r3, .L10+12
+ 429 004a 4FF08052 		mov	r2, #268435456
+ 430 004e 1A60     		str	r2, [r3]
+ 431              	.L7:
+ 193:App/STM32F4-Discovery/usart.c **** }
+ 432              		.loc 1 193 0 is_stmt 1
+ 433 0050 0837     		adds	r7, r7, #8
+ 434 0052 BD46     		mov	sp, r7
+ 435              		@ sp needed
+ 436 0054 80BD     		pop	{r7, pc}
+ 437              	.L11:
+ 438 0056 00BF     		.align	2
+ 439              	.L10:
+ 440 0058 88640240 		.word	1073898632
+ 441 005c 00880020 		.word	536905728
+ 442 0060 00000000 		.word	xSemaphoreDMAUSARTrx
+ 443 0064 04ED00E0 		.word	-536810236
+ 444              		.cfi_endproc
+ 445              	.LFE112:
+ 447              		.section	.text.DMA2_Stream7_IRQHandler,"ax",%progbits
+ 448              		.align	2
+ 449              		.global	DMA2_Stream7_IRQHandler
+ 450              		.thumb
+ 451              		.thumb_func
+ 453              	DMA2_Stream7_IRQHandler:
+ 454              	.LFB113:
+ 194:App/STM32F4-Discovery/usart.c **** void DMA2_Stream7_IRQHandler()
+ 195:App/STM32F4-Discovery/usart.c **** {
+ 455              		.loc 1 195 0
+ 456              		.cfi_startproc
+ 457              		@ args = 0, pretend = 0, frame = 8
+ 458              		@ frame_needed = 1, uses_anonymous_args = 0
+ 459 0000 80B5     		push	{r7, lr}
+ 460              	.LCFI8:
+ 461              		.cfi_def_cfa_offset 8
+ 462              		.cfi_offset 7, -8
+ 463              		.cfi_offset 14, -4
+ 464 0002 82B0     		sub	sp, sp, #8
+ 465              	.LCFI9:
+ 466              		.cfi_def_cfa_offset 16
+ 467 0004 00AF     		add	r7, sp, #0
+ 468              	.LCFI10:
+ 469              		.cfi_def_cfa_register 7
+ 196:App/STM32F4-Discovery/usart.c **** 	/*!	\var static unsigned portBASE_TYPE xHigherPriorityTaskWoken
+ 197:App/STM32F4-Discovery/usart.c **** 	 * 	\brief Indicates if higher priority has been woken
+ 198:App/STM32F4-Discovery/usart.c **** 	 */
+ 199:App/STM32F4-Discovery/usart.c **** 
+ 200:App/STM32F4-Discovery/usart.c **** 	unsigned portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+ 470              		.loc 1 200 0
+ 471 0006 0023     		movs	r3, #0
+ 472 0008 7B60     		str	r3, [r7, #4]
+ 201:App/STM32F4-Discovery/usart.c **** 
+ 202:App/STM32F4-Discovery/usart.c ****   // Test if DMA Stream Transfer Complete interrupt
+ 203:App/STM32F4-Discovery/usart.c ****   if (DMA_GetITStatus (USARTx_TX_DMA_STREAM,  USARTx_TX_DMA_FLAG_TCIF)) {
+ 473              		.loc 1 203 0
+ 474 000a 1548     		ldr	r0, .L15
+ 475 000c 1549     		ldr	r1, .L15+4
+ 476 000e FFF7FEFF 		bl	DMA_GetITStatus
+ 477 0012 0346     		mov	r3, r0
+ 478 0014 002B     		cmp	r3, #0
+ 479 0016 19D0     		beq	.L13
+ 204:App/STM32F4-Discovery/usart.c ****     //if (USART_GetITStatus ( USARTx, USART_IT_TC)){ 
+ 205:App/STM32F4-Discovery/usart.c ****     taskENTER_CRITICAL(); 	
+ 480              		.loc 1 205 0
+ 481 0018 FFF7FEFF 		bl	vPortEnterCritical
+ 206:App/STM32F4-Discovery/usart.c **** 	DMA_ClearITPendingBit (USARTx_TX_DMA_STREAM, USARTx_TX_DMA_FLAG_TCIF);
+ 482              		.loc 1 206 0
+ 483 001c 1048     		ldr	r0, .L15
+ 484 001e 1149     		ldr	r1, .L15+4
+ 485 0020 FFF7FEFF 		bl	DMA_ClearITPendingBit
+ 207:App/STM32F4-Discovery/usart.c **** 	USART_ClearITPendingBit ( USARTx, USART_IT_TC);
+ 486              		.loc 1 207 0
+ 487 0024 1048     		ldr	r0, .L15+8
+ 488 0026 40F22661 		movw	r1, #1574
+ 489 002a FFF7FEFF 		bl	USART_ClearITPendingBit
+ 208:App/STM32F4-Discovery/usart.c **** 	
+ 209:App/STM32F4-Discovery/usart.c **** 	//DE();
+ 210:App/STM32F4-Discovery/usart.c **** 	DMA_Cmd(USARTx_TX_DMA_STREAM, DISABLE);		
+ 490              		.loc 1 210 0
+ 491 002e 0C48     		ldr	r0, .L15
+ 492 0030 0021     		movs	r1, #0
+ 493 0032 FFF7FEFF 		bl	DMA_Cmd
+ 211:App/STM32F4-Discovery/usart.c **** 	
+ 212:App/STM32F4-Discovery/usart.c **** 	xSemaphoreGiveFromISR( xSemaphoreDMAUSARTtx, &xHigherPriorityTaskWoken );
+ 494              		.loc 1 212 0
+ 495 0036 0D4B     		ldr	r3, .L15+12
+ 496 0038 1A68     		ldr	r2, [r3]
+ 497 003a 3B1D     		adds	r3, r7, #4
+ 498 003c 1046     		mov	r0, r2
+ 499 003e 0021     		movs	r1, #0
+ 500 0040 1A46     		mov	r2, r3
+ 501 0042 0023     		movs	r3, #0
+ 502 0044 FFF7FEFF 		bl	xQueueGenericSendFromISR
+ 213:App/STM32F4-Discovery/usart.c ****  	taskEXIT_CRITICAL();  
+ 503              		.loc 1 213 0
+ 504 0048 FFF7FEFF 		bl	vPortExitCritical
+ 505              	.L13:
+ 214:App/STM32F4-Discovery/usart.c ****  }
+ 215:App/STM32F4-Discovery/usart.c ****    portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
+ 506              		.loc 1 215 0
+ 507 004c 7B68     		ldr	r3, [r7, #4]
+ 508 004e 002B     		cmp	r3, #0
+ 509 0050 03D0     		beq	.L12
+ 510              		.loc 1 215 0 is_stmt 0 discriminator 1
+ 511 0052 074B     		ldr	r3, .L15+16
+ 512 0054 4FF08052 		mov	r2, #268435456
+ 513 0058 1A60     		str	r2, [r3]
+ 514              	.L12:
+ 216:App/STM32F4-Discovery/usart.c **** }
+ 515              		.loc 1 216 0 is_stmt 1
+ 516 005a 0837     		adds	r7, r7, #8
+ 517 005c BD46     		mov	sp, r7
+ 518              		@ sp needed
+ 519 005e 80BD     		pop	{r7, pc}
+ 520              	.L16:
+ 521              		.align	2
+ 522              	.L15:
+ 523 0060 B8640240 		.word	1073898680
+ 524 0064 00800028 		.word	671121408
+ 525 0068 00100140 		.word	1073811456
+ 526 006c 00000000 		.word	xSemaphoreDMAUSARTtx
+ 527 0070 04ED00E0 		.word	-536810236
+ 528              		.cfi_endproc
+ 529              	.LFE113:
+ 531              		.section	.text.usart_dma_write,"ax",%progbits
+ 532              		.align	2
+ 533              		.global	usart_dma_write
+ 534              		.thumb
+ 535              		.thumb_func
+ 537              	usart_dma_write:
+ 538              	.LFB114:
+ 217:App/STM32F4-Discovery/usart.c **** 
  218:App/STM32F4-Discovery/usart.c **** 
- 219:App/STM32F4-Discovery/usart.c **** 
- 220:App/STM32F4-Discovery/usart.c **** void usart_dma_write_read(uint8_t *bufRX, uint8_t *bufTX, uint16_t lenRX,  uint16_t lenTX)
- 221:App/STM32F4-Discovery/usart.c **** {
- 530              		.loc 1 221 0
- 531              		.cfi_startproc
- 532              		@ args = 0, pretend = 0, frame = 16
- 533              		@ frame_needed = 1, uses_anonymous_args = 0
- 534 0000 80B5     		push	{r7, lr}
- 535              	.LCFI9:
- 536              		.cfi_def_cfa_offset 8
- 537              		.cfi_offset 7, -8
- 538              		.cfi_offset 14, -4
- 539 0002 84B0     		sub	sp, sp, #16
- 540              	.LCFI10:
- 541              		.cfi_def_cfa_offset 24
- 542 0004 00AF     		add	r7, sp, #0
- 543              	.LCFI11:
- 544              		.cfi_def_cfa_register 7
- 545 0006 F860     		str	r0, [r7, #12]
- 546 0008 B960     		str	r1, [r7, #8]
- 547 000a FA80     		strh	r2, [r7, #6]	@ movhi
- 548 000c BB80     		strh	r3, [r7, #4]	@ movhi
- 222:App/STM32F4-Discovery/usart.c **** 		
- 223:App/STM32F4-Discovery/usart.c **** 		/*! usart_dma_read it has to be used with \n
- 224:App/STM32F4-Discovery/usart.c **** 		 * memcpy from bufferRX right after it has recieve \n
- 225:App/STM32F4-Discovery/usart.c **** 		 * data on SPI. */
- 226:App/STM32F4-Discovery/usart.c **** 		
- 227:App/STM32F4-Discovery/usart.c **** 		DMA_SetCurrDataCounter(USARTx_RX_DMA_STREAM, lenRX);
- 549              		.loc 1 227 0
- 550 000e FB88     		ldrh	r3, [r7, #6]
- 551 0010 1948     		ldr	r0, .L20
- 552 0012 1946     		mov	r1, r3
- 553 0014 FFF7FEFF 		bl	DMA_SetCurrDataCounter
- 228:App/STM32F4-Discovery/usart.c **** 		DMA_SetCurrDataCounter(USARTx_TX_DMA_STREAM, lenTX);
- 554              		.loc 1 228 0
- 555 0018 BB88     		ldrh	r3, [r7, #4]
- 556 001a 1848     		ldr	r0, .L20+4
- 557 001c 1946     		mov	r1, r3
- 558 001e FFF7FEFF 		bl	DMA_SetCurrDataCounter
- 229:App/STM32F4-Discovery/usart.c **** 		USARTx_TX_DMA_STREAM->M0AR =(uint32_t)bufTX;	
- 559              		.loc 1 229 0
- 560 0022 164B     		ldr	r3, .L20+4
- 561 0024 BA68     		ldr	r2, [r7, #8]
- 562 0026 DA60     		str	r2, [r3, #12]
- 230:App/STM32F4-Discovery/usart.c **** 		USARTx_RX_DMA_STREAM->M0AR =(uint32_t)bufRX;	
- 563              		.loc 1 230 0
- 564 0028 134B     		ldr	r3, .L20
- 565 002a FA68     		ldr	r2, [r7, #12]
- 566 002c DA60     		str	r2, [r3, #12]
- 231:App/STM32F4-Discovery/usart.c **** 
- 232:App/STM32F4-Discovery/usart.c **** 		//DD(); // chip select 
- 233:App/STM32F4-Discovery/usart.c **** 		DMA_Cmd(USARTx_TX_DMA_STREAM, ENABLE);		
- 567              		.loc 1 233 0
- 568 002e 1348     		ldr	r0, .L20+4
- 569 0030 0121     		movs	r1, #1
- 570 0032 FFF7FEFF 		bl	DMA_Cmd
- 234:App/STM32F4-Discovery/usart.c **** 	
- 235:App/STM32F4-Discovery/usart.c **** 		/* Block until the semaphore is given */
- 236:App/STM32F4-Discovery/usart.c **** 		if ( xSemaphoreTake(xSemaphoreDMAUSARTtx, 10/portTICK_RATE_MS) == pdTRUE )
- 571              		.loc 1 236 0
- 572 0036 124B     		ldr	r3, .L20+8
- 573 0038 1B68     		ldr	r3, [r3]
- 574 003a 1846     		mov	r0, r3
- 575 003c 0021     		movs	r1, #0
- 576 003e 0A22     		movs	r2, #10
- 577 0040 0023     		movs	r3, #0
- 578 0042 FFF7FEFF 		bl	xQueueGenericReceive
- 579 0046 0346     		mov	r3, r0
- 580 0048 012B     		cmp	r3, #1
- 581 004a 00D0     		beq	.L17
- 237:App/STM32F4-Discovery/usart.c **** 		{
- 238:App/STM32F4-Discovery/usart.c **** 			// we were able to take semaphore now wait for transfer
- 239:App/STM32F4-Discovery/usart.c **** 			// to finish. We will give back semaphore in IRQ
- 240:App/STM32F4-Discovery/usart.c **** 			// handeler 
- 241:App/STM32F4-Discovery/usart.c **** 			// 
- 242:App/STM32F4-Discovery/usart.c **** 		}
- 243:App/STM32F4-Discovery/usart.c **** 		else
- 244:App/STM32F4-Discovery/usart.c **** 		{
- 245:App/STM32F4-Discovery/usart.c **** 			// error taking semaphore
- 246:App/STM32F4-Discovery/usart.c **** 			return -1;
- 582              		.loc 1 246 0
- 583 004c 10E0     		b	.L16
- 584              	.L17:
- 247:App/STM32F4-Discovery/usart.c **** 		}
- 248:App/STM32F4-Discovery/usart.c **** 
- 249:App/STM32F4-Discovery/usart.c **** 		// enable RX stream 
- 250:App/STM32F4-Discovery/usart.c **** 		DMA_Cmd(USARTx_RX_DMA_STREAM, ENABLE);
- 585              		.loc 1 250 0
- 586 004e 0A48     		ldr	r0, .L20
- 587 0050 0121     		movs	r1, #1
- 588 0052 FFF7FEFF 		bl	DMA_Cmd
- 251:App/STM32F4-Discovery/usart.c **** 
- 252:App/STM32F4-Discovery/usart.c **** 		/* Block until the semaphore is given */
- 253:App/STM32F4-Discovery/usart.c **** 		if ( xSemaphoreTake(xSemaphoreDMAUSARTrx, 10/portTICK_RATE_MS) == pdTRUE )
- 589              		.loc 1 253 0
- 590 0056 0B4B     		ldr	r3, .L20+12
- 591 0058 1B68     		ldr	r3, [r3]
- 592 005a 1846     		mov	r0, r3
- 593 005c 0021     		movs	r1, #0
- 594 005e 0A22     		movs	r2, #10
- 595 0060 0023     		movs	r3, #0
- 596 0062 FFF7FEFF 		bl	xQueueGenericReceive
- 597 0066 0346     		mov	r3, r0
- 598 0068 012B     		cmp	r3, #1
- 599 006a 00D0     		beq	.L19
- 254:App/STM32F4-Discovery/usart.c **** 		{
- 255:App/STM32F4-Discovery/usart.c **** 			// we were able to take semaphore now wait for transfer
- 256:App/STM32F4-Discovery/usart.c **** 			// to finish. We will give back semaphore in IRQ
- 257:App/STM32F4-Discovery/usart.c **** 			// handeler 
- 258:App/STM32F4-Discovery/usart.c **** 			// 
- 259:App/STM32F4-Discovery/usart.c **** 		}
- 260:App/STM32F4-Discovery/usart.c **** 		else
- 261:App/STM32F4-Discovery/usart.c **** 		{
- 262:App/STM32F4-Discovery/usart.c **** 			// error taking semaphore
- 263:App/STM32F4-Discovery/usart.c **** 			return -1; 
- 600              		.loc 1 263 0
- 601 006c 00E0     		b	.L16
- 602              	.L19:
- 264:App/STM32F4-Discovery/usart.c **** 		}
- 265:App/STM32F4-Discovery/usart.c **** 		
- 266:App/STM32F4-Discovery/usart.c **** 		return 0;
- 603              		.loc 1 266 0
- 604 006e 00BF     		nop
- 605              	.L16:
- 267:App/STM32F4-Discovery/usart.c **** 
- 268:App/STM32F4-Discovery/usart.c **** 
- 269:App/STM32F4-Discovery/usart.c **** }
- 606              		.loc 1 269 0
- 607 0070 1037     		adds	r7, r7, #16
- 608 0072 BD46     		mov	sp, r7
- 609              		@ sp needed
- 610 0074 80BD     		pop	{r7, pc}
- 611              	.L21:
- 612 0076 00BF     		.align	2
- 613              	.L20:
- 614 0078 88600240 		.word	1073897608
- 615 007c B8600240 		.word	1073897656
- 616 0080 00000000 		.word	xSemaphoreDMAUSARTtx
- 617 0084 00000000 		.word	xSemaphoreDMAUSARTrx
- 618              		.cfi_endproc
- 619              	.LFE113:
- 621              		.section	.text.usart_rw,"ax",%progbits
- 622              		.align	2
- 623              		.global	usart_rw
- 624              		.thumb
- 625              		.thumb_func
- 627              	usart_rw:
- 628              	.LFB114:
- 270:App/STM32F4-Discovery/usart.c **** 
- 271:App/STM32F4-Discovery/usart.c **** int usart_rw ( ic_comm_header_TypeDef * icComH, uint8_t *buf, uint16_t len)
- 272:App/STM32F4-Discovery/usart.c **** {
- 629              		.loc 1 272 0
- 630              		.cfi_startproc
- 631              		@ args = 0, pretend = 0, frame = 24
- 632              		@ frame_needed = 1, uses_anonymous_args = 0
- 633 0000 80B5     		push	{r7, lr}
- 634              	.LCFI12:
- 635              		.cfi_def_cfa_offset 8
- 636              		.cfi_offset 7, -8
- 637              		.cfi_offset 14, -4
- 638 0002 86B0     		sub	sp, sp, #24
- 639              	.LCFI13:
- 640              		.cfi_def_cfa_offset 32
- 641 0004 00AF     		add	r7, sp, #0
- 642              	.LCFI14:
- 643              		.cfi_def_cfa_register 7
- 644 0006 F860     		str	r0, [r7, #12]
- 645 0008 B960     		str	r1, [r7, #8]
- 646 000a 1346     		mov	r3, r2
- 647 000c FB80     		strh	r3, [r7, #6]	@ movhi
- 273:App/STM32F4-Discovery/usart.c **** 	switch ( icComH->id )
- 648              		.loc 1 273 0
- 649 000e FB68     		ldr	r3, [r7, #12]
- 650 0010 1B88     		ldrh	r3, [r3]
- 651 0012 312B     		cmp	r3, #49
- 652 0014 00F08780 		beq	.L24
- 653 0018 322B     		cmp	r3, #50
- 654 001a 15D0     		beq	.L25
- 655 001c 302B     		cmp	r3, #48
- 656 001e 40F09480 		bne	.L30
- 657              	.LBB2:
- 274:App/STM32F4-Discovery/usart.c **** 	{
- 275:App/STM32F4-Discovery/usart.c **** 		case IC_COMM_ID_COMMAND:
- 276:App/STM32F4-Discovery/usart.c **** 			
- 277:App/STM32F4-Discovery/usart.c **** 			RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_CRC, ENABLE);	
- 658              		.loc 1 277 0
- 659 0022 4FF48050 		mov	r0, #4096
- 660 0026 0121     		movs	r1, #1
- 661 0028 FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
- 278:App/STM32F4-Discovery/usart.c **** 			icComH->CRC_data = CRC_CalcBlockCRC((uint32_t)icComH, 16);
- 662              		.loc 1 278 0
- 663 002c F868     		ldr	r0, [r7, #12]
- 664 002e 1021     		movs	r1, #16
- 665 0030 FFF7FEFF 		bl	CRC_CalcBlockCRC
- 666 0034 0246     		mov	r2, r0
- 667 0036 FB68     		ldr	r3, [r7, #12]
- 668 0038 DA60     		str	r2, [r3, #12]
- 279:App/STM32F4-Discovery/usart.c **** 			usart_dma_write_read(NULL, icComH, 0, 16);
- 669              		.loc 1 279 0
- 670 003a 0020     		movs	r0, #0
- 671 003c F968     		ldr	r1, [r7, #12]
- 672 003e 0022     		movs	r2, #0
- 673 0040 1023     		movs	r3, #16
- 674 0042 FFF7FEFF 		bl	usart_dma_write_read
- 280:App/STM32F4-Discovery/usart.c **** 			
+ 219:App/STM32F4-Discovery/usart.c **** int usart_dma_write( uint8_t *bufTX,  uint16_t lenTX)
+ 220:App/STM32F4-Discovery/usart.c **** {
+ 539              		.loc 1 220 0
+ 540              		.cfi_startproc
+ 541              		@ args = 0, pretend = 0, frame = 8
+ 542              		@ frame_needed = 1, uses_anonymous_args = 0
+ 543 0000 80B5     		push	{r7, lr}
+ 544              	.LCFI11:
+ 545              		.cfi_def_cfa_offset 8
+ 546              		.cfi_offset 7, -8
+ 547              		.cfi_offset 14, -4
+ 548 0002 82B0     		sub	sp, sp, #8
+ 549              	.LCFI12:
+ 550              		.cfi_def_cfa_offset 16
+ 551 0004 00AF     		add	r7, sp, #0
+ 552              	.LCFI13:
+ 553              		.cfi_def_cfa_register 7
+ 554 0006 7860     		str	r0, [r7, #4]
+ 555 0008 0B46     		mov	r3, r1
+ 556 000a 7B80     		strh	r3, [r7, #2]	@ movhi
+ 221:App/STM32F4-Discovery/usart.c **** 		
+ 222:App/STM32F4-Discovery/usart.c **** 		/*! usart_dma_read it has to be used with \n
+ 223:App/STM32F4-Discovery/usart.c **** 		 * memcpy from bufferRX right after it has recieve \n
+ 224:App/STM32F4-Discovery/usart.c **** 		 * data on SPI. */
+ 225:App/STM32F4-Discovery/usart.c **** 
+ 226:App/STM32F4-Discovery/usart.c **** 
+ 227:App/STM32F4-Discovery/usart.c **** 		DMA_SetCurrDataCounter(USARTx_TX_DMA_STREAM, lenTX);
+ 557              		.loc 1 227 0
+ 558 000c 7B88     		ldrh	r3, [r7, #2]
+ 559 000e 0F48     		ldr	r0, .L20
+ 560 0010 1946     		mov	r1, r3
+ 561 0012 FFF7FEFF 		bl	DMA_SetCurrDataCounter
+ 228:App/STM32F4-Discovery/usart.c **** 		USARTx_TX_DMA_STREAM->M0AR =(uint32_t)bufTX;	
+ 562              		.loc 1 228 0
+ 563 0016 0D4B     		ldr	r3, .L20
+ 564 0018 7A68     		ldr	r2, [r7, #4]
+ 565 001a DA60     		str	r2, [r3, #12]
+ 229:App/STM32F4-Discovery/usart.c **** 
+ 230:App/STM32F4-Discovery/usart.c **** 		//DD(); // chip select 
+ 231:App/STM32F4-Discovery/usart.c **** 		DMA_Cmd(USARTx_TX_DMA_STREAM, ENABLE);		
+ 566              		.loc 1 231 0
+ 567 001c 0B48     		ldr	r0, .L20
+ 568 001e 0121     		movs	r1, #1
+ 569 0020 FFF7FEFF 		bl	DMA_Cmd
+ 232:App/STM32F4-Discovery/usart.c **** 	
+ 233:App/STM32F4-Discovery/usart.c **** 		/* Block until the semaphore is given */
+ 234:App/STM32F4-Discovery/usart.c **** 		if ( xSemaphoreTake(xSemaphoreDMAUSARTtx, 10/portTICK_RATE_MS ) == pdTRUE )
+ 570              		.loc 1 234 0
+ 571 0024 0A4B     		ldr	r3, .L20+4
+ 572 0026 1B68     		ldr	r3, [r3]
+ 573 0028 1846     		mov	r0, r3
+ 574 002a 0021     		movs	r1, #0
+ 575 002c 0A22     		movs	r2, #10
+ 576 002e 0023     		movs	r3, #0
+ 577 0030 FFF7FEFF 		bl	xQueueGenericReceive
+ 578 0034 0346     		mov	r3, r0
+ 579 0036 012B     		cmp	r3, #1
+ 580 0038 02D0     		beq	.L18
+ 235:App/STM32F4-Discovery/usart.c **** 		{
+ 236:App/STM32F4-Discovery/usart.c **** 			// we were able to take semaphore now wait for transfer
+ 237:App/STM32F4-Discovery/usart.c **** 			// to finish. We will give back semaphore in IRQ
+ 238:App/STM32F4-Discovery/usart.c **** 			// handeler 
+ 239:App/STM32F4-Discovery/usart.c **** 			// 
+ 240:App/STM32F4-Discovery/usart.c **** 
+ 241:App/STM32F4-Discovery/usart.c **** 		}
+ 242:App/STM32F4-Discovery/usart.c **** 		else
+ 243:App/STM32F4-Discovery/usart.c **** 		{
+ 244:App/STM32F4-Discovery/usart.c **** 			// error taking semaphore
+ 245:App/STM32F4-Discovery/usart.c **** 			return -1;
+ 581              		.loc 1 245 0
+ 582 003a 4FF0FF33 		mov	r3, #-1
+ 583 003e 00E0     		b	.L19
+ 584              	.L18:
+ 246:App/STM32F4-Discovery/usart.c **** 		}
+ 247:App/STM32F4-Discovery/usart.c **** 
+ 248:App/STM32F4-Discovery/usart.c **** 		return 0;
+ 585              		.loc 1 248 0
+ 586 0040 0023     		movs	r3, #0
+ 587              	.L19:
+ 249:App/STM32F4-Discovery/usart.c **** 
+ 250:App/STM32F4-Discovery/usart.c **** 
+ 251:App/STM32F4-Discovery/usart.c **** }
+ 588              		.loc 1 251 0
+ 589 0042 1846     		mov	r0, r3
+ 590 0044 0837     		adds	r7, r7, #8
+ 591 0046 BD46     		mov	sp, r7
+ 592              		@ sp needed
+ 593 0048 80BD     		pop	{r7, pc}
+ 594              	.L21:
+ 595 004a 00BF     		.align	2
+ 596              	.L20:
+ 597 004c B8640240 		.word	1073898680
+ 598 0050 00000000 		.word	xSemaphoreDMAUSARTtx
+ 599              		.cfi_endproc
+ 600              	.LFE114:
+ 602              		.section	.text.usart_dma_read,"ax",%progbits
+ 603              		.align	2
+ 604              		.global	usart_dma_read
+ 605              		.thumb
+ 606              		.thumb_func
+ 608              	usart_dma_read:
+ 609              	.LFB115:
+ 252:App/STM32F4-Discovery/usart.c **** 
+ 253:App/STM32F4-Discovery/usart.c **** int usart_dma_read( uint8_t *bufRX,  uint16_t lenRX)
+ 254:App/STM32F4-Discovery/usart.c **** {
+ 610              		.loc 1 254 0
+ 611              		.cfi_startproc
+ 612              		@ args = 0, pretend = 0, frame = 8
+ 613              		@ frame_needed = 1, uses_anonymous_args = 0
+ 614 0000 80B5     		push	{r7, lr}
+ 615              	.LCFI14:
+ 616              		.cfi_def_cfa_offset 8
+ 617              		.cfi_offset 7, -8
+ 618              		.cfi_offset 14, -4
+ 619 0002 82B0     		sub	sp, sp, #8
+ 620              	.LCFI15:
+ 621              		.cfi_def_cfa_offset 16
+ 622 0004 00AF     		add	r7, sp, #0
+ 623              	.LCFI16:
+ 624              		.cfi_def_cfa_register 7
+ 625 0006 7860     		str	r0, [r7, #4]
+ 626 0008 0B46     		mov	r3, r1
+ 627 000a 7B80     		strh	r3, [r7, #2]	@ movhi
+ 255:App/STM32F4-Discovery/usart.c **** 		
+ 256:App/STM32F4-Discovery/usart.c **** 		
+ 257:App/STM32F4-Discovery/usart.c **** 		DMA_SetCurrDataCounter(USARTx_RX_DMA_STREAM, lenRX);
+ 628              		.loc 1 257 0
+ 629 000c 7B88     		ldrh	r3, [r7, #2]
+ 630 000e 0F48     		ldr	r0, .L25
+ 631 0010 1946     		mov	r1, r3
+ 632 0012 FFF7FEFF 		bl	DMA_SetCurrDataCounter
+ 258:App/STM32F4-Discovery/usart.c **** 		
+ 259:App/STM32F4-Discovery/usart.c **** 		USARTx_TX_DMA_STREAM->M0AR =(uint32_t)bufferRXusart;	
+ 633              		.loc 1 259 0
+ 634 0016 0E4B     		ldr	r3, .L25+4
+ 635 0018 0E4A     		ldr	r2, .L25+8
+ 636 001a DA60     		str	r2, [r3, #12]
+ 260:App/STM32F4-Discovery/usart.c **** 
+ 261:App/STM32F4-Discovery/usart.c **** 		//DD(); // chip select 
+ 262:App/STM32F4-Discovery/usart.c **** 		DMA_Cmd(USARTx_RX_DMA_STREAM, ENABLE);		
+ 637              		.loc 1 262 0
+ 638 001c 0B48     		ldr	r0, .L25
+ 639 001e 0121     		movs	r1, #1
+ 640 0020 FFF7FEFF 		bl	DMA_Cmd
+ 263:App/STM32F4-Discovery/usart.c **** 
+ 264:App/STM32F4-Discovery/usart.c **** 		/* Block until the semaphore is given */
+ 265:App/STM32F4-Discovery/usart.c **** 		if ( xSemaphoreTake(xSemaphoreDMAUSARTrx, 10/portTICK_RATE_MS) == pdTRUE )
+ 641              		.loc 1 265 0
+ 642 0024 0C4B     		ldr	r3, .L25+12
+ 643 0026 1B68     		ldr	r3, [r3]
+ 644 0028 1846     		mov	r0, r3
+ 645 002a 0021     		movs	r1, #0
+ 646 002c 0A22     		movs	r2, #10
+ 647 002e 0023     		movs	r3, #0
+ 648 0030 FFF7FEFF 		bl	xQueueGenericReceive
+ 649 0034 0346     		mov	r3, r0
+ 650 0036 012B     		cmp	r3, #1
+ 651 0038 02D0     		beq	.L23
+ 266:App/STM32F4-Discovery/usart.c **** 		{
+ 267:App/STM32F4-Discovery/usart.c **** 			// we were able to take semaphore now wait for transfer
+ 268:App/STM32F4-Discovery/usart.c **** 			// to finish. We will give back semaphore in IRQ
+ 269:App/STM32F4-Discovery/usart.c **** 			// handeler 
+ 270:App/STM32F4-Discovery/usart.c **** 			// 
+ 271:App/STM32F4-Discovery/usart.c **** 			
+ 272:App/STM32F4-Discovery/usart.c **** 		}
+ 273:App/STM32F4-Discovery/usart.c **** 		else
+ 274:App/STM32F4-Discovery/usart.c **** 		{
+ 275:App/STM32F4-Discovery/usart.c **** 			// error taking semaphore
+ 276:App/STM32F4-Discovery/usart.c **** 			return -1;
+ 652              		.loc 1 276 0
+ 653 003a 4FF0FF33 		mov	r3, #-1
+ 654 003e 00E0     		b	.L24
+ 655              	.L23:
+ 277:App/STM32F4-Discovery/usart.c **** 		}
+ 278:App/STM32F4-Discovery/usart.c **** 
+ 279:App/STM32F4-Discovery/usart.c **** 		return 0;
+ 656              		.loc 1 279 0
+ 657 0040 0023     		movs	r3, #0
+ 658              	.L24:
+ 280:App/STM32F4-Discovery/usart.c **** 
  281:App/STM32F4-Discovery/usart.c **** 
- 282:App/STM32F4-Discovery/usart.c **** 			break;
- 675              		.loc 1 282 0
- 676 0046 80E0     		b	.L30
- 677              	.L25:
- 283:App/STM32F4-Discovery/usart.c **** 		case IC_COMM_ID_WRITE:
- 284:App/STM32F4-Discovery/usart.c **** 			
- 285:App/STM32F4-Discovery/usart.c **** 			RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_CRC, ENABLE);
- 678              		.loc 1 285 0
- 679 0048 4FF48050 		mov	r0, #4096
- 680 004c 0121     		movs	r1, #1
- 681 004e FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
- 286:App/STM32F4-Discovery/usart.c **** 			
- 287:App/STM32F4-Discovery/usart.c **** 		/* notify other device about transfer */
- 288:App/STM32F4-Discovery/usart.c **** 			icComH->data_length = len;
- 682              		.loc 1 288 0
- 683 0052 FB68     		ldr	r3, [r7, #12]
- 684 0054 FA88     		ldrh	r2, [r7, #6]	@ movhi
- 685 0056 DA80     		strh	r2, [r3, #6]	@ movhi
- 289:App/STM32F4-Discovery/usart.c **** 			icComH->data_offset = 0; 
- 686              		.loc 1 289 0
- 687 0058 FB68     		ldr	r3, [r7, #12]
- 688 005a 0022     		movs	r2, #0
- 689 005c 1A81     		strh	r2, [r3, #8]	@ movhi
- 290:App/STM32F4-Discovery/usart.c **** 			icComH->frames_no   = (len + 4) / 16; 
- 690              		.loc 1 290 0
- 691 005e FB88     		ldrh	r3, [r7, #6]
- 692 0060 0433     		adds	r3, r3, #4
- 693 0062 002B     		cmp	r3, #0
- 694 0064 00DA     		bge	.L27
- 695 0066 0F33     		adds	r3, r3, #15
- 696              	.L27:
- 697 0068 1B11     		asrs	r3, r3, #4
- 698 006a 9AB2     		uxth	r2, r3
- 699 006c FB68     		ldr	r3, [r7, #12]
- 700 006e 5A81     		strh	r2, [r3, #10]	@ movhi
- 291:App/STM32F4-Discovery/usart.c **** 			icComH->frames_no  += (len + 4 ) % 16 ? 1 : 0; 
- 701              		.loc 1 291 0
- 702 0070 FB68     		ldr	r3, [r7, #12]
- 703 0072 5A89     		ldrh	r2, [r3, #10]
- 704 0074 FB88     		ldrh	r3, [r7, #6]
- 705 0076 0433     		adds	r3, r3, #4
- 706 0078 03F00F03 		and	r3, r3, #15
- 707 007c 002B     		cmp	r3, #0
- 708 007e 0CBF     		ite	eq
- 709 0080 0023     		moveq	r3, #0
- 710 0082 0123     		movne	r3, #1
- 711 0084 DBB2     		uxtb	r3, r3
- 712 0086 1344     		add	r3, r3, r2
- 713 0088 9AB2     		uxth	r2, r3
- 714 008a FB68     		ldr	r3, [r7, #12]
- 715 008c 5A81     		strh	r2, [r3, #10]	@ movhi
- 292:App/STM32F4-Discovery/usart.c **** 			icComH->CRC_data = CRC_CalcBlockCRC((uint32_t)icComH, 16);
- 716              		.loc 1 292 0
- 717 008e F868     		ldr	r0, [r7, #12]
- 718 0090 1021     		movs	r1, #16
- 719 0092 FFF7FEFF 		bl	CRC_CalcBlockCRC
- 720 0096 0246     		mov	r2, r0
- 721 0098 FB68     		ldr	r3, [r7, #12]
- 722 009a DA60     		str	r2, [r3, #12]
- 293:App/STM32F4-Discovery/usart.c **** 			uint32_t crc = CRC_CalcBlockCRC((uint32_t)buf, len);
- 723              		.loc 1 293 0
- 724 009c FB88     		ldrh	r3, [r7, #6]
- 725 009e B868     		ldr	r0, [r7, #8]
- 726 00a0 1946     		mov	r1, r3
- 727 00a2 FFF7FEFF 		bl	CRC_CalcBlockCRC
- 728 00a6 3861     		str	r0, [r7, #16]
- 294:App/STM32F4-Discovery/usart.c **** 		       *bufferTXusart = buf; 
- 729              		.loc 1 294 0
- 730 00a8 BB68     		ldr	r3, [r7, #8]
- 731 00aa DAB2     		uxtb	r2, r3
- 732 00ac 294B     		ldr	r3, .L31
- 733 00ae 1A70     		strb	r2, [r3]
- 295:App/STM32F4-Discovery/usart.c **** 			bufferTXusart[ icComH->frames_no * 16 - 4 ] = crc << 32;
- 734              		.loc 1 295 0
- 735 00b0 FB68     		ldr	r3, [r7, #12]
- 736 00b2 5B89     		ldrh	r3, [r3, #10]
- 737 00b4 1B01     		lsls	r3, r3, #4
- 738 00b6 043B     		subs	r3, r3, #4
- 739 00b8 264A     		ldr	r2, .L31
- 740 00ba 0021     		movs	r1, #0
- 741 00bc D154     		strb	r1, [r2, r3]
- 296:App/STM32F4-Discovery/usart.c **** 			bufferTXusart[ icComH->frames_no * 16 - 3 ] = crc << 16;
- 742              		.loc 1 296 0
- 743 00be FB68     		ldr	r3, [r7, #12]
- 744 00c0 5B89     		ldrh	r3, [r3, #10]
- 745 00c2 1B01     		lsls	r3, r3, #4
- 746 00c4 033B     		subs	r3, r3, #3
- 747 00c6 234A     		ldr	r2, .L31
- 748 00c8 0021     		movs	r1, #0
- 749 00ca D154     		strb	r1, [r2, r3]
- 297:App/STM32F4-Discovery/usart.c **** 			bufferTXusart[ icComH->frames_no * 16 - 2 ] = crc << 8;
- 750              		.loc 1 297 0
- 751 00cc FB68     		ldr	r3, [r7, #12]
- 752 00ce 5B89     		ldrh	r3, [r3, #10]
- 753 00d0 1B01     		lsls	r3, r3, #4
- 754 00d2 023B     		subs	r3, r3, #2
- 755 00d4 1F4A     		ldr	r2, .L31
- 756 00d6 0021     		movs	r1, #0
- 757 00d8 D154     		strb	r1, [r2, r3]
- 298:App/STM32F4-Discovery/usart.c **** 			bufferTXusart[ icComH->frames_no * 16 - 1 ] = crc;
- 758              		.loc 1 298 0
- 759 00da FB68     		ldr	r3, [r7, #12]
- 760 00dc 5B89     		ldrh	r3, [r3, #10]
- 761 00de 1B01     		lsls	r3, r3, #4
- 762 00e0 013B     		subs	r3, r3, #1
- 763 00e2 3A69     		ldr	r2, [r7, #16]
- 764 00e4 D1B2     		uxtb	r1, r2
- 765 00e6 1B4A     		ldr	r2, .L31
- 766 00e8 D154     		strb	r1, [r2, r3]
- 299:App/STM32F4-Discovery/usart.c **** 			
- 300:App/STM32F4-Discovery/usart.c **** 			usart_dma_write_read(NULL, icComH, 0, 16);
- 767              		.loc 1 300 0
- 768 00ea 0020     		movs	r0, #0
- 769 00ec F968     		ldr	r1, [r7, #12]
- 770 00ee 0022     		movs	r2, #0
- 771 00f0 1023     		movs	r3, #16
- 772 00f2 FFF7FEFF 		bl	usart_dma_write_read
- 301:App/STM32F4-Discovery/usart.c **** 						
- 302:App/STM32F4-Discovery/usart.c **** 		/* send data */
- 303:App/STM32F4-Discovery/usart.c **** 
+ 282:App/STM32F4-Discovery/usart.c **** }
+ 659              		.loc 1 282 0
+ 660 0042 1846     		mov	r0, r3
+ 661 0044 0837     		adds	r7, r7, #8
+ 662 0046 BD46     		mov	sp, r7
+ 663              		@ sp needed
+ 664 0048 80BD     		pop	{r7, pc}
+ 665              	.L26:
+ 666 004a 00BF     		.align	2
+ 667              	.L25:
+ 668 004c 88640240 		.word	1073898632
+ 669 0050 B8640240 		.word	1073898680
+ 670 0054 00000000 		.word	bufferRXusart
+ 671 0058 00000000 		.word	xSemaphoreDMAUSARTrx
+ 672              		.cfi_endproc
+ 673              	.LFE115:
+ 675              		.section	.text.usart_send,"ax",%progbits
+ 676              		.align	2
+ 677              		.global	usart_send
+ 678              		.thumb
+ 679              		.thumb_func
+ 681              	usart_send:
+ 682              	.LFB116:
+ 283:App/STM32F4-Discovery/usart.c **** 
+ 284:App/STM32F4-Discovery/usart.c **** int usart_send ( uint8_t * buf, uint16_t len) 
+ 285:App/STM32F4-Discovery/usart.c **** {
+ 683              		.loc 1 285 0
+ 684              		.cfi_startproc
+ 685              		@ args = 0, pretend = 0, frame = 32
+ 686              		@ frame_needed = 1, uses_anonymous_args = 0
+ 687 0000 80B5     		push	{r7, lr}
+ 688              	.LCFI17:
+ 689              		.cfi_def_cfa_offset 8
+ 690              		.cfi_offset 7, -8
+ 691              		.cfi_offset 14, -4
+ 692 0002 88B0     		sub	sp, sp, #32
+ 693              	.LCFI18:
+ 694              		.cfi_def_cfa_offset 40
+ 695 0004 00AF     		add	r7, sp, #0
+ 696              	.LCFI19:
+ 697              		.cfi_def_cfa_register 7
+ 698 0006 7860     		str	r0, [r7, #4]
+ 699 0008 0B46     		mov	r3, r1
+ 700 000a 7B80     		strh	r3, [r7, #2]	@ movhi
+ 286:App/STM32F4-Discovery/usart.c **** 
+ 287:App/STM32F4-Discovery/usart.c **** 		
+ 288:App/STM32F4-Discovery/usart.c **** 	ic_comm_header_TypeDef 	icComH;
+ 289:App/STM32F4-Discovery/usart.c **** 	icComH.id = 		IC_COMM_ID_WRITE; 
+ 701              		.loc 1 289 0
+ 702 000c 3223     		movs	r3, #50
+ 703 000e BB81     		strh	r3, [r7, #12]	@ movhi
+ 290:App/STM32F4-Discovery/usart.c **** 	icComH.data_length = 	len; 
+ 704              		.loc 1 290 0
+ 705 0010 7B88     		ldrh	r3, [r7, #2]	@ movhi
+ 706 0012 7B82     		strh	r3, [r7, #18]	@ movhi
+ 291:App/STM32F4-Discovery/usart.c **** 	icComH.frames_no   =	( len + 4 ) / 16;
+ 707              		.loc 1 291 0
+ 708 0014 7B88     		ldrh	r3, [r7, #2]
+ 709 0016 0433     		adds	r3, r3, #4
+ 710 0018 002B     		cmp	r3, #0
+ 711 001a 00DA     		bge	.L28
+ 712 001c 0F33     		adds	r3, r3, #15
+ 713              	.L28:
+ 714 001e 1B11     		asrs	r3, r3, #4
+ 715 0020 9BB2     		uxth	r3, r3
+ 716 0022 FB82     		strh	r3, [r7, #22]	@ movhi
+ 292:App/STM32F4-Discovery/usart.c **** 	(len + 4 ) % 16 ? icComH.frames_no +=1 : 0; 
+ 717              		.loc 1 292 0
+ 718 0024 7B88     		ldrh	r3, [r7, #2]
+ 719 0026 0433     		adds	r3, r3, #4
+ 720 0028 03F00F03 		and	r3, r3, #15
+ 721 002c 002B     		cmp	r3, #0
+ 722 002e 03D0     		beq	.L30
+ 723              		.loc 1 292 0 is_stmt 0 discriminator 1
+ 724 0030 FB8A     		ldrh	r3, [r7, #22]
+ 725 0032 0133     		adds	r3, r3, #1
+ 726 0034 9BB2     		uxth	r3, r3
+ 727 0036 FB82     		strh	r3, [r7, #22]	@ movhi
+ 728              	.L30:
+ 293:App/STM32F4-Discovery/usart.c **** 
+ 294:App/STM32F4-Discovery/usart.c **** 	CRC_ResetDR();	
+ 729              		.loc 1 294 0 is_stmt 1
+ 730 0038 FFF7FEFF 		bl	CRC_ResetDR
+ 295:App/STM32F4-Discovery/usart.c **** 	icComH.CRC_data = CRC_CalcBlockCRC ( (uint32_t * ) &icComH, 3); 
+ 731              		.loc 1 295 0
+ 732 003c 07F10C03 		add	r3, r7, #12
+ 733 0040 1846     		mov	r0, r3
+ 734 0042 0321     		movs	r1, #3
+ 735 0044 FFF7FEFF 		bl	CRC_CalcBlockCRC
+ 736 0048 0346     		mov	r3, r0
+ 737 004a BB61     		str	r3, [r7, #24]
+ 296:App/STM32F4-Discovery/usart.c **** 	
+ 297:App/STM32F4-Discovery/usart.c **** 	
+ 298:App/STM32F4-Discovery/usart.c **** 	
+ 299:App/STM32F4-Discovery/usart.c **** 	usart_dma_write ( (uint8_t*)&icComH, 16); 
+ 738              		.loc 1 299 0
+ 739 004c 07F10C03 		add	r3, r7, #12
+ 740 0050 1846     		mov	r0, r3
+ 741 0052 1021     		movs	r1, #16
+ 742 0054 FFF7FEFF 		bl	usart_dma_write
+ 300:App/STM32F4-Discovery/usart.c **** 	
+ 301:App/STM32F4-Discovery/usart.c **** //	if ( len == 0) return 0; 
+ 302:App/STM32F4-Discovery/usart.c **** 
+ 303:App/STM32F4-Discovery/usart.c **** 	
  304:App/STM32F4-Discovery/usart.c **** 
- 305:App/STM32F4-Discovery/usart.c **** 			int i;
- 306:App/STM32F4-Discovery/usart.c **** 			for (i = 0; i < icComH->frames_no; i++)
- 773              		.loc 1 306 0
- 774 00f6 0023     		movs	r3, #0
- 775 00f8 7B61     		str	r3, [r7, #20]
- 776 00fa 0DE0     		b	.L28
- 777              	.L29:
- 307:App/STM32F4-Discovery/usart.c **** 			{
- 308:App/STM32F4-Discovery/usart.c **** 				usart_dma_write_read(NULL, bufferTXusart + 16*i, 0, 16);
- 778              		.loc 1 308 0 discriminator 2
- 779 00fc 7B69     		ldr	r3, [r7, #20]
- 780 00fe 1B01     		lsls	r3, r3, #4
- 781 0100 1A46     		mov	r2, r3
- 782 0102 144B     		ldr	r3, .L31
- 783 0104 1344     		add	r3, r3, r2
- 784 0106 0020     		movs	r0, #0
- 785 0108 1946     		mov	r1, r3
- 786 010a 0022     		movs	r2, #0
- 787 010c 1023     		movs	r3, #16
- 788 010e FFF7FEFF 		bl	usart_dma_write_read
- 306:App/STM32F4-Discovery/usart.c **** 			for (i = 0; i < icComH->frames_no; i++)
- 789              		.loc 1 306 0 discriminator 2
- 790 0112 7B69     		ldr	r3, [r7, #20]
- 791 0114 0133     		adds	r3, r3, #1
- 792 0116 7B61     		str	r3, [r7, #20]
- 793              	.L28:
- 306:App/STM32F4-Discovery/usart.c **** 			for (i = 0; i < icComH->frames_no; i++)
- 794              		.loc 1 306 0 is_stmt 0 discriminator 1
- 795 0118 FB68     		ldr	r3, [r7, #12]
- 796 011a 5B89     		ldrh	r3, [r3, #10]
- 797 011c 1A46     		mov	r2, r3
- 798 011e 7B69     		ldr	r3, [r7, #20]
- 799 0120 9A42     		cmp	r2, r3
- 800 0122 EBDC     		bgt	.L29
- 309:App/STM32F4-Discovery/usart.c **** 				
- 310:App/STM32F4-Discovery/usart.c **** 			}
- 311:App/STM32F4-Discovery/usart.c **** 
- 312:App/STM32F4-Discovery/usart.c **** 			break;
- 801              		.loc 1 312 0 is_stmt 1
- 802 0124 11E0     		b	.L30
- 803              	.L24:
- 313:App/STM32F4-Discovery/usart.c **** 		case IC_COMM_ID_READ:
- 314:App/STM32F4-Discovery/usart.c **** 
- 315:App/STM32F4-Discovery/usart.c **** 			RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_CRC, ENABLE);	
- 804              		.loc 1 315 0
- 805 0126 4FF48050 		mov	r0, #4096
- 806 012a 0121     		movs	r1, #1
- 807 012c FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
- 316:App/STM32F4-Discovery/usart.c **** 			icComH->CRC_data = CRC_CalcBlockCRC((uint32_t)icComH, 16);
- 808              		.loc 1 316 0
- 809 0130 F868     		ldr	r0, [r7, #12]
- 810 0132 1021     		movs	r1, #16
- 811 0134 FFF7FEFF 		bl	CRC_CalcBlockCRC
- 812 0138 0246     		mov	r2, r0
- 813 013a FB68     		ldr	r3, [r7, #12]
- 814 013c DA60     		str	r2, [r3, #12]
- 317:App/STM32F4-Discovery/usart.c **** 			usart_dma_write_read(NULL, icComH, 0, 16);
- 815              		.loc 1 317 0
- 816 013e 0020     		movs	r0, #0
- 817 0140 F968     		ldr	r1, [r7, #12]
- 818 0142 0022     		movs	r2, #0
- 819 0144 1023     		movs	r3, #16
- 820 0146 FFF7FEFF 		bl	usart_dma_write_read
- 821              	.L30:
- 822              	.LBE2:
- 318:App/STM32F4-Discovery/usart.c **** 			
+ 305:App/STM32F4-Discovery/usart.c **** 	CRC_ResetDR();
+ 743              		.loc 1 305 0
+ 744 0058 FFF7FEFF 		bl	CRC_ResetDR
+ 306:App/STM32F4-Discovery/usart.c **** 
+ 307:App/STM32F4-Discovery/usart.c **** 	uint32_t crc 	= CRC_CalcBlockCRC ( (uint32_t * ) buf,  ( 4*icComH.frames_no - 1 )  );	
+ 745              		.loc 1 307 0
+ 746 005c FB8A     		ldrh	r3, [r7, #22]
+ 747 005e 9B00     		lsls	r3, r3, #2
+ 748 0060 013B     		subs	r3, r3, #1
+ 749 0062 7868     		ldr	r0, [r7, #4]
+ 750 0064 1946     		mov	r1, r3
+ 751 0066 FFF7FEFF 		bl	CRC_CalcBlockCRC
+ 752 006a F861     		str	r0, [r7, #28]
+ 308:App/STM32F4-Discovery/usart.c **** 	*( uint32_t*)&buf[icComH.frames_no * 16 - 4 ]	= (uint32_t)crc; 
+ 753              		.loc 1 308 0
+ 754 006c FB8A     		ldrh	r3, [r7, #22]
+ 755 006e 1B01     		lsls	r3, r3, #4
+ 756 0070 043B     		subs	r3, r3, #4
+ 757 0072 7A68     		ldr	r2, [r7, #4]
+ 758 0074 1344     		add	r3, r3, r2
+ 759 0076 FA69     		ldr	r2, [r7, #28]
+ 760 0078 1A60     		str	r2, [r3]
+ 309:App/STM32F4-Discovery/usart.c **** 	
+ 310:App/STM32F4-Discovery/usart.c **** 	
+ 311:App/STM32F4-Discovery/usart.c **** 	return usart_dma_write ( buf, icComH.frames_no*16 ); 
+ 761              		.loc 1 311 0
+ 762 007a FB8A     		ldrh	r3, [r7, #22]
+ 763 007c 1B01     		lsls	r3, r3, #4
+ 764 007e 9BB2     		uxth	r3, r3
+ 765 0080 7868     		ldr	r0, [r7, #4]
+ 766 0082 1946     		mov	r1, r3
+ 767 0084 FFF7FEFF 		bl	usart_dma_write
+ 768 0088 0346     		mov	r3, r0
+ 312:App/STM32F4-Discovery/usart.c **** }
+ 769              		.loc 1 312 0
+ 770 008a 1846     		mov	r0, r3
+ 771 008c 2037     		adds	r7, r7, #32
+ 772 008e BD46     		mov	sp, r7
+ 773              		@ sp needed
+ 774 0090 80BD     		pop	{r7, pc}
+ 775              		.cfi_endproc
+ 776              	.LFE116:
+ 778 0092 00BF     		.section	.text.usart_receive,"ax",%progbits
+ 779              		.align	2
+ 780              		.global	usart_receive
+ 781              		.thumb
+ 782              		.thumb_func
+ 784              	usart_receive:
+ 785              	.LFB117:
+ 313:App/STM32F4-Discovery/usart.c **** 
+ 314:App/STM32F4-Discovery/usart.c **** int usart_receive ( uint8_t * buf, uint16_t len) 
+ 315:App/STM32F4-Discovery/usart.c **** {
+ 786              		.loc 1 315 0
+ 787              		.cfi_startproc
+ 788              		@ args = 0, pretend = 0, frame = 32
+ 789              		@ frame_needed = 1, uses_anonymous_args = 0
+ 790 0000 80B5     		push	{r7, lr}
+ 791              	.LCFI20:
+ 792              		.cfi_def_cfa_offset 8
+ 793              		.cfi_offset 7, -8
+ 794              		.cfi_offset 14, -4
+ 795 0002 88B0     		sub	sp, sp, #32
+ 796              	.LCFI21:
+ 797              		.cfi_def_cfa_offset 40
+ 798 0004 00AF     		add	r7, sp, #0
+ 799              	.LCFI22:
+ 800              		.cfi_def_cfa_register 7
+ 801 0006 7860     		str	r0, [r7, #4]
+ 802 0008 0B46     		mov	r3, r1
+ 803 000a 7B80     		strh	r3, [r7, #2]	@ movhi
+ 316:App/STM32F4-Discovery/usart.c **** 
+ 317:App/STM32F4-Discovery/usart.c **** 		
+ 318:App/STM32F4-Discovery/usart.c **** 	ic_comm_header_TypeDef 	icComH;
  319:App/STM32F4-Discovery/usart.c **** 
- 320:App/STM32F4-Discovery/usart.c **** 
- 321:App/STM32F4-Discovery/usart.c **** 			
- 322:App/STM32F4-Discovery/usart.c **** 			
- 323:App/STM32F4-Discovery/usart.c **** 	}
+ 320:App/STM32F4-Discovery/usart.c **** 	icComH.id = 		IC_COMM_ID_READ; 
+ 804              		.loc 1 320 0
+ 805 000c 3123     		movs	r3, #49
+ 806 000e BB81     		strh	r3, [r7, #12]	@ movhi
+ 321:App/STM32F4-Discovery/usart.c **** 	icComH.data_length = 	len; 
+ 807              		.loc 1 321 0
+ 808 0010 7B88     		ldrh	r3, [r7, #2]	@ movhi
+ 809 0012 7B82     		strh	r3, [r7, #18]	@ movhi
+ 322:App/STM32F4-Discovery/usart.c **** 	icComH.frames_no   =	( len + 4 ) / 16;
+ 810              		.loc 1 322 0
+ 811 0014 7B88     		ldrh	r3, [r7, #2]
+ 812 0016 0433     		adds	r3, r3, #4
+ 813 0018 002B     		cmp	r3, #0
+ 814 001a 00DA     		bge	.L33
+ 815 001c 0F33     		adds	r3, r3, #15
+ 816              	.L33:
+ 817 001e 1B11     		asrs	r3, r3, #4
+ 818 0020 9BB2     		uxth	r3, r3
+ 819 0022 FB82     		strh	r3, [r7, #22]	@ movhi
+ 323:App/STM32F4-Discovery/usart.c **** 	(len + 4 ) % 16 ? icComH.frames_no +=1 : 0; 
+ 820              		.loc 1 323 0
+ 821 0024 7B88     		ldrh	r3, [r7, #2]
+ 822 0026 0433     		adds	r3, r3, #4
+ 823 0028 03F00F03 		and	r3, r3, #15
+ 824 002c 002B     		cmp	r3, #0
+ 825 002e 03D0     		beq	.L35
+ 826              		.loc 1 323 0 is_stmt 0 discriminator 1
+ 827 0030 FB8A     		ldrh	r3, [r7, #22]
+ 828 0032 0133     		adds	r3, r3, #1
+ 829 0034 9BB2     		uxth	r3, r3
+ 830 0036 FB82     		strh	r3, [r7, #22]	@ movhi
+ 831              	.L35:
  324:App/STM32F4-Discovery/usart.c **** 
- 325:App/STM32F4-Discovery/usart.c **** }
- 823              		.loc 1 325 0
- 824 014a 1846     		mov	r0, r3
- 825 014c 1837     		adds	r7, r7, #24
- 826 014e BD46     		mov	sp, r7
- 827              		@ sp needed
- 828 0150 80BD     		pop	{r7, pc}
- 829              	.L32:
- 830 0152 00BF     		.align	2
- 831              	.L31:
- 832 0154 00000000 		.word	bufferTXusart
- 833              		.cfi_endproc
- 834              	.LFE114:
- 836              		.text
- 837              	.Letext0:
- 838              		.file 2 "/Users/maticknap/ARM/gcc-arm-none-eabi-4_8-2014q2/arm-none-eabi/include/machine/_default_
- 839              		.file 3 "/Users/maticknap/ARM/gcc-arm-none-eabi-4_8-2014q2/arm-none-eabi/include/stdint.h"
- 840              		.file 4 "App/STM32F4-Discovery/Libraries/CMSIS/ST/STM32F4xx/Include/stm32f4xx.h"
- 841              		.file 5 "App/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma.h"
- 842              		.file 6 "App/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h"
- 843              		.file 7 "App/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_usart.h"
- 844              		.file 8 "App/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc/misc.h"
- 845              		.file 9 "Source/portable/GCC/ARM_CM4F/portmacro.h"
- 846              		.file 10 "Source/include/queue.h"
- 847              		.file 11 "Source/include/semphr.h"
- 848              		.file 12 "ic_comm/ic_comm_struct.h"
- 849              		.file 13 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
- 850              		.file 14 "App/STM32F4-Discovery/usart.h"
+ 325:App/STM32F4-Discovery/usart.c **** 	CRC_ResetDR();	
+ 832              		.loc 1 325 0 is_stmt 1
+ 833 0038 FFF7FEFF 		bl	CRC_ResetDR
+ 326:App/STM32F4-Discovery/usart.c **** 	icComH.CRC_data = CRC_CalcBlockCRC ( (uint32_t * ) &icComH, 3); 
+ 834              		.loc 1 326 0
+ 835 003c 07F10C03 		add	r3, r7, #12
+ 836 0040 1846     		mov	r0, r3
+ 837 0042 0321     		movs	r1, #3
+ 838 0044 FFF7FEFF 		bl	CRC_CalcBlockCRC
+ 839 0048 0346     		mov	r3, r0
+ 840 004a BB61     		str	r3, [r7, #24]
+ 327:App/STM32F4-Discovery/usart.c **** //	CRC_ResetDR();	
+ 328:App/STM32F4-Discovery/usart.c **** //	uint32_t crc 	= CRC_CalcBlockCRC ( (uint32_t * ) buf,    len);
+ 329:App/STM32F4-Discovery/usart.c **** 	
+ 330:App/STM32F4-Discovery/usart.c **** 	
+ 331:App/STM32F4-Discovery/usart.c **** 	usart_dma_write ( (uint8_t*)&icComH, 16); 
+ 841              		.loc 1 331 0
+ 842 004c 07F10C03 		add	r3, r7, #12
+ 843 0050 1846     		mov	r0, r3
+ 844 0052 1021     		movs	r1, #16
+ 845 0054 FFF7FEFF 		bl	usart_dma_write
+ 332:App/STM32F4-Discovery/usart.c **** 	
+ 333:App/STM32F4-Discovery/usart.c **** //	buf [ icComH.frames_no * 16 ] 		=	crc << 32; 
+ 334:App/STM32F4-Discovery/usart.c **** //	buf [ icComH.frames_no * 16 + 1]	=	crc << 16;
+ 335:App/STM32F4-Discovery/usart.c **** //	buf [ icComH.frames_no * 16 + 2]	=	crc << 8;
+ 336:App/STM32F4-Discovery/usart.c **** //	buf [ icComH.frames_no * 16 + 3]	=	crc ;
+ 337:App/STM32F4-Discovery/usart.c **** 	
+ 338:App/STM32F4-Discovery/usart.c **** 	// read header 
+ 339:App/STM32F4-Discovery/usart.c **** 	usart_dma_read ( (uint8_t *)buf , icComH.frames_no*16);
+ 846              		.loc 1 339 0
+ 847 0058 FB8A     		ldrh	r3, [r7, #22]
+ 848 005a 1B01     		lsls	r3, r3, #4
+ 849 005c 9BB2     		uxth	r3, r3
+ 850 005e 7868     		ldr	r0, [r7, #4]
+ 851 0060 1946     		mov	r1, r3
+ 852 0062 FFF7FEFF 		bl	usart_dma_read
+ 340:App/STM32F4-Discovery/usart.c **** 
+ 341:App/STM32F4-Discovery/usart.c **** 	// reset crc data register 
+ 342:App/STM32F4-Discovery/usart.c **** 	CRC_ResetDR();
+ 853              		.loc 1 342 0
+ 854 0066 FFF7FEFF 		bl	CRC_ResetDR
+ 343:App/STM32F4-Discovery/usart.c **** 	int i;
+ 344:App/STM32F4-Discovery/usart.c **** 
+ 345:App/STM32F4-Discovery/usart.c **** 	if ( ! CRC_CalcBlockCRC ( (uint32_t * )bufferRXusart, (4*icComH.frames_no ) ) )
+ 855              		.loc 1 345 0
+ 856 006a FB8A     		ldrh	r3, [r7, #22]
+ 857 006c 9B00     		lsls	r3, r3, #2
+ 858 006e 1148     		ldr	r0, .L41
+ 859 0070 1946     		mov	r1, r3
+ 860 0072 FFF7FEFF 		bl	CRC_CalcBlockCRC
+ 861 0076 0346     		mov	r3, r0
+ 862 0078 002B     		cmp	r3, #0
+ 863 007a 15D1     		bne	.L36
+ 346:App/STM32F4-Discovery/usart.c **** 	{
+ 347:App/STM32F4-Discovery/usart.c **** 		// data received are correct 
+ 348:App/STM32F4-Discovery/usart.c **** 		for (i = 0; i < 16*icComH.frames_no - 4; i ++ ) buf[i] = bufferRXusart[i]; 	
+ 864              		.loc 1 348 0
+ 865 007c 0023     		movs	r3, #0
+ 866 007e FB61     		str	r3, [r7, #28]
+ 867 0080 0AE0     		b	.L37
+ 868              	.L38:
+ 869              		.loc 1 348 0 is_stmt 0 discriminator 2
+ 870 0082 FB69     		ldr	r3, [r7, #28]
+ 871 0084 7A68     		ldr	r2, [r7, #4]
+ 872 0086 1344     		add	r3, r3, r2
+ 873 0088 0A49     		ldr	r1, .L41
+ 874 008a FA69     		ldr	r2, [r7, #28]
+ 875 008c 0A44     		add	r2, r2, r1
+ 876 008e 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 877 0090 1A70     		strb	r2, [r3]
+ 878 0092 FB69     		ldr	r3, [r7, #28]
+ 879 0094 0133     		adds	r3, r3, #1
+ 880 0096 FB61     		str	r3, [r7, #28]
+ 881              	.L37:
+ 882              		.loc 1 348 0 discriminator 1
+ 883 0098 FB8A     		ldrh	r3, [r7, #22]
+ 884 009a 1B01     		lsls	r3, r3, #4
+ 885 009c 1A1F     		subs	r2, r3, #4
+ 886 009e FB69     		ldr	r3, [r7, #28]
+ 887 00a0 9A42     		cmp	r2, r3
+ 888 00a2 EEDC     		bgt	.L38
+ 349:App/STM32F4-Discovery/usart.c **** 		return 0;
+ 889              		.loc 1 349 0 is_stmt 1
+ 890 00a4 0023     		movs	r3, #0
+ 891 00a6 01E0     		b	.L40
+ 892              	.L36:
+ 350:App/STM32F4-Discovery/usart.c **** 	}
+ 351:App/STM32F4-Discovery/usart.c **** 	else 
+ 352:App/STM32F4-Discovery/usart.c **** 	{
+ 353:App/STM32F4-Discovery/usart.c **** 		// error receiving data via usart
+ 354:App/STM32F4-Discovery/usart.c **** 		return -1; 
+ 893              		.loc 1 354 0
+ 894 00a8 4FF0FF33 		mov	r3, #-1
+ 895              	.L40:
+ 355:App/STM32F4-Discovery/usart.c **** 	}
+ 356:App/STM32F4-Discovery/usart.c **** 
+ 357:App/STM32F4-Discovery/usart.c **** 	return 0; 
+ 358:App/STM32F4-Discovery/usart.c **** }
+ 896              		.loc 1 358 0
+ 897 00ac 1846     		mov	r0, r3
+ 898 00ae 2037     		adds	r7, r7, #32
+ 899 00b0 BD46     		mov	sp, r7
+ 900              		@ sp needed
+ 901 00b2 80BD     		pop	{r7, pc}
+ 902              	.L42:
+ 903              		.align	2
+ 904              	.L41:
+ 905 00b4 00000000 		.word	bufferRXusart
+ 906              		.cfi_endproc
+ 907              	.LFE117:
+ 909              		.text
+ 910              	.Letext0:
+ 911              		.file 2 "/Users/maticknap/ARM/gcc-arm-none-eabi-4_8-2014q2/arm-none-eabi/include/machine/_default_
+ 912              		.file 3 "/Users/maticknap/ARM/gcc-arm-none-eabi-4_8-2014q2/arm-none-eabi/include/stdint.h"
+ 913              		.file 4 "App/STM32F4-Discovery/Libraries/CMSIS/ST/STM32F4xx/Include/stm32f4xx.h"
+ 914              		.file 5 "App/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma.h"
+ 915              		.file 6 "App/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h"
+ 916              		.file 7 "App/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_usart.h"
+ 917              		.file 8 "App/STM32F4-Discovery/Libraries/STM32F4xx_StdPeriph_Driver/inc/misc.h"
+ 918              		.file 9 "Source/portable/GCC/ARM_CM4F/portmacro.h"
+ 919              		.file 10 "Source/include/queue.h"
+ 920              		.file 11 "Source/include/semphr.h"
+ 921              		.file 12 "ic_comm/ic_comm_struct.h"
+ 922              		.file 13 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
+ 923              		.file 14 "App/STM32F4-Discovery/usart.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 usart.c
                             *COM*:00000000000000c8 bufferTXusart
@@ -1169,35 +1271,38 @@ DEFINED SYMBOLS
                             *COM*:0000000000000004 bufferTXidx
                             *COM*:0000000000000004 dat_lengthRX
                             *COM*:0000000000000004 dat_lengthTX
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:26     .bss.xSemaphoreDMAUSARTrx:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:29     .bss.xSemaphoreDMAUSARTrx:0000000000000000 xSemaphoreDMAUSARTrx
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:32     .bss.xSemaphoreDMAUSARTtx:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:35     .bss.xSemaphoreDMAUSARTtx:0000000000000000 xSemaphoreDMAUSARTtx
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:38     .text.init_USARTx:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:43     .text.init_USARTx:0000000000000000 init_USARTx
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:346    .text.init_USARTx:0000000000000228 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:360    .text.DMA2_Stream5_IRQHandler:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:365    .text.DMA2_Stream5_IRQHandler:0000000000000000 DMA2_Stream5_IRQHandler
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:431    .text.DMA2_Stream5_IRQHandler:0000000000000058 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:439    .text.DMA2_Stream7_IRQHandler:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:444    .text.DMA2_Stream7_IRQHandler:0000000000000000 DMA2_Stream7_IRQHandler
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:514    .text.DMA2_Stream7_IRQHandler:0000000000000064 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:523    .text.usart_dma_write_read:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:528    .text.usart_dma_write_read:0000000000000000 usart_dma_write_read
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:614    .text.usart_dma_write_read:0000000000000078 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:622    .text.usart_rw:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:627    .text.usart_rw:0000000000000000 usart_rw
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccEpB2dc.s:832    .text.usart_rw:0000000000000154 $d
+                            *COM*:0000000000000004 xSemaphoreDMAUSARTrx
+                            *COM*:0000000000000004 xSemaphoreDMAUSARTtx
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:28     .text.init_CRC:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:33     .text.init_CRC:0000000000000000 init_CRC
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:58     .text.init_USARTx:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:63     .text.init_USARTx:0000000000000000 init_USARTx
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:355    .text.init_USARTx:0000000000000210 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:369    .text.DMA2_Stream5_IRQHandler:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:374    .text.DMA2_Stream5_IRQHandler:0000000000000000 DMA2_Stream5_IRQHandler
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:440    .text.DMA2_Stream5_IRQHandler:0000000000000058 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:448    .text.DMA2_Stream7_IRQHandler:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:453    .text.DMA2_Stream7_IRQHandler:0000000000000000 DMA2_Stream7_IRQHandler
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:523    .text.DMA2_Stream7_IRQHandler:0000000000000060 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:532    .text.usart_dma_write:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:537    .text.usart_dma_write:0000000000000000 usart_dma_write
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:597    .text.usart_dma_write:000000000000004c $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:603    .text.usart_dma_read:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:608    .text.usart_dma_read:0000000000000000 usart_dma_read
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:668    .text.usart_dma_read:000000000000004c $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:676    .text.usart_send:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:681    .text.usart_send:0000000000000000 usart_send
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:779    .text.usart_receive:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:784    .text.usart_receive:0000000000000000 usart_receive
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckNA9Uc.s:905    .text.usart_receive:00000000000000b4 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
-RCC_APB2PeriphClockCmd
 RCC_AHB1PeriphClockCmd
+RCC_APB2PeriphClockCmd
 GPIO_Init
 GPIO_PinAFConfig
 USART_Init
-USART_ITConfig
-NVIC_Init
 USART_Cmd
 DMA_DeInit
 DMA_GetCmdStatus
@@ -1205,16 +1310,17 @@ DMA_StructInit
 DMA_Init
 DMA_ITConfig
 USART_ClearFlag
+NVIC_Init
 USART_DMACmd
+DMA_Cmd
 xQueueGenericCreate
 DMA_GetITStatus
-DMA_ClearITPendingBit
-DMA_Cmd
 vPortEnterCritical
+DMA_ClearITPendingBit
 xQueueGenericSendFromISR
 vPortExitCritical
-USART_GetITStatus
 USART_ClearITPendingBit
 DMA_SetCurrDataCounter
 xQueueGenericReceive
+CRC_ResetDR
 CRC_CalcBlockCRC

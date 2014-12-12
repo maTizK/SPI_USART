@@ -597,7 +597,7 @@
  273 00e4 00380240 		.word	1073887232
  274 00e8 00000000 		.word	SystemCoreClock
  275 00ec 0024F400 		.word	16000000
- 276 00f0 40787D01 		.word	25000000
+ 276 00f0 00127A00 		.word	8000000
  277 00f4 00000000 		.word	AHBPrescTable
  278              		.cfi_endproc
  279              	.LFE111:
@@ -847,19 +847,19 @@
  446              		.file 5 "App/STM32F4-Discovery/Libraries/CMSIS/ST/STM32F4xx/Include/stm32f4xx.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 system_stm32f4xx.c
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cceuatX4.s:24     .data.SystemCoreClock:0000000000000000 SystemCoreClock
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cceuatX4.s:21     .data.SystemCoreClock:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cceuatX4.s:31     .data.AHBPrescTable:0000000000000000 AHBPrescTable
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cceuatX4.s:28     .data.AHBPrescTable:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cceuatX4.s:49     .text.SystemInit:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cceuatX4.s:54     .text.SystemInit:0000000000000000 SystemInit
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cceuatX4.s:286    .text.SetSysClock:0000000000000000 SetSysClock
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cceuatX4.s:117    .text.SystemInit:000000000000005c $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cceuatX4.s:124    .text.SystemCoreClockUpdate:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cceuatX4.s:129    .text.SystemCoreClockUpdate:0000000000000000 SystemCoreClockUpdate
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cceuatX4.s:273    .text.SystemCoreClockUpdate:00000000000000e4 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cceuatX4.s:282    .text.SetSysClock:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cceuatX4.s:434    .text.SetSysClock:00000000000000e4 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckerUmR.s:24     .data.SystemCoreClock:0000000000000000 SystemCoreClock
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckerUmR.s:21     .data.SystemCoreClock:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckerUmR.s:31     .data.AHBPrescTable:0000000000000000 AHBPrescTable
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckerUmR.s:28     .data.AHBPrescTable:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckerUmR.s:49     .text.SystemInit:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckerUmR.s:54     .text.SystemInit:0000000000000000 SystemInit
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckerUmR.s:286    .text.SetSysClock:0000000000000000 SetSysClock
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckerUmR.s:117    .text.SystemInit:000000000000005c $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckerUmR.s:124    .text.SystemCoreClockUpdate:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckerUmR.s:129    .text.SystemCoreClockUpdate:0000000000000000 SystemCoreClockUpdate
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckerUmR.s:273    .text.SystemCoreClockUpdate:00000000000000e4 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckerUmR.s:282    .text.SetSysClock:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckerUmR.s:434    .text.SetSysClock:00000000000000e4 $d
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

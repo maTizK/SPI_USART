@@ -39,7 +39,7 @@ obj/App/STM32F4-Discovery/main.o: App/STM32F4-Discovery/main.c \
  Source/include/list.h Source/include/timers.h Source/include/task.h \
  Source/include/semphr.h Source/include/queue.h \
  App/STM32F4-Discovery/stm32f4xx_conf.h App/STM32F4-Discovery/spi.h \
- App/STM32F4-Discovery/usart.h bojan/printf.h
+ App/STM32F4-Discovery/usart.h
 
 App/STM32F4-Discovery/main.h:
 
@@ -138,5 +138,3 @@ App/STM32F4-Discovery/stm32f4xx_conf.h:
 App/STM32F4-Discovery/spi.h:
 
 App/STM32F4-Discovery/usart.h:
-
-bojan/printf.h:

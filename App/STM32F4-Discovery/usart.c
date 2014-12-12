@@ -19,16 +19,18 @@
  * 						   supposed to operate
  */
 
+xSemaphoreHandle xSemaphoreDMAUSARTrx;
+xSemaphoreHandle xSemaphoreDMAUSARTtx;
 
-static xSemaphoreHandle xSemaphoreDMAUSARTrx;
-static xSemaphoreHandle xSemaphoreDMAUSARTtx;
-
-
+void init_CRC(void)
+{
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_CRC, ENABLE);
+}
 
 void init_USARTx(void)
 {
 	
-	
+		
 	GPIO_InitTypeDef GPIO_InitStruct; // this is for the GPIO pins used as TX and RX
 	USART_InitTypeDef USART_InitStruct; // this is for the USART1 initilization
 	NVIC_InitTypeDef NVIC_InitStruct; // this is used to configure the NVIC (nested vector interrupt controller)
@@ -52,9 +54,11 @@ void init_USARTx(void)
 	 * so they work correctly with the USART1 peripheral
 	 */
 	GPIO_InitStruct.GPIO_Pin = USARTx_RX_GPIO_PIN | USARTx_TX_GPIO_PIN; // Pins 6 (TX) and 7 (RX) are used
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;		// this defines the IO speed and has nothing to do with the baudrate!
 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;			// this defines the output type as push pull mode (as opposed to open drain)
 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;			// this activates the pullup resistors on the IO pins
+
 	GPIO_Init(USARTx_TX_GPIO_PORT, &GPIO_InitStruct);					// now all the values are passed to the GPIO_Init() function which sets the GPIO registers
 	
 	
@@ -94,14 +98,6 @@ void init_USARTx(void)
 	 * to jump to the USART1_IRQHandler() function
 	 * if the USART1 receive interrupt occurs
 	 */
-	USART_ITConfig(USARTx, USART_IT_RXNE, ENABLE); // enable the USART1 receive interrupt 
-	
-	NVIC_InitStruct.NVIC_IRQChannel = USARTx_IRQn;		 // we want to configure the USART interrupts
-	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1;;// this sets the priority group of the USART1 interrupts
-	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0x1;		 // this sets the subpriority inside the group
-	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;			 // the USART1 interrupts are globally enabled
-	NVIC_Init(&NVIC_InitStruct);	 // the properties are passed to the NVIC_Init function which takes care of the low level stuff	
-
 	// finally this enables the complete USART1 peripheral
 	USART_Cmd(USARTx, ENABLE);
 
@@ -168,6 +164,9 @@ void init_USARTx(void)
 	USART_DMACmd (USARTx, USART_DMAReq_Tx, ENABLE);	
 	USART_DMACmd (USARTx, USART_DMAReq_Rx, ENABLE);	
 	
+	DMA_Cmd(USARTx_TX_DMA_STREAM, DISABLE);	
+	DMA_Cmd(USARTx_RX_DMA_STREAM, DISABLE);	
+	
 	xSemaphoreDMAUSARTrx = xSemaphoreCreateBinary();
 	xSemaphoreDMAUSARTtx = xSemaphoreCreateBinary();
 }
@@ -182,11 +181,11 @@ void DMA2_Stream5_IRQHandler()
 
  // Test if DMA Stream Transfer Complete interrupt
   if (DMA_GetITStatus (USARTx_RX_DMA_STREAM, USARTx_RX_DMA_FLAG_TCIF)) {
+ 	taskENTER_CRITICAL();
 	DMA_ClearITPendingBit (USARTx_RX_DMA_STREAM,  USARTx_RX_DMA_FLAG_TCIF);
 	//DE();
 	DMA_Cmd(USARTx_RX_DMA_STREAM, DISABLE);		
- 
-	taskENTER_CRITICAL(); 
+
 	xSemaphoreGiveFromISR( xSemaphoreDMAUSARTrx, &xHigherPriorityTaskWoken );
 	taskEXIT_CRITICAL(); //
 }	
@@ -201,15 +200,15 @@ void DMA2_Stream7_IRQHandler()
 	unsigned portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
 
   // Test if DMA Stream Transfer Complete interrupt
-//  if (DMA_GetITStatus (USARTx_TX_DMA_STREAM,  USARTx_TX_DMA_FLAG_TCIF)) {
-    if (USART_GetITStatus ( USARTx, USART_IT_TC)){ 
-    
+  if (DMA_GetITStatus (USARTx_TX_DMA_STREAM,  USARTx_TX_DMA_FLAG_TCIF)) {
+    //if (USART_GetITStatus ( USARTx, USART_IT_TC)){ 
+    taskENTER_CRITICAL(); 	
 	DMA_ClearITPendingBit (USARTx_TX_DMA_STREAM, USARTx_TX_DMA_FLAG_TCIF);
 	USART_ClearITPendingBit ( USARTx, USART_IT_TC);
 	
 	//DE();
 	DMA_Cmd(USARTx_TX_DMA_STREAM, DISABLE);		
-	taskENTER_CRITICAL(); 
+	
 	xSemaphoreGiveFromISR( xSemaphoreDMAUSARTtx, &xHigherPriorityTaskWoken );
  	taskEXIT_CRITICAL();  
  }
@@ -217,28 +216,28 @@ void DMA2_Stream7_IRQHandler()
 }
 
 
-void usart_dma_write_read(uint8_t *bufRX, uint8_t *bufTX, uint16_t lenRX,  uint16_t lenTX)
+int usart_dma_write( uint8_t *bufTX,  uint16_t lenTX)
 {
 		
 		/*! usart_dma_read it has to be used with \n
 		 * memcpy from bufferRX right after it has recieve \n
 		 * data on SPI. */
-		
-		DMA_SetCurrDataCounter(USARTx_RX_DMA_STREAM, lenRX);
+
+
 		DMA_SetCurrDataCounter(USARTx_TX_DMA_STREAM, lenTX);
 		USARTx_TX_DMA_STREAM->M0AR =(uint32_t)bufTX;	
-		USARTx_RX_DMA_STREAM->M0AR =(uint32_t)bufRX;	
 
 		//DD(); // chip select 
 		DMA_Cmd(USARTx_TX_DMA_STREAM, ENABLE);		
 	
 		/* Block until the semaphore is given */
-		if ( xSemaphoreTake(xSemaphoreDMAUSARTtx, 10/portTICK_RATE_MS) == pdTRUE )
+		if ( xSemaphoreTake(xSemaphoreDMAUSARTtx, 10/portTICK_RATE_MS ) == pdTRUE )
 		{
 			// we were able to take semaphore now wait for transfer
 			// to finish. We will give back semaphore in IRQ
 			// handeler 
 			// 
+
 		}
 		else
 		{
@@ -246,8 +245,21 @@ void usart_dma_write_read(uint8_t *bufRX, uint8_t *bufTX, uint16_t lenRX,  uint1
 			return -1;
 		}
 
-		// enable RX stream 
-		DMA_Cmd(USARTx_RX_DMA_STREAM, ENABLE);
+		return 0;
+
+
+}
+
+int usart_dma_read( uint8_t *bufRX,  uint16_t lenRX)
+{
+		
+		
+		DMA_SetCurrDataCounter(USARTx_RX_DMA_STREAM, lenRX);
+		
+		USARTx_TX_DMA_STREAM->M0AR =(uint32_t)bufferRXusart;	
+
+		//DD(); // chip select 
+		DMA_Cmd(USARTx_RX_DMA_STREAM, ENABLE);		
 
 		/* Block until the semaphore is given */
 		if ( xSemaphoreTake(xSemaphoreDMAUSARTrx, 10/portTICK_RATE_MS) == pdTRUE )
@@ -256,75 +268,85 @@ void usart_dma_write_read(uint8_t *bufRX, uint8_t *bufTX, uint16_t lenRX,  uint1
 			// to finish. We will give back semaphore in IRQ
 			// handeler 
 			// 
+			
 		}
 		else
 		{
 			// error taking semaphore
-			return -1; 
+			return -1;
 		}
-		
+
 		return 0;
 
 
 }
 
-int usart_rw ( ic_comm_header_TypeDef * icComH, uint8_t *buf, uint16_t len)
+int usart_send ( uint8_t * buf, uint16_t len) 
 {
-	switch ( icComH->id )
-	{
-		case IC_COMM_ID_COMMAND:
-			
-			RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_CRC, ENABLE);	
-			icComH->CRC_data = CRC_CalcBlockCRC((uint32_t)icComH, 16);
-			usart_dma_write_read(NULL, icComH, 0, 16);
-			
 
-			break;
-		case IC_COMM_ID_WRITE:
-			
-			RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_CRC, ENABLE);
-			
-		/* notify other device about transfer */
-			icComH->data_length = len;
-			icComH->data_offset = 0; 
-			icComH->frames_no   = (len + 4) / 16; 
-			icComH->frames_no  += (len + 4 ) % 16 ? 1 : 0; 
-			icComH->CRC_data = CRC_CalcBlockCRC((uint32_t)icComH, 16);
-			uint32_t crc = CRC_CalcBlockCRC((uint32_t)buf, len);
-		       *bufferTXusart = buf; 
-			bufferTXusart[ icComH->frames_no * 16 - 4 ] = crc << 32;
-			bufferTXusart[ icComH->frames_no * 16 - 3 ] = crc << 16;
-			bufferTXusart[ icComH->frames_no * 16 - 2 ] = crc << 8;
-			bufferTXusart[ icComH->frames_no * 16 - 1 ] = crc;
-			
-			usart_dma_write_read(NULL, icComH, 0, 16);
-						
-		/* send data */
+		
+	ic_comm_header_TypeDef 	icComH;
+	icComH.id = 		IC_COMM_ID_WRITE; 
+	icComH.data_length = 	len; 
+	icComH.frames_no   =	( len + 4 ) / 16;
+	(len + 4 ) % 16 ? icComH.frames_no +=1 : 0; 
 
+	CRC_ResetDR();	
+	icComH.CRC_data = CRC_CalcBlockCRC ( (uint32_t * ) &icComH, 3); 
+	
+	
+	
+	usart_dma_write ( (uint8_t*)&icComH, 16); 
+	
+//	if ( len == 0) return 0; 
 
-			int i;
-			for (i = 0; i < icComH->frames_no; i++)
-			{
-				usart_dma_write_read(NULL, bufferTXusart + 16*i, 0, 16);
-				
-			}
+	
 
-			break;
-		case IC_COMM_ID_READ:
+	CRC_ResetDR();
 
-			RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_CRC, ENABLE);	
-			icComH->CRC_data = CRC_CalcBlockCRC((uint32_t)icComH, 16);
-			usart_dma_write_read(NULL, icComH, 0, 16);
-			
-
-
-			
-			
-	}
-
+	uint32_t crc 	= CRC_CalcBlockCRC ( (uint32_t * ) buf,  ( 4*icComH.frames_no - 1 )  );	
+	*( uint32_t*)&buf[icComH.frames_no * 16 - 4 ]	= (uint32_t)crc; 
+	
+	
+	return usart_dma_write ( buf, icComH.frames_no*16 ); 
 }
 
+int usart_receive ( uint8_t * buf, uint16_t len) 
+{
 
+		
+	ic_comm_header_TypeDef 	icComH;
 
+	icComH.id = 		IC_COMM_ID_READ; 
+	icComH.data_length = 	len; 
+	icComH.frames_no   =	( len + 4 ) / 16;
+	(len + 4 ) % 16 ? icComH.frames_no +=1 : 0; 
+
+	CRC_ResetDR();	
+	icComH.CRC_data = CRC_CalcBlockCRC ( (uint32_t * ) &icComH, 3); 
+	
+	usart_dma_write ( (uint8_t*)&icComH, 16); 
+	
+	// read header 
+	usart_dma_read ( (uint8_t *)buf , icComH.frames_no*16);
+
+	// reset crc data register 
+	CRC_ResetDR();
+	int i;
+
+	if ( ! CRC_CalcBlockCRC ( (uint32_t * )bufferRXusart, (4*icComH.frames_no ) ) )
+	{
+		// data received are correct 
+		for (i = 0; i < 16*icComH.frames_no - 4; i ++ ) buf[i] = bufferRXusart[i]; 	
+		return 0;
+	}
+	else 
+	{
+		// error receiving data via usart
+		return -1; 
+	}
+
+	return 0; 
+}
 
 

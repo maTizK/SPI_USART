@@ -112,7 +112,7 @@ interrupt. */
 static xSemaphoreHandle xTestSemaphore = NULL;
 
 #ifdef DEBUG
-#define SWO_BAUD_RATE 230400
+#define SWO_BAUD_RATE 9600
 
 void CoreSight_configure(uint32_t SystemCoreClock)
 {
@@ -150,7 +150,6 @@ void CoreSight_configure(uint32_t SystemCoreClock)
 }
 
 #endif
-
 /*-----------------------------------------------------------*/
 
 int main(void)
@@ -170,7 +169,6 @@ int main(void)
 	// ============now register CLI commands ===================
 	
 
-	
 
 /*------------------added by Matic Knap 24 Jun 2014 ---------------------------------*/
 
@@ -178,12 +176,12 @@ int main(void)
 
 
 	// set motor task 
-	if (xTaskCreate(usart_task, "usart", configMINIMAL_STACK_SIZE * 5,		       				
+	if (xTaskCreate(usart_task, "usart", configMINIMAL_STACK_SIZE * 10,		       				
 			NULL, mainFLASH_TASK_PRIORITY  , NULL)
 			!= pdTRUE)
 	{
 		#ifdef DEBUG
-		t_printf("Error creating motorHB task.\n");
+		t_printf("Error creating usart task.\n");
 		#endif
 		return -1;
 
@@ -191,7 +189,7 @@ int main(void)
 	else
 	{
 		#ifdef DEBUG
-		t_printf("Succsessfully created motorHB task\n");
+		t_printf("Succsessfully created usart  task\n");
 		#endif
 			
 	}
@@ -227,17 +225,21 @@ void usart_task(void * pvParameters)
 {
 
 
-	uint8_t str[30];
+	uint8_t str[50];
 	int i = 0;
-	for (i = 0; i < 29; i++) str[i] =  i; 
-	int len = 16;
+//	for (i = 0; i < 50; i++) str[i] =  i; 
+	int len = 8;
 	for(;;)
 	{
-		usart_dma_write_read(NULL, str,0, len);
-		spi_dma_write_read(SPIx, NULL, str, 0, len);
-		spi_dma_write_read(SPIy, NULL, str, 0, len);
+	//	usart_send(NULL, 0);
+	//	usart_dma_write ( str, len); 	
 		
-		vTaskDelay(50/portTICK_RATE_MS);
+	//	usart_send( str, len); 
+		//vTaskDelay(50/portTICK_RATE_MS);
+		
+		usart_receive ( str, len);
+			
+	//	vTaskDelay(50/portTICK_RATE_MS);
 	}
 }
 
@@ -258,6 +260,7 @@ void prvSetupHardware( void )
 	init_SPIy();
 	// init USARTx 
 	init_USARTx();
+	init_CRC();
 
 	
 	

@@ -163,7 +163,7 @@ CFLAGS += -DITM_TRACE
 CFLAGS+=-DCORTEX_M4
 #CFLAGS+=-DCORTEX_M3
 CFLAGS+=-DSTM32F4xx
-
+CFLAGS+=-DHSE_VALUE=\(\(uint32_t\)8000000\)
 # Optimize use of the single-precision FPU
 #
 CFLAGS += -fsingle-precision-constant

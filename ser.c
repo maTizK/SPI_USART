@@ -13,8 +13,8 @@ int main(int argc, char **argv) {
 
     fd = open( argv[1], O_RDONLY | O_NOCTTY | O_NONBLOCK );
     cfmakeraw(&tio);
-    cfsetispeed(&tio,B38400);
-    cfsetospeed(&tio,B38400);
+    cfsetispeed(&tio,B230400);
+    cfsetospeed(&tio,B230400);
     tio.c_cflag = (tio.c_cflag & ~CSIZE) | CS8; 
     tio.c_iflag &= ~IGNBRK; 
     tio.c_lflag = 0; 
@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
         for(i=0; i<len; i++)
         {
           if (buf[i]==0x01) continue;
-          printf("|%x|", buf[i]);
+          printf("%c", buf[i]);
         }
         if (len > 0) printf("\n");
         sleep(1);

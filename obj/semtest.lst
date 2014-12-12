@@ -841,22 +841,22 @@
  543              		.file 8 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 semtest.c
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccLXrdv0.s:20     .bss.sCheckVariables:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccLXrdv0.s:23     .bss.sCheckVariables:0000000000000000 sCheckVariables
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccLXrdv0.s:26     .bss.sNextCheckVariable:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccLXrdv0.s:29     .bss.sNextCheckVariable:0000000000000000 sNextCheckVariable
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccLXrdv0.s:32     .rodata:0000000000000000 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccLXrdv0.s:51     .text.vStartSemaphoreTasks:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccLXrdv0.s:56     .text.vStartSemaphoreTasks:0000000000000000 vStartSemaphoreTasks
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccLXrdv0.s:258    .text.vStartSemaphoreTasks:0000000000000154 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccLXrdv0.s:273    .text.prvSemaphoreTest:0000000000000000 prvSemaphoreTest
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccLXrdv0.s:269    .text.prvSemaphoreTest:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccLXrdv0.s:443    .text.prvSemaphoreTest:0000000000000100 $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccLXrdv0.s:449    .text.xAreSemaphoreTasksStillRunning:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccLXrdv0.s:454    .text.xAreSemaphoreTasksStillRunning:0000000000000000 xAreSemaphoreTasksStillRunning
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccLXrdv0.s:524    .text.xAreSemaphoreTasksStillRunning:000000000000005c $d
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccLXrdv0.s:533    .bss.sLastCheckVariables.8233:0000000000000000 sLastCheckVariables.8233
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccLXrdv0.s:530    .bss.sLastCheckVariables.8233:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccbPvn6M.s:20     .bss.sCheckVariables:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccbPvn6M.s:23     .bss.sCheckVariables:0000000000000000 sCheckVariables
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccbPvn6M.s:26     .bss.sNextCheckVariable:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccbPvn6M.s:29     .bss.sNextCheckVariable:0000000000000000 sNextCheckVariable
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccbPvn6M.s:32     .rodata:0000000000000000 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccbPvn6M.s:51     .text.vStartSemaphoreTasks:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccbPvn6M.s:56     .text.vStartSemaphoreTasks:0000000000000000 vStartSemaphoreTasks
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccbPvn6M.s:258    .text.vStartSemaphoreTasks:0000000000000154 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccbPvn6M.s:273    .text.prvSemaphoreTest:0000000000000000 prvSemaphoreTest
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccbPvn6M.s:269    .text.prvSemaphoreTest:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccbPvn6M.s:443    .text.prvSemaphoreTest:0000000000000100 $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccbPvn6M.s:449    .text.xAreSemaphoreTasksStillRunning:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccbPvn6M.s:454    .text.xAreSemaphoreTasksStillRunning:0000000000000000 xAreSemaphoreTasksStillRunning
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccbPvn6M.s:524    .text.xAreSemaphoreTasksStillRunning:000000000000005c $d
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccbPvn6M.s:533    .bss.sLastCheckVariables.8233:0000000000000000 sLastCheckVariables.8233
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccbPvn6M.s:530    .bss.sLastCheckVariables.8233:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

@@ -30,7 +30,7 @@
 
 
 /* DEBUG for debugging purposes. */
-#define DEBUG
+//#define DEBUG
 
 /*! 	\var xSemaphoreHandle xSemaphoreDMASPI
  * 	\brief Semaphore handle for DMA SPI pheriphal

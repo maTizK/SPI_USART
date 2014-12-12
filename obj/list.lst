@@ -547,16 +547,16 @@
  355              		.file 6 "App/STM32F4-Discovery/Libraries/CMSIS/Include/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 list.c
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwLzww4.s:20     .text.vListInitialise:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwLzww4.s:25     .text.vListInitialise:0000000000000000 vListInitialise
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwLzww4.s:77     .text.vListInitialiseItem:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwLzww4.s:82     .text.vListInitialiseItem:0000000000000000 vListInitialiseItem
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwLzww4.s:114    .text.vListInsertEnd:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwLzww4.s:119    .text.vListInsertEnd:0000000000000000 vListInsertEnd
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwLzww4.s:180    .text.vListInsert:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwLzww4.s:185    .text.vListInsert:0000000000000000 vListInsert
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwLzww4.s:275    .text.uxListRemove:0000000000000000 $t
-/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//ccwLzww4.s:280    .text.uxListRemove:0000000000000000 uxListRemove
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckw79Xb.s:20     .text.vListInitialise:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckw79Xb.s:25     .text.vListInitialise:0000000000000000 vListInitialise
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckw79Xb.s:77     .text.vListInitialiseItem:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckw79Xb.s:82     .text.vListInitialiseItem:0000000000000000 vListInitialiseItem
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckw79Xb.s:114    .text.vListInsertEnd:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckw79Xb.s:119    .text.vListInsertEnd:0000000000000000 vListInsertEnd
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckw79Xb.s:180    .text.vListInsert:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckw79Xb.s:185    .text.vListInsert:0000000000000000 vListInsert
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckw79Xb.s:275    .text.uxListRemove:0000000000000000 $t
+/var/folders/hq/s45830mn6w17j2ybbkgkrjk00000gn/T//cckw79Xb.s:280    .text.uxListRemove:0000000000000000 uxListRemove
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

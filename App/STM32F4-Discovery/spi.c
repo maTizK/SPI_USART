@@ -478,7 +478,7 @@ void spi_dma_write_read(uint32_t spi, uint8_t *bufRX, uint8_t *bufTX, uint16_t l
 		{
 			// we were able to take semaphore now wait for transfer
 			// to finish. We will give back semaphore in IRQ
-			// handeler 
+			// handler 
 			
 		}
 		else
@@ -514,4 +514,6 @@ void spi_dma_write_read(uint32_t spi, uint8_t *bufRX, uint8_t *bufTX, uint16_t l
 
 
 
-}	
+}
+
+
